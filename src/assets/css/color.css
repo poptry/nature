@@ -1,0 +1,16 @@
+:root{
+    /* 背景 */
+    /* 主题色 */
+    --background:rgba(34, 32, 32, 1);
+    /* 渐变 */
+    --gradualBackground:linear-gradient(135deg,white,gray 40%,black);
+    /* 侧边栏背景色 */
+    /* 透明 */
+    --noBackground:rgba(34, 32, 32, 0);
+
+    /* 字体颜色 */
+    --fontColor:#ffffff;
+
+    /* 边框 */
+    --borderColor:#ffffff 1px solid;
+}

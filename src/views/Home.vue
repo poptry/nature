@@ -1,13 +1,14 @@
 <template>
     <div class="home">
         <!-- 走马灯 -->
-        <el-carousel height="650px">
+        <el-carousel height="650px" 
+        class="animate__animated animate__fadeIn">
             <el-carousel-item v-for="(item,index) in images" :key="index">
                 <img :src="item.url" alt="">
             </el-carousel-item>
         </el-carousel>
         <!-- 题 1 -->
-        <div class="slogan">
+        <div class="slogan animate__animated animate__fadeIn">
             <span class="headtitle" animate__fadeIn animate__fadeOut>前进</span>
         </div>
         <!-- 左图右字 -->
@@ -20,30 +21,12 @@
                     </el-card>
                 </el-col>
                 <el-col :span="12" class="right-col">
-                        <transition enter-active-class="animate__animated animate__fadeInDown"
-                        leave-active-class="animate__animated animate__fadeOutDown">
-                            <span v-show="show">让我们一同探索自然的奥秘</span>
-                        </transition>
-                        <transition enter-active-class="animate__animated animate__zoomIn"
-                        leave-active-class="animate__animated animate__zoomOut">
-                            <span v-show="show">共享山川的美丽，留下足迹，收获回忆</span>
-                        </transition>
-                        <transition enter-active-class="animate__animated animate__zoomIn"
-                        leave-active-class="animate__animated animate__zoomOut">
-                            <span v-show="show">这不仅是一场徒步旅行</span>
-                        </transition>
-                        <transition enter-active-class="animate__animated animate__zoomIn"
-                        leave-active-class="animate__animated animate__zoomOut">
-                            <span v-show="show">更是一场心灵的洗礼</span>
-                        </transition>
-                        <transition enter-active-class="animate__animated animate__zoomIn"
-                        leave-active-class="animate__animated animate__zoomOut">
-                            <span v-show="show">在这片净土，释放心中的压力</span>
-                        </transition>
-                        <transition enter-active-class="animate__animated animate__zoomIn"
-                        leave-active-class="animate__animated animate__zoomOut">
-                            <span v-show="show">找回内心的宁静，感受生活的美好</span>
-                        </transition>
+                        <span v-show="show" class="animate__animated animate__fadeInDown">让我们一同探索自然的奥秘</span>
+                        <span v-show="show" class="animate__animated animate__fadeInDown">共享山川的美丽，留下足迹，收获回忆</span>
+                        <span v-show="show" class="animate__animated animate__fadeInDown">这不仅是一场徒步旅行</span>
+                        <span v-show="show" class="animate__animated animate__fadeInDown">更是一场心灵的洗礼</span>
+                        <span v-show="show" class="animate__animated animate__fadeInDown">在这片净土，释放心中的压力</span>
+                        <span v-show="show" class="animate__animated animate__fadeInDown">找回内心的宁静，感受生活的美好</span>
                 </el-col>
             </el-row>
         </div>
@@ -61,30 +44,12 @@
                     </el-card>
                 </el-col>
                 <el-col :span="12" class="right-col">
-                        <transition enter-active-class="animate__animated animate__fadeInDown"
-                        leave-active-class="animate__animated animate__fadeOutDown">
-                            <span v-show="show">让我们一同探索自然的奥秘</span>
-                        </transition>
-                        <transition enter-active-class="animate__animated animate__zoomIn"
-                        leave-active-class="animate__animated animate__zoomOut">
-                            <span v-show="show">共享山川的美丽，留下足迹，收获回忆</span>
-                        </transition>
-                        <transition enter-active-class="animate__animated animate__zoomIn"
-                        leave-active-class="animate__animated animate__zoomOut">
-                            <span v-show="show">这不仅是一场徒步旅行</span>
-                        </transition>
-                        <transition enter-active-class="animate__animated animate__zoomIn"
-                        leave-active-class="animate__animated animate__zoomOut">
-                            <span v-show="show">更是一场心灵的洗礼</span>
-                        </transition>
-                        <transition enter-active-class="animate__animated animate__zoomIn"
-                        leave-active-class="animate__animated animate__zoomOut">
-                            <span v-show="show">在这片净土，释放心中的压力</span>
-                        </transition>
-                        <transition enter-active-class="animate__animated animate__zoomIn"
-                        leave-active-class="animate__animated animate__zoomOut">
-                            <span v-show="show">找回内心的宁静，感受生活的美好</span>
-                        </transition>
+                    <span v-show="show" class="animate__animated animate__fadeInDown">让我们一同探索自然的奥秘</span>
+                        <span v-show="show" class="animate__animated animate__fadeInDown">共享山川的美丽，留下足迹，收获回忆</span>
+                        <span v-show="show" class="animate__animated animate__fadeInDown">这不仅是一场徒步旅行</span>
+                        <span v-show="show" class="animate__animated animate__fadeInDown">更是一场心灵的洗礼</span>
+                        <span v-show="show" class="animate__animated animate__fadeInDown">在这片净土，释放心中的压力</span>
+                        <span v-show="show" class="animate__animated animate__fadeInDown">找回内心的宁静，感受生活的美好</span>
                 </el-col>
             </el-row>
         </div>
@@ -107,7 +72,6 @@
     </div>
 </template>
 <script>
-import {mapState} from 'vuex';
 export default {
     name: 'Carousel',
     data() {
@@ -127,7 +91,7 @@ export default {
         }
     },
     computed:{
-            ...mapState({iscomeout:state=>state.nav.iscomeout})//获取state，导航栏的状态
+            // ...mapState({iscomeout:state=>state.nav.iscomeout})//获取state，导航栏的状态
           },
     methods:{
         handleScroll(){
@@ -144,25 +108,14 @@ export default {
                     }
             });
         },
-        navScroll(){
-                let top = pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-                if(top>0){
-                  this.$store.commit('changeOne')
-                }else {
-                    this.$store.commit('changeZero')
-                }
-            }
     },
     mounted(){
                 this.$nextTick(()=>{
                     addEventListener('scroll',this.handleScroll)
-                    addEventListener('scroll',this.navScroll)
                 })
     },
     beforeDestroy(){
-        console.log('destroy');
         removeEventListener('scroll',this.handleScroll)
-        removeEventListener('scroll',this.navScroll)
     }
 }
 </script>

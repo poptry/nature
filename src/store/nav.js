@@ -1,15 +1,12 @@
 export default {
     state:{
-        iscomeout:0,
+        iscomeout:false,
     },
     actions:{
     },
     mutations:{
-        changeZero(state){
-            state.iscomeout = 0 //透明
-        },
-        changeOne(state){
-            state.iscomeout = 1  //黑色
+        changeToolbar(state,toolbarState){
+            state.iscomeout = toolbarState
         }
     }
 }

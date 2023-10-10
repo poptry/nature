@@ -33,7 +33,10 @@ const routes = [
 ]
 //创建router实例，传routes配置
 const router = new VueRouter({
-    routes
+    routes,
+    scrollBehavior(to, from, savedPosition) {
+        return {x: 0, y: 0}
+    }
 })
 
 
