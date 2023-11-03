@@ -1,16 +1,26 @@
 :root{
-    /* 背景 */
-    /* 主题色 */
-    --background:rgba(34, 32, 32, 1);
+    --themeColor:#121212;
+    /* --themeColor:#0d5e36e0; */
+
+    /* 背景色 */
+    --background:rgb(12, 12, 12);
+
     /* 渐变 */
-    --gradualBackground:linear-gradient(135deg,white,gray 40%,black);
+    --gradualBackground:linear-gradient(135deg,white,rgb(197, 196, 136));
+
+    --gradualBackgroundR:linear-gradient(135deg,white,gray 40%,black);
     /* 侧边栏背景色 */
-    /* 透明 */
-    --noBackground:rgba(34, 32, 32, 0);
-
+    /* 边框颜色 */
+    --borderColor:#5a5a5a;
     /* 字体颜色 */
-    --fontColor:#ffffff;
-
-    /* 边框 */
-    --borderColor:#ffffff 1px solid;
+    /* #FFB500 */
+    --fontColor:rgba(255,255,255,0.87);
+    --fontColor-m:#151617;
+    /* 按钮色 */
+    --btnColor:#215701;
+    --btnColorActive:#007177;
+    --btnHoverColor:#d7d8d5;
+    --btnActiveColor:#ededed;
+    /* --btnFontColor:#ffffff; */
+    --btnReplsColor:#909490;
 }

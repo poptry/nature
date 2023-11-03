@@ -6,7 +6,11 @@ Vue.use(VueRouter)
 import Main from '@/views/Main'
 import Home from '@/views/Home'//主页
 import Circle from '@/views/Circle'//圈子
-import Forum from '@/views/Forum'
+import Strategy from '@/views/Strategy'
+import CircleHome from '@/views/CircleChildren/CircleHome'
+import Inbox from '@/views/CircleChildren/Inbox'
+import City from '@/views/CircleChildren/City'
+import School from '@/views/CircleChildren/School'
 //组件和路由映射
 const routes = [
     {
@@ -18,16 +22,32 @@ const routes = [
             {path:'home',name:'home',component:Home},//首页
             {
                 //*********圈子
-
                 path:'circle',
-                name:'circle',
                 component:Circle,
                 //三级路由
                 children:[
-                    {path:'',redirect:'./forum',},
-                    {path:'forum',name:'forum',component:Forum}
+                    {path:'/',name:'circlehome',redirect:'circlehome'},
+                    {
+                        path:'circlehome',
+                        component:CircleHome,
+                        children:[
+                            {path:'/',name:'city',redirect:'city'},
+                            {path:'city',name:'city',component:City},//同城
+                            {path:'school',name:'school',component:School},//同城
+                        ]
+                    },//首页
+                    {path:'inbox',name:'inbox',component:Inbox},//私信
                 ]
             },
+            {
+                //$$$$$$$$$攻略
+                path:'strategy',
+                name:'strategy',
+                component:Strategy,
+                children:[
+                    
+                ]
+            }
         ]
     },
 ]

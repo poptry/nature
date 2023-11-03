@@ -1,0 +1,114 @@
+{
+  "id": "4265030",
+  "name": "毕设",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "9836870",
+      "name": "校园",
+      "font_class": "xiaoyuan",
+      "unicode": "e655",
+      "unicode_decimal": 58965
+    },
+    {
+      "icon_id": "30747928",
+      "name": "同城异业",
+      "font_class": "shop06",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "21649092",
+      "name": "爱好",
+      "font_class": "ziyuan25",
+      "unicode": "e608",
+      "unicode_decimal": 58888
+    },
+    {
+      "icon_id": "6718995",
+      "name": "菜单-打开",
+      "font_class": "caidan-dakai",
+      "unicode": "e6a4",
+      "unicode_decimal": 59044
+    },
+    {
+      "icon_id": "21658017",
+      "name": "合作共赢",
+      "font_class": "7hezuogongying",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "4333920",
+      "name": "确定",
+      "font_class": "queding",
+      "unicode": "e611",
+      "unicode_decimal": 58897
+    },
+    {
+      "icon_id": "2593578",
+      "name": "群聊",
+      "font_class": "qunliao",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    },
+    {
+      "icon_id": "16328053",
+      "name": "星球",
+      "font_class": "xingqiu",
+      "unicode": "e650",
+      "unicode_decimal": 58960
+    },
+    {
+      "icon_id": "1245577",
+      "name": "换一换",
+      "font_class": "huanyihuan",
+      "unicode": "e65f",
+      "unicode_decimal": 58975
+    },
+    {
+      "icon_id": "3457210",
+      "name": "提醒",
+      "font_class": "tixing",
+      "unicode": "e716",
+      "unicode_decimal": 59158
+    },
+    {
+      "icon_id": "201692",
+      "name": "3.1 好友",
+      "font_class": "31haoyou",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "1413426",
+      "name": "创建课程",
+      "font_class": "chuangjiankecheng",
+      "unicode": "e695",
+      "unicode_decimal": 59029
+    },
+    {
+      "icon_id": "1306",
+      "name": "购物车空",
+      "font_class": "gouwuchekong",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "2080213",
+      "name": "dkw_攻略",
+      "font_class": "dkw_gonglve",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
+      "icon_id": "5532898",
+      "name": "圈子",
+      "font_class": "quanzi",
+      "unicode": "e632",
+      "unicode_decimal": 58930
+    }
+  ]
+}

@@ -6,6 +6,7 @@ import ElementUI from 'element-ui'
 import 'animate.css'
 import './assets/css/color.css'
 import './assets/css/common.css'
+import './assets/iconfont/iconfont.css'
 
 import store from './store';
 //引入router from './router

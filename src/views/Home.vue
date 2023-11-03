@@ -79,13 +79,13 @@ export default {
             show:0,
             images:[
                 {
-                    url:require('@/assets/0-4.jpg')
+                    url:require('@/assets/images/pexels-oleksandr-p-376368.jpg')
                 },
                 {
-                    url:require('@/assets/0-1.jpg')
+                    url:require('@/assets/images/0-5.jpg')
                 },
                 {
-                    url:require('@/assets/0-5.jpg')
+                    url:require('@/assets/images/0-8.jpg')
                 }
             ],
         }
@@ -128,7 +128,7 @@ export default {
             img{
                 width: 100%;
                 height: auto;
-                object-fit: cover;
+                object-fit: fill;
             }
         }
     //slogan样式
@@ -139,6 +139,7 @@ export default {
         font-weight: 400;
         margin: 40px 0 40px 0;
         .headtitle{
+            color: var(--themeColor);
             font-size:28px;
         }
         &::after{
@@ -146,7 +147,7 @@ export default {
             content: '';
             width: 64px;
             height: 4px;
-            background-color:black;
+            background-color:var(--themeColor);
             left: calc((100% - 64px)/2);
             bottom: -14px;
         }
@@ -155,7 +156,7 @@ export default {
     .content-one{
         height: 600px;
         margin-bottom: 20px;
-        background: url('@/assets/goAhead.jpg') no-repeat center;
+        background: url('@/assets/images/goAhead.jpg') no-repeat center;
         .el-row {
             height: 100%;
             backdrop-filter:blur(20px);
