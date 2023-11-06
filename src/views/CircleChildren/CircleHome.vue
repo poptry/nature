@@ -31,6 +31,7 @@ export default {
     .circle-home{
         .aside{
             width: 100%;
+            height: 100%;
             max-width: 200px;
             .el-aside{
                 width: 100%;
@@ -38,7 +39,8 @@ export default {
             }
         }
         .el-main{
-            min-height:calc(100vh - 80px);;
+            height: 100%;
+            min-height:calc(100vh - 80px);
             background-color: #f1f1f1;
         }
     }

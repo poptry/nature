@@ -5,7 +5,7 @@
             <el-button size="small" icon="el-icon-search"></el-button>
         </div>
         <div class="cards">
-            <common-card v-for="(url,index) in urls" :url="url" :key="index"></common-card>
+            <!-- <common-card v-for="(url,index) in urls" :url="url" :key="index"></common-card> -->
         </div>
     </div>
 </template>
@@ -109,9 +109,9 @@ export default {
         .search{
             display:flex;
             justify-content: end;
+            align-items: center;
+            margin-bottom: 20px;
             .input {
-                    width: 100%;
-                    margin-bottom: 20px;
                     width: 30%;
                     min-width: 280px;
                     border: none;
@@ -122,7 +122,8 @@ export default {
                             -10px -10px 30px #a5d1fc;
                     transition: 0.3s;
                     opacity: 0.7;
-                }
+                    animation: search 1s linear;
+            }
             .input:focus {
                 outline-color: #e8e8e8;
                 background: #e8e8e8;
@@ -132,7 +133,8 @@ export default {
                 opacity: 1;
             }
             .el-button{
-                
+                height: 100%;
+                margin-left: 20px;
             }
         }
         .cards{
@@ -141,6 +143,14 @@ export default {
             height: 100%;
             display: flex;
             flex-wrap: wrap;
+        }
+    }
+    @keyframes search {
+        0%{
+            width: 0%;
+        }
+        100%{
+            width: 30%;
         }
     }
 </style>

@@ -28,7 +28,6 @@ export default {
     },
     methods:{
         clickCard(){
-            console.log(1111111111);
         }
     }
 }

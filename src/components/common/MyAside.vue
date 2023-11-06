@@ -53,12 +53,6 @@ export default {
                     name:'私信',
                     icon:'el-icon-message'
                 },
-                {
-                  id:'1',
-                  path:'/circle/inbox',
-                  name:'我的',
-                  icon:'el-icon-user'
-                }
             ]
     }
   },
@@ -105,7 +99,6 @@ export default {
   }
   .el-menu--collapse{
     width: 60px;
-    // height: calc(100vh - 80px);
     height: 100%;
   }
 </style>

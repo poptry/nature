@@ -26,6 +26,7 @@ export default {
         margin-top: 80px;
         .el-main{
             padding: 0;
+            height: 100%;
         }
     }
 </style>
