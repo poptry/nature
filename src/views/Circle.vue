@@ -1,8 +1,6 @@
 <template>
     <el-container class="circle-container">
-        <el-aside width="auto">
-            <my-aside></my-aside>
-        </el-aside>
+        <my-aside></my-aside>
         <el-container>
             <el-main>
                 <router-view></router-view>
@@ -26,10 +24,6 @@ export default {
 <style lang="less" scoped>
     .circle-container{
         margin-top: 80px;
-        // height: 100%;
-        .el-aside{
-            height: calc(100vh - 80px);
-        }
         .el-main{
             padding: 0;
         }

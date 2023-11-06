@@ -30,12 +30,15 @@ export default {
 <style lang="less" scoped>
     .circle-home{
         .aside{
-            overflow: hidden;
+            width: 100%;
+            max-width: 200px;
             .el-aside{
                 width: 100%;
+                height: 100%;
             }
         }
         .el-main{
+            min-height:calc(100vh - 80px);;
             background-color: #f1f1f1;
         }
     }

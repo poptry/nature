@@ -31,7 +31,7 @@ const routes = [
                         path:'circlehome',
                         component:CircleHome,
                         children:[
-                            {path:'/',name:'city',redirect:'city'},
+                            {path:'/',redirect:'city'},
                             {path:'city',name:'city',component:City},//同城
                             {path:'school',name:'school',component:School},//同城
                         ]

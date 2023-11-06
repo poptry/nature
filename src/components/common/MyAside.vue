@@ -35,6 +35,7 @@
 </template>
 
 <script>
+  import { mapState,mapMutations } from 'vuex';
 export default {
   data(){
     return{
@@ -52,17 +53,27 @@ export default {
                     name:'私信',
                     icon:'el-icon-message'
                 },
+                {
+                  id:'1',
+                  path:'/circle/inbox',
+                  name:'我的',
+                  icon:'el-icon-user'
+                }
             ]
     }
   },
   methods:{
+    ...mapMutations({
+      changeCommonAside:'changeCommonAside'
+    }),
+    //导航点击事件
     clickNavItem(nav){
+      this.changeCommonAside(nav.id)
       this.$router.push(nav.path).catch(erro=>{
       })
     }
   },
   created(){
-    
   }
 }
 </script>
@@ -72,7 +83,7 @@ export default {
     // https://zhuanlan.zhihu.com/p/374142549
     &:not(.el-menu--collapse) {
       width: 200px;
-      height: calc(100vh - 80px);
+      height: 100%;
     }
       .person{
         display: flex;
@@ -94,6 +105,7 @@ export default {
   }
   .el-menu--collapse{
     width: 60px;
-    height: calc(100vh - 80px);
+    // height: calc(100vh - 80px);
+    height: 100%;
   }
 </style>

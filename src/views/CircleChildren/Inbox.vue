@@ -7,7 +7,9 @@
                 </el-aside>
             </div>
             <el-container>
-                <el-main>私信</el-main>
+                <el-main>
+                    <router-view></router-view>
+                </el-main>
             </el-container>
         </el-container>
     </div>
@@ -27,12 +29,15 @@ export default {
 <style lang="less" scoped>
     .circle-inbox{
         .aside{
-            overflow: hidden;
+            width: 100%;
+            max-width: 200px;
             .el-aside{
                 width: 100%;
+                height: 100%;
             }
         }
         .el-main{
+            min-height: calc(100vh - 80px);
             background-color: #f1f1f1;
         }
     }

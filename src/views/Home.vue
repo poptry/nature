@@ -17,7 +17,7 @@
                 <el-col :span="12" class="left-col">
                     <el-card :body-style="{padding:'0px',border:0}" 
                      shadow="hover">
-                        <img src="@/assets/goAhead.jpg" alt="">
+                        <img src="@/assets/images/goAhead.jpg" alt="">
                     </el-card>
                 </el-col>
                 <el-col :span="12" class="right-col">
@@ -40,7 +40,7 @@
                 <el-col :span="12" class="left-col">
                     <el-card :body-style="{padding:'0px',border:0}" 
                      shadow="hover">
-                        <img src="@/assets/goAhead.jpg" alt="">
+                        <img src="@/assets/images/goAhead.jpg" alt="">
                     </el-card>
                 </el-col>
                 <el-col :span="12" class="right-col">
