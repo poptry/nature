@@ -27,6 +27,11 @@ export default {
         .el-main{
             padding: 0;
             height: 100%;
+            &::-webkit-scrollbar {
+                width: 0; /* Safari,Chrome 隐藏滚动条 */
+                height: 0; /* Safari,Chrome 隐藏滚动条 */
+                display: none; /* 移动端、pad 上Safari，Chrome，隐藏滚动条 */
+            }
         }
     }
 </style>

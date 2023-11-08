@@ -12,8 +12,8 @@
   </template>
   <script>
   import { mapState } from 'vuex';
-import MyCircles from './MyCircles.vue';
-import CircleHomeNav from './CircleHomeNav.vue';
+import MyCircles from '../inbox/MyCircles.vue';
+import CircleHomeNav from '../circleHome/CircleHomeNav.vue';
   export default {
     components:{MyCircles,CircleHomeNav},
     data(){
@@ -32,7 +32,11 @@ import CircleHomeNav from './CircleHomeNav.vue';
       })
     },
     created(){
-
+      if(this.$route.path.includes('inbox')){
+        this.$store.commit('changeCommonAside','1')
+      }else{
+        this.$store.commit('changeCommonAside','0')
+      }
     }
   }
   </script>

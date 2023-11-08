@@ -23,7 +23,6 @@ export default {
     props:['url'],
     data(){
         return{
-            
         }
     },
     methods:{

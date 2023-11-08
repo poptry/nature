@@ -39,8 +39,8 @@ export default {
             }
         }
         .el-main{
-            height: 100%;
-            min-height:calc(100vh - 80px);
+            min-height: 698px;
+            min-width: 900px;
             background-color: #f1f1f1;
         }
     }

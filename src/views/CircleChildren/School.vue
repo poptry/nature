@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import CommonCard from '@/components/common/CommonCard.vue';
+import CommonCard from '@/components/circleHome/CommonCard.vue';
 export default {
   data(){
       return{
@@ -107,7 +107,7 @@ export default {
       background-size: 100% 100%;
       .search{
           display:flex;
-          justify-content: end;
+          justify-content: flex-end;
           .input {
                   width: 100%;
                   margin-bottom: 20px;

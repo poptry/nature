@@ -8,7 +8,7 @@
             </div>
             <el-container>
                 <el-main>
-                    <router-view></router-view>
+                    <chat></chat>
                 </el-main>
             </el-container>
         </el-container>
@@ -17,13 +17,17 @@
 
 <script>
 import CommonAside from '@/components/common/CommonAside'
+import Chat from '@/components/inbox/Chat.vue';
 export default {
     data(){
         return{
 
         }
     },
-    components:{CommonAside}
+    components:{
+        CommonAside,
+        Chat
+    }
 }
 </script>
 <style lang="less" scoped>
@@ -37,8 +41,14 @@ export default {
             }
         }
         .el-main{
+            height: 698px;
             min-height: calc(100vh - 80px);
             background-color: #f1f1f1;
+            &::-webkit-scrollbar {
+                width: 0; /* Safari,Chrome 隐藏滚动条 */
+                height: 0; /* Safari,Chrome 隐藏滚动条 */
+                display: none; /* 移动端、pad 上Safari，Chrome，隐藏滚动条 */
+            }
         }
     }
 </style>
