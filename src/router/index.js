@@ -11,6 +11,7 @@ import CircleHome from '@/views/CircleChildren/CircleHome'
 import Inbox from '@/views/CircleChildren/Inbox'
 import City from '@/views/CircleChildren/City'
 import School from '@/views/CircleChildren/School'
+import Equipment from '@/views/Equipment'
 //组件和路由映射
 const routes = [
     {
@@ -20,8 +21,8 @@ const routes = [
         //二级路由
         children:[
             {path:'home',name:'home',component:Home},//首页
+            //*********圈子
             {
-                //*********圈子
                 path:'circle',
                 component:Circle,
                 //三级路由
@@ -39,14 +40,21 @@ const routes = [
                     {path:'inbox',name:'inbox',component:Inbox},//私信
                 ]
             },
+          //$$$$$$$$$攻略
             {
-                //$$$$$$$$$攻略
                 path:'strategy',
                 name:'strategy',
                 component:Strategy,
                 children:[
                     
                 ]
+            },
+          //$$$$$$$$$装备
+            {
+                path:'equipment',
+                name:'equipment',
+                component:Equipment,
+                
             }
         ]
     },

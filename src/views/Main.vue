@@ -4,7 +4,7 @@
         <div
          @mouseenter="isEnter = true"
          @mouseleave="isEnter = false"
-         :class="{comeout: (isEnter || iscomeout || this.$route.path.includes('circle'))}"
+         :class="{comeout: (isEnter || iscomeout || this.$route.path.includes('circle') || this.$route.path.includes('equipment'))}"
          class="nav animate__animated animate__fadeIn">
             <span class="sign" @click="clickSpan">Natrue探险者</span>
             <ul>
@@ -50,6 +50,7 @@
                 {
                     name:'装备',
                     icon:'iconfont icon-gouwuchekong',
+                    path:'/equipment'
                 }
             ]
             };
