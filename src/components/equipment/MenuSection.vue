@@ -8,7 +8,8 @@
             <li>背包/配件</li>
         </ul>
         <div class="search">
-            <input type="text" placeholder="Search">
+            <input @keyup.enter="searchEquipment" v-model="searchContent" type="text" placeholder="Search">
+            <i @click="searchEquipment" class="iconfont icon-search searchIcon"></i>
         </div>
         <div class="icons">
             <i class="iconfont icon-shangjiaduanicon-"></i>
@@ -20,9 +21,15 @@
 export default {
     data(){
         return{
-
+            searchContent:''
         }
     },
+    methods:{
+        //搜索按钮事件
+        searchEquipment(){
+            console.log(this.searchContent);
+        }
+    }
 }
 </script>
 <style lang="less" scoped>
@@ -56,13 +63,21 @@ export default {
             display: flex;
             align-items: center;
             border: 1px solid rgb(184, 184, 184);
-            padding: 10px;
+            padding: 5px;
             background-color: #e3e3e3;
             input{
                 width: 100%;
                 border: 0;
                 outline: none;
+                padding: 5px;
                 background-color: #e3e3e3;
+            }
+            .searchIcon{
+                padding: 5px;
+                &:hover{
+                    background-color: #d4d4d4;
+                    cursor: pointer;
+                }
             }
         }
         .icons{
