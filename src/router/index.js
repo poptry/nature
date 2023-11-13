@@ -12,6 +12,7 @@ import Inbox from '@/views/CircleChildren/Inbox'
 import City from '@/views/CircleChildren/City'
 import School from '@/views/CircleChildren/School'
 import Equipment from '@/views/Equipment'
+import AllEquipment from '@/views/equipmentChildren/AllEquipment'
 //组件和路由映射
 const routes = [
     {
@@ -52,9 +53,11 @@ const routes = [
           //$$$$$$$$$装备
             {
                 path:'equipment',
-                name:'equipment',
                 component:Equipment,
-                
+                children:[
+                    {path:'/',name:'allEquipment',redirect:'allEquipment'},
+                    {path:'allEquipment',name:'allEquipment',component:AllEquipment}
+                ]
             }
         ]
     },
@@ -66,8 +69,4 @@ const router = new VueRouter({
         return {x: 0, y: 0}
     }
 })
-
-
-
-
 export default router

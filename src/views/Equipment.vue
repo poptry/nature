@@ -4,7 +4,7 @@
             <MenuSectionVue></MenuSectionVue>
         </el-header>
         <el-main>
-            MAIN
+            <router-view></router-view>
         </el-main>
     </el-container>
 </template>
@@ -14,7 +14,6 @@ import MenuSectionVue from '@/components/equipment/MenuSection'
 export default {
     data(){
         return{
-
         }
     },
     components:{
@@ -31,6 +30,11 @@ export default {
             height: 80px !important;
             border-bottom: 1px solid rgb(179, 179, 179);
             min-width: 1300px;
+        }
+        .el-main{
+            width: 1280px;
+            // max-width: 1280px;
+            margin: 0 auto;
         }
     }
 </style>

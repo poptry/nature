@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4265030 */
-  src: url('iconfont.woff2?t=1699499760151') format('woff2'),
-       url('iconfont.woff?t=1699499760151') format('woff'),
-       url('iconfont.ttf?t=1699499760151') format('truetype');
+  src: url('iconfont.woff2?t=1699602199049') format('woff2'),
+       url('iconfont.woff?t=1699602199049') format('woff'),
+       url('iconfont.ttf?t=1699602199049') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,10 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-jushoucanggift:before {
+  content: "\e684";
 }
 
 .icon-search:before {

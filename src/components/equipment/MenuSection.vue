@@ -12,16 +12,22 @@
             <i @click="searchEquipment" class="iconfont icon-search searchIcon"></i>
         </div>
         <div class="icons">
-            <i class="iconfont icon-shangjiaduanicon-"></i>
+            <i @click="drawer=true" class="iconfont icon-shangjiaduanicon-"></i>
             <i class="iconfont icon-jushoucang favorite"></i>
         </div>
+        <el-drawer
+            title="购物车"
+            :visible.sync="drawer">
+            <span>我来啦!</span>
+        </el-drawer>
     </div>
 </template>
 <script>
 export default {
     data(){
         return{
-            searchContent:''
+            searchContent:'',
+            drawer:false
         }
     },
     methods:{
