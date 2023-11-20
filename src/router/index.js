@@ -13,8 +13,13 @@ import City from '@/views/CircleChildren/City'
 import School from '@/views/CircleChildren/School'
 import Equipment from '@/views/Equipment'
 import AllEquipment from '@/views/equipmentChildren/AllEquipment'
+import Login from '@/views/Login'
+
 //组件和路由映射
 const routes = [
+    {
+        path:'/login',component:Login,name:'login'
+    },
     {
         path:'/',
         component:Main,

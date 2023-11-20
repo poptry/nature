@@ -1,19 +1,63 @@
 <template>
   <div class="strategy">
-    <img
-        style="width: 100vw;height: 100vh;object-fit: cover;overflow: hidden;"
-        src="@/assets/images/0-3.jpg"/>
-    
+    <el-upload
+      class="avatar-uploader"
+      action="/api/user/upload"
+      :data="userInfo"
+      :show-file-list="false"
+      name="file"
+      :on-success="handleAvatarSuccess">
+      <img v-if="image.imageUrl" :src="image.imageUrl" class="avatar">
+      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+    </el-upload>
+    <el-image src="http://natural-image.oss-cn-hangzhou.aliyuncs.com/avatar/10.JPG"></el-image>
   </div>
 </template>
 
 <script>
 export default {
-
+  data() {
+      return {
+        image:{
+          imageUrl: '',
+        },
+        userInfo:JSON.parse(localStorage.getItem('user'))
+      };
+    },
+    methods: {
+      handleAvatarSuccess(res, file) {
+        if(res.code === 200){
+          this.image.imageUrl = res.url
+        }
+      }
+    }
 }
 </script>
 
 <style lang="less" scoped>
     .strategy{
+      margin-top: 180px;
+    .avatar-uploader{
+        width: 180px;
+        border: 1px dashed #d9d9d9;
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        border-color: #409EFF;
+        .avatar {
+          width: 178px;
+          height: 178px;
+          display: block;
+        }
+        .avatar-uploader-icon {
+          font-size: 28px;
+          color: #8c939d;
+          width: 178px;
+          height: 178px;
+          line-height: 178px;
+          text-align: center;
+        }
+      }
     }
 </style>

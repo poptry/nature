@@ -11,7 +11,7 @@
     </div>
   </template>
   <script>
-  import { mapState } from 'vuex';
+import { mapState } from 'vuex';
 import MyCircles from '../inbox/MyCircles.vue';
 import CircleHomeNav from '../circleHome/CircleHomeNav.vue';
   export default {

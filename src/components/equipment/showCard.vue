@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import { getUser } from '@/api'
 export default {
   props:['product'],
   data(){

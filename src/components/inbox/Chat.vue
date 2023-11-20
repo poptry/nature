@@ -47,83 +47,82 @@
 </template>
 
 <script>
-import {animation} from '@/util'
 import { mapState } from 'vuex';
 export default {
-    data(){
-        return{
-          chatList:[
-            {
-              id:'1',
-              name:'好',
-              avatar:'https://tse2-mm.cn.bing.net/th/id/OIP-C.pSYrBZuWAziwSL4d7H9-UAAAAA?w=206&h=206&c=7&r=0&o=5&dpr=2&pid=1.7',
-              msg:'唱歌？'
-            },
-            {
-              id:'2',
-              name:'好',
-              avatar:'https://tse4-mm.cn.bing.net/th/id/OIP-C.wYmjPaJV75lcGZaN2ptT5AAAAA?w=202&h=202&c=7&r=0&o=5&dpr=2&pid=1.7',
-              msg:'我很好'
-            },
-            {
-              id:'1',
-              name:'好',
-              avatar:'https://tse2-mm.cn.bing.net/th/id/OIP-C.pSYrBZuWAziwSL4d7H9-UAAAAA?w=206&h=206&c=7&r=0&o=5&dpr=2&pid=1.7',
-              msg:'你在做什么？'
-            },
-            {
-              id:'2',
-              name:'好',
-              avatar:'https://tse4-mm.cn.bing.net/th/id/OIP-C.wYmjPaJV75lcGZaN2ptT5AAAAA?w=202&h=202&c=7&r=0&o=5&dpr=2&pid=1.7',
-              msg:'跳舞？'
-            },
-            {
-              id:'1',
-              name:'好',
-              avatar:'https://tse2-mm.cn.bing.net/th/id/OIP-C.pSYrBZuWAziwSL4d7H9-UAAAAA?w=206&h=206&c=7&r=0&o=5&dpr=2&pid=1.7',
-              msg:'你的童年'
-            },
-            {
-              id:'2',
-              name:'好',
-              avatar:'https://tse4-mm.cn.bing.net/th/id/OIP-C.wYmjPaJV75lcGZaN2ptT5AAAAA?w=202&h=202&c=7&r=0&o=5&dpr=2&pid=1.7',
-              msg:'我的童年'
-            }
-          ],
-          inputMsg:''
+  data(){
+    return{
+      chatList:[
+        {
+          id:'1',
+          name:'好',
+          avatar:'https://tse2-mm.cn.bing.net/th/id/OIP-C.pSYrBZuWAziwSL4d7H9-UAAAAA?w=206&h=206&c=7&r=0&o=5&dpr=2&pid=1.7',
+          msg:'唱歌？'
+        },
+        {
+          id:'2',
+          name:'好',
+          avatar:'https://tse4-mm.cn.bing.net/th/id/OIP-C.wYmjPaJV75lcGZaN2ptT5AAAAA?w=202&h=202&c=7&r=0&o=5&dpr=2&pid=1.7',
+          msg:'我很好'
+        },
+        {
+          id:'1',
+          name:'好',
+          avatar:'https://tse2-mm.cn.bing.net/th/id/OIP-C.pSYrBZuWAziwSL4d7H9-UAAAAA?w=206&h=206&c=7&r=0&o=5&dpr=2&pid=1.7',
+          msg:'你在做什么？'
+        },
+        {
+          id:'2',
+          name:'好',
+          avatar:'https://tse4-mm.cn.bing.net/th/id/OIP-C.wYmjPaJV75lcGZaN2ptT5AAAAA?w=202&h=202&c=7&r=0&o=5&dpr=2&pid=1.7',
+          msg:'跳舞？'
+        },
+        {
+          id:'1',
+          name:'好',
+          avatar:'https://tse2-mm.cn.bing.net/th/id/OIP-C.pSYrBZuWAziwSL4d7H9-UAAAAA?w=206&h=206&c=7&r=0&o=5&dpr=2&pid=1.7',
+          msg:'你的童年'
+        },
+        {
+          id:'2',
+          name:'好',
+          avatar:'https://tse4-mm.cn.bing.net/th/id/OIP-C.wYmjPaJV75lcGZaN2ptT5AAAAA?w=202&h=202&c=7&r=0&o=5&dpr=2&pid=1.7',
+          msg:'我的童年'
         }
-    },
-    methods:{
-      sendMsg(){
-        if(this.inputMsg !== ''){
-          let obj = {
-            id:'2',
-            name:'好',
-            avatar:'https://tse4-mm.cn.bing.net/th/id/OIP-C.wYmjPaJV75lcGZaN2ptT5AAAAA?w=202&h=202&c=7&r=0&o=5&dpr=2&pid=1.7',
-            msg:this.inputMsg
-          }
-          this.chatList.push(obj)
-          this.inputMsg = ''
-          this.$nextTick(()=>{
-            const msgWrap = this.$refs.msgWrap;
-            msgWrap.scrollTop = msgWrap.scrollHeight - msgWrap.clientHeight
-            console.log(msgWrap.scrollTop,msgWrap.scrollHeight,msgWrap.clientHeight);
-          })
-        }
-
-      }
-    },
-    watch:{
-      friendId(newVal){
-        console.log(newVal);
-      }
-    },
-    computed:{
-      ...mapState({friendId:state=>state.inbox.friendId})
-    },
-    created(){
-      console.log(this.friendId);
+      ],
+      inputMsg:''
     }
+  },
+  methods:{
+    sendMsg(){
+      if(this.inputMsg !== ''){
+        let obj = {
+          id:'2',
+          name:'好',
+          avatar:'https://tse4-mm.cn.bing.net/th/id/OIP-C.wYmjPaJV75lcGZaN2ptT5AAAAA?w=202&h=202&c=7&r=0&o=5&dpr=2&pid=1.7',
+          msg:this.inputMsg
+        }
+        this.chatList.push(obj)
+        this.inputMsg = ''
+        this.$nextTick(()=>{
+          const msgWrap = this.$refs.msgWrap;
+          msgWrap.scrollTop = msgWrap.scrollHeight - msgWrap.clientHeight
+          console.log(msgWrap.scrollTop,msgWrap.scrollHeight,msgWrap.clientHeight);
+        })
+      }
+
+    }
+  },
+  watch:{
+    friendId(newVal){
+      console.log(newVal);
+    }
+  },
+  computed:{
+    ...mapState({friendId:state=>state.inbox.friendId})
+  },
+  created(){
+    console.log(this.friendId);
+  }
 }
 </script>
 

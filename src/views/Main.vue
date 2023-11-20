@@ -13,7 +13,14 @@
                   {{item.name}}
                 </li>
             </ul>
-            <button class="join-us">加入我们</button>
+          <el-dropdown>
+            <el-avatar class="my_avatar" shape="circle" :size="size" src="https://cdn.pixabay.com/photo/2013/03/03/15/49/mount-everest-89590_1280.jpg"></el-avatar>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item>个人中心</el-dropdown-item>
+              <el-dropdown-item>退出登录</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+            <!-- <button class="join-us">加入我们</button> -->
         </div>
         <el-main>
             <!-- 主要内容区 -->
@@ -155,6 +162,13 @@
                   font-size: 20px;
                 }
             }
+        }
+        .my_avatar {
+          float: right;
+          margin-right: 40px;
+          &:hover{
+            cursor: pointer;
+          }
         }
         .join-us{
             float: right;

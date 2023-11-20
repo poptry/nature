@@ -4,7 +4,7 @@
   </div>
 </template>
 <script>
-import {getUser} from '@/api'
+import {login} from '@/api'
 export default {
   data(){
     return{
@@ -15,8 +15,17 @@ export default {
 
   },
   created(){
-    getUser().then((response)=>{
+    let user = {
+      userId:'1',
+      userPwd:'TnuhV7vcII'
+    }
+    login({params:user}).then((response)=>{
       console.log(response);
+      if(response.status === 200){
+        localStorage.setItem('user',JSON.stringify(response.data[0]))
+      }
+    }).catch(err=>{
+      console.log(err);
     })
   }
 };
