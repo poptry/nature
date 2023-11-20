@@ -2,7 +2,7 @@
   <div class="strategy">
     <el-upload
       class="avatar-uploader"
-      action="/api/user/upload"
+      action="/api/user/updateAvatar"
       :data="userInfo"
       :show-file-list="false"
       name="file"
@@ -10,7 +10,7 @@
       <img v-if="image.imageUrl" :src="image.imageUrl" class="avatar">
       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
     </el-upload>
-    <el-image src="http://natural-image.oss-cn-hangzhou.aliyuncs.com/avatar/10.JPG"></el-image>
+    <!-- <el-image src="http://natural-image.oss-cn-hangzhou.aliyuncs.com/avatar/10.JPG"></el-image> -->
   </div>
 </template>
 
@@ -26,8 +26,13 @@ export default {
     },
     methods: {
       handleAvatarSuccess(res, file) {
+        console.log(res);
         if(res.code === 200){
           this.image.imageUrl = res.url
+          let user = JSON.parse(localStorage.getItem('user'))
+          user.user_avatar = res.url
+          localStorage.setItem('user',JSON.stringify(user))
+          console.log('写入了storage');
         }
       }
     }

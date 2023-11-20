@@ -83,7 +83,7 @@ export default {
             cursor: pointer;
             user-select: none;
             &:hover{
-                background-color: #f0eeee;
+                background-color: #c4c4c4;
             }
             .friendImg{
                 width: 50px;
@@ -109,7 +109,7 @@ export default {
             }
         }
         .active{
-            background-color: #f0eeee;
+            background-color: #bababa;
         }
     }
 }

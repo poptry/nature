@@ -14,7 +14,7 @@
                 </li>
             </ul>
           <el-dropdown>
-            <el-avatar class="my_avatar" shape="circle" :size="size" src="https://cdn.pixabay.com/photo/2013/03/03/15/49/mount-everest-89590_1280.jpg"></el-avatar>
+            <el-avatar class="my_avatar" shape="circle" size="medium" :src='user_avatar'></el-avatar>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item>个人中心</el-dropdown-item>
               <el-dropdown-item>退出登录</el-dropdown-item>
@@ -33,81 +33,101 @@
       </el-container>
     </div>
   </template>
-  <script>
-      // 引入底部公共栏
-      import  CommonFooter from '@/components/common/CommonFooter'
-      import {mapState} from 'vuex';
-      export default {
-          components: {CommonFooter},
-          data() {
-            return {
-              scrollTop:false,
-              isEnter:false,
-              navList:[
-                {
-                    name:'圈子',
-                    icon:'iconfont icon-quanzi',
-                    path:'/circle'
-                },
-                {
-                    name:'攻略',
-                    icon:'iconfont icon-dkw_gonglve',
-                    path:'/strategy'
-                },
-                {
-                    name:'装备',
-                    icon:'iconfont icon-gouwuchekong',
-                    path:'/equipment'
-                }
-            ]
-            };
+<script>
+// 引入底部公共栏
+import  CommonFooter from '@/components/common/CommonFooter'
+import {mapState} from 'vuex';
+export default {
+    components: {CommonFooter},
+    data() {
+      return {
+        scrollTop:false,
+        isEnter:false,
+        user_avatar:'',
+        //是否存在用户的缓存信息，没有重新登录
+        // user_avatar:localStorage.getItem('user') ? JSON.parse(localStorage.getItem(user)).user_avatar:0,
+        navList:[
+          {
+              name:'圈子',
+              icon:'iconfont icon-quanzi',
+              path:'/circle'
           },
-          computed:{
-            ...mapState({iscomeout:state=>state.nav.iscomeout})
+          {
+              name:'攻略',
+              icon:'iconfont icon-dkw_gonglve',
+              path:'/strategy'
           },
-          methods:{
-                //获取滚动高度
-                handleScroll(){
-                  this.scrollTop = pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
-                },
-                clickSpan(){
-                if(this.$router.name !== 'home' ){
-                        this.$router.push('/home').catch(err=>{
-                        err
-                        })
-                    }
-                },
-                clickMenu(item){
-                        if(this.$router.path !== item.path){
-                            this.$router.push(item.path).catch(err=>{
-                            err
-                        })
-                    }
-                }
-          },
-          created(){
-            let iscomeout = false
-            this.$store.commit('changeToolbar',iscomeout)
-          },
-          watch:{
-            //监视滚动高度
-            scrollTop(scrollTop,oldScrollTop){
-              let iscomeout = scrollTop > 0 //大于0，就背景为黑色，等于0就是透明色
-              //提交滚动高度，更改状态
-              this.$store.commit('changeToolbar',iscomeout)
-            }
-          },
-          mounted(){
-            this.$nextTick(()=>{
-                    addEventListener('scroll',this.handleScroll)
-                })
-          },
-          destroyed(){
-            removeEventListener('scroll',this.handleScroll)//注销滚动事件
-            console.log("已注销");
+          {
+              name:'装备',
+              icon:'iconfont icon-gouwuchekong',
+              path:'/equipment'
           }
+      ]
       };
-  </script>
+    },
+    computed:{
+      ...mapState({iscomeout:state=>state.nav.iscomeout})
+    },
+    methods:{
+      //获取滚动高度
+      handleScroll(){
+        this.scrollTop = pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+      },
+      clickSpan(){
+      if(this.$router.name !== 'home' ){
+        this.$router.push('/home').catch(err=>{
+           err
+          })
+        }
+      },
+      clickMenu(item){
+              if(this.$router.path !== item.path){
+                  this.$router.push(item.path).catch(err=>{
+                  err
+              })
+          }
+      },
+      handleSetItemEvent(e) {
+        const that = this
+        if (e.key === "user") {
+          that.user_avatar = JSON.parse(e.newValue).user_avatar;
+          console.log('监听成功');
+        }
+      }
+    },
+    created(){
+      let iscomeout = false
+      this.$store.commit('changeToolbar',iscomeout)
+    },
+    watch:{
+      //监视滚动高度
+      scrollTop(scrollTop,oldScrollTop){
+        let iscomeout = scrollTop > 0 //大于0，就背景为黑色，等于0就是透明色
+        //提交滚动高度，更改状态
+        this.$store.commit('changeToolbar',iscomeout)
+      }
+    },
+    mounted(){
+      this.user_avatar = JSON.parse(localStorage.getItem('user')).user_avatar
+      console.log(this.user_avatar);
+      this.$nextTick(()=>{
+        addEventListener('scroll',this.handleScroll)
+        addEventListener('setItemEvent',this.handleSetItemEvent)
+      })
+      // window.addEventListener("setItemEvent", function(e) {
+      //   if (e.key === "user") {
+      //     that.user_avatar = JSON.parse(e.newValue).user_avatar
+      //     console.log('监听成功');
+      //   }
+      // })
+    },
+    destroyed(){
+      console.log('注销了');
+      removeEventListener('scroll',this.handleScroll)//注销滚动事件
+      removeEventListener('setItemEvent',this.handleSetItemEvent)//注销滚动事件
+    }
+};
+</script>
   <style scoped lang="less">
   ._main{
     .nav {

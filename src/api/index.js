@@ -9,6 +9,10 @@ export const login = (params)=>{
 export const upload = (data)=>{
     return http.post('/user/upload',data)
 }
+
+export const updateAvatar = (data)=>{
+    return http.post('/user/updateAvatar',data)
+}
 //圈子相关接口
 export const getCircleInfo = ()=>{
     return http.get('/circle/getCircle')

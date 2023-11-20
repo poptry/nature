@@ -23,42 +23,42 @@
 
 <script>
 export default {
-    data(){
-        return{
-            navList:[
-            ],
-            navList1:[
-                    {
-                        id:'0',
-                        path:'/circle/circlehome/city',
-                        name:'同城推荐',
-                        icon:'iconfont icon-shop06'
-                    },
-                    {
-                        id:'1',
-                        path:'/circle/circlehome/school',
-                        name:'校园',
-                        icon:'iconfont icon-xiaoyuan'
-                    },
-                    {
-                        id:'2',
-                        path:'/circle/circlehome/hobby',
-                        name:'爱好',
-                        icon:'iconfont icon-ziyuan25'
-                    },
-                ],
-        }
-    },
-    methods:{
-      clickNavItem(nav){
-        this.$router.push(nav.path).catch(erro=>{
-        })
-      }
-    },
-    created(){
-        this.title = '首页'
-        this.navList = this.navList1
+  data(){
+    return{
+      navList:[
+      ],
+      navList1:[
+        {
+          id:'0',
+          path:'/circle/circlehome/city',
+          name:'同城推荐',
+          icon:'iconfont icon-shop06'
+        },
+        {
+          id:'1',
+          path:'/circle/circlehome/school',
+          name:'校园',
+          icon:'iconfont icon-xiaoyuan'
+        },
+        {
+          id:'2',
+          path:'/circle/circlehome/hobby',
+          name:'爱好',
+          icon:'iconfont icon-ziyuan25'
+        },
+      ],
     }
+  },
+  methods:{
+    clickNavItem(nav){
+      this.$router.push(nav.path).catch(erro=>{
+      })
+    }
+  },
+  created(){
+      this.title = '首页'
+      this.navList = this.navList1
+  }
 }
 </script>
 

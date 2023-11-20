@@ -12,8 +12,11 @@ import store from './store';
 //引入router from './router
 import router from './router'
 
+import tool from './util/tool.js'
+
 Vue.config.productionTip = false
 Vue.use(ElementUI)
+Vue.use(tool)
 // 创建路由守卫
 // router.beforeEach((to,from,next)=>{
 //   if(to.name === 'forum'){
