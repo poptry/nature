@@ -2,31 +2,30 @@ import Vue from 'vue'
 import App from './App.vue'
 import 'element-ui/lib/theme-chalk/index.css';
 import ElementUI from 'element-ui'
-
 import 'animate.css'
 import './assets/css/color.css'
 import './assets/css/common.css'
 import './assets/iconfont/iconfont.css'
 
-import store from './store';
-//引入router from './router
-import router from './router'
+import  ClientSocketIO from 'socket.io-client';
+import SocketIO from "vue-socket.io"
 
-import tool from './util/tool.js'
+import store from './store';
+import router from './router'//引入router from './router
+import tool from './util/tool.js'// import socket from './socket';
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.use(tool)
-// 创建路由守卫
-// router.beforeEach((to,from,next)=>{
-//   if(to.name === 'forum'){
-//     store.commit('changeOne')
-//   }else if(to.name === 'home'){
-//     store.commit('changeZero')
-//   }
-//   next()
-// })
-
+Vue.use(
+  new SocketIO({
+    debug:false,
+    connection:ClientSocketIO.connect("http://localhost:3000",{
+      transports:["websocket"],
+      autoConnect:false
+    })
+  })
+)
 new Vue({
   router,
   store,

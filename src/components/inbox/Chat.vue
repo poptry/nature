@@ -48,6 +48,7 @@
 
 <script>
 import { mapState } from 'vuex';
+// import {socket_state,socket} from '@/socket'
 export default {
   data(){
     return{
@@ -93,6 +94,7 @@ export default {
     }
   },
   methods:{
+    //发送消息
     sendMsg(){
       if(this.inputMsg !== ''){
         let obj = {
@@ -102,11 +104,11 @@ export default {
           msg:this.inputMsg
         }
         this.chatList.push(obj)
+        this.$socket.emit('msg',this.inputMsg)
         this.inputMsg = ''
         this.$nextTick(()=>{
           const msgWrap = this.$refs.msgWrap;
           msgWrap.scrollTop = msgWrap.scrollHeight - msgWrap.clientHeight
-          console.log(msgWrap.scrollTop,msgWrap.scrollHeight,msgWrap.clientHeight);
         })
       }
 
@@ -118,10 +120,30 @@ export default {
     }
   },
   computed:{
-    ...mapState({friendId:state=>state.inbox.friendId})
+    ...mapState({friendId:state=>state.inbox.friendId}),
   },
-  created(){
-    console.log(this.friendId);
+  mounted(){
+    this.$socket.open() //开启连接
+  },
+  beforeDestroy(){
+    this.$socket.close() //必须要注销掉
+  },
+  sockets:{
+    connecting(){
+      console.log("正连接");
+    },
+    disconnect(){
+      alert("Socket端口")
+    },
+    connect_erro(){
+      console.log('连接失败');
+    },
+    connect(){
+      console.log('连接成功');
+    },
+    msg(msg){
+      console.log(`${msg}`);
+    }
   }
 }
 </script>

@@ -15,8 +15,10 @@
     "element-ui": "^2.15.14",
     "less": "^4.2.0",
     "less-loader": "^6.1.0",
+    "socket.io-client": "^4.7.2",
     "vue": "^2.6.14",
     "vue-router": "^3.6.5",
+    "vue-socket.io": "^3.0.10",
     "vuex": "^3.6.2"
   },
   "devDependencies": {
