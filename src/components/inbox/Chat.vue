@@ -1,115 +1,93 @@
 <template>
   <div class="chat-room">
     <div class="left">
+      <!-- <div class="msg_menu">菜单栏</div> -->
       <div class="msg-box">
+        <!-- 聊天框开始 -->
         <div class="msg-wrap" ref="msgWrap">
-          <div v-for="(c,index) in chatList" :key="index">
-            <div class="friend" v-if="c.id === '1'">
+          <div v-for="c in chatList" :key="c.chat_id">
+            <!-- 时间显示，每间隔五分钟记录一次，五分钟内的消息不记录-->
+            <div class="msgTime" v-if="c.chat_timestamp">
+              <span v-text="c.chat_timestamp"></span>
+            </div>
+            <!-- 好友消息 -->
+            <div class="friend" v-if="c.chat_send_id != sendInfo.user_id ">
               <div class="friend-avatar">
                 <el-avatar
-                :src="c.avatar"
+                :src="c.user_avatar"
                 >
                 </el-avatar>
               </div>
               <div class="friend-msg">
                 <div class="msg-text">
-                  {{ c.msg }}
+                  {{ c.chat_msg }}
                 </div>
               </div>
             </div>
+            <!-- 好友消息结束 -->
+            <!-- 我的消息开始 -->
             <div class="my" v-else>
               <div class="my-msg">
                 <div class="msg-text">
-                  {{ c.msg }}
+                  {{ c.chat_msg }}
                 </div>
               </div>
               <div class="my-avatar">
                 <el-avatar
-                :src="c.avatar"
+                :src="sendInfo.user_avatar"
                 >
                 </el-avatar>
               </div>
             </div>
+            <!-- 我的消息结束 -->
           </div>
         </div>
+        <!-- 聊天框结束 -->
       </div>
+      <!-- 消息输入框开始 -->
       <div class="input-box">
         <textarea @keyup.enter="sendMsg" name="input" id="input" cols="30" rows="10" v-model="inputMsg"></textarea>
         <div class="send-btn">
           <button  @click="sendMsg">发送</button>
         </div>
       </div>
+      <!-- 消息输入框结束 -->
     </div>
+    <!-- 私信记录开始 -->
     <div class="right">
       私信记录
     </div>
+    <!-- 私信记录结束 -->
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex';
-// import {socket_state,socket} from '@/socket'
+import {getMsgs} from '@/api'
+import {getTime,getNowTimeStamp,isFiveMinutes,getTimestamp} from '@/util/index.js'
 export default {
   data(){
     return{
-      chatList:[
-        {
-          id:'1',
-          name:'好',
-          avatar:'https://tse2-mm.cn.bing.net/th/id/OIP-C.pSYrBZuWAziwSL4d7H9-UAAAAA?w=206&h=206&c=7&r=0&o=5&dpr=2&pid=1.7',
-          msg:'唱歌？'
-        },
-        {
-          id:'2',
-          name:'好',
-          avatar:'https://tse4-mm.cn.bing.net/th/id/OIP-C.wYmjPaJV75lcGZaN2ptT5AAAAA?w=202&h=202&c=7&r=0&o=5&dpr=2&pid=1.7',
-          msg:'我很好'
-        },
-        {
-          id:'1',
-          name:'好',
-          avatar:'https://tse2-mm.cn.bing.net/th/id/OIP-C.pSYrBZuWAziwSL4d7H9-UAAAAA?w=206&h=206&c=7&r=0&o=5&dpr=2&pid=1.7',
-          msg:'你在做什么？'
-        },
-        {
-          id:'2',
-          name:'好',
-          avatar:'https://tse4-mm.cn.bing.net/th/id/OIP-C.wYmjPaJV75lcGZaN2ptT5AAAAA?w=202&h=202&c=7&r=0&o=5&dpr=2&pid=1.7',
-          msg:'跳舞？'
-        },
-        {
-          id:'1',
-          name:'好',
-          avatar:'https://tse2-mm.cn.bing.net/th/id/OIP-C.pSYrBZuWAziwSL4d7H9-UAAAAA?w=206&h=206&c=7&r=0&o=5&dpr=2&pid=1.7',
-          msg:'你的童年'
-        },
-        {
-          id:'2',
-          name:'好',
-          avatar:'https://tse4-mm.cn.bing.net/th/id/OIP-C.wYmjPaJV75lcGZaN2ptT5AAAAA?w=202&h=202&c=7&r=0&o=5&dpr=2&pid=1.7',
-          msg:'我的童年'
-        }
-      ],
-      inputMsg:''
+      chatList:[],
+      inputMsg:'',
+      sendInfo:'',
+      showTime:false,
+      nowTimeStamp:''
     }
   },
   methods:{
     //发送消息
     sendMsg(){
+      //会先获取目前最后的，再从后台返回，所以这里得到的不是‘最新的’的时间
+      const data = {
+        send_id:this.sendInfo.user_id,
+        receive_id:this.friendId,
+        msg:this.inputMsg,
+        timestamp:this.nowTimeStamp
+      }
       if(this.inputMsg !== ''){
-        let obj = {
-          id:'2',
-          name:'好',
-          avatar:'https://tse4-mm.cn.bing.net/th/id/OIP-C.wYmjPaJV75lcGZaN2ptT5AAAAA?w=202&h=202&c=7&r=0&o=5&dpr=2&pid=1.7',
-          msg:this.inputMsg
-        }
-        this.chatList.push(obj)
-        this.$socket.emit('msg',this.inputMsg)
+        this.$socket.emit('chatMsg',data)
         this.inputMsg = ''
-        this.$nextTick(()=>{
-          const msgWrap = this.$refs.msgWrap;
-          msgWrap.scrollTop = msgWrap.scrollHeight - msgWrap.clientHeight
-        })
       }
 
     }
@@ -117,10 +95,26 @@ export default {
   watch:{
     friendId(newVal){
       console.log(newVal);
+      getMsgs({params:{sendId:this.sendInfo.user_id,recevieId:newVal}}).then(res=>{
+        this.chatList = res.data
+        console.log(this.chatList);
+        this.chatList.forEach(e=>{
+          e.chat_timestamp = getTime(e.chat_timestamp)
+        })
+        this.$nextTick(()=>{
+          const msgWrap = this.$refs.msgWrap;
+          msgWrap.scrollTop = msgWrap.scrollHeight - msgWrap.clientHeight
+        })
+      }).catch(erro=>{
+        console.log(erro);
+      })
     }
   },
   computed:{
     ...mapState({friendId:state=>state.inbox.friendId}),
+  },
+  created(){
+    this.sendInfo = JSON.parse(localStorage.getItem('user'))
   },
   mounted(){
     this.$socket.open() //开启连接
@@ -139,10 +133,18 @@ export default {
       console.log('连接失败');
     },
     connect(){
-      console.log('连接成功');
+      console.log('socket连接成功');
     },
-    msg(msg){
-      console.log(`${msg}`);
+    chatMsg(data){
+      this.chatList.push({
+        chat_send_id:data.send_id,
+        chat_msg:data.msg,
+        chat_timestamp:getTime(data.timestamp)
+      })
+      this.$nextTick(()=>{
+        const msgWrap = this.$refs.msgWrap;
+        msgWrap.scrollTop = msgWrap.scrollHeight - msgWrap.clientHeight
+      })
     }
   }
 }
@@ -165,7 +167,6 @@ export default {
         border-right: 1px solid #b8b8b8;
         border-bottom: 1px solid #b8b8b8;
         padding: 0 15px;
-
         .msg-wrap{
           height: 100%;
           width: 100%;
@@ -174,6 +175,17 @@ export default {
             width: 0; /* Safari,Chrome 隐藏滚动条 */
             height: 0; /* Safari,Chrome 隐藏滚动条 */
             display: none; /* 移动端、pad 上Safari，Chrome，隐藏滚动条 */
+          }
+          .msgTime{
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            span{
+              padding: 5px;
+              border-radius: 5px;
+              color: #959595;
+            }
           }
           .friend,
           .my{

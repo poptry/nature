@@ -1,25 +1,43 @@
 <template>
     <div class="contain-city">
         <div class="search">
-            <input type="text" name="text" class="input" placeholder="搜索">
-            <el-button size="small" icon="el-icon-search"></el-button>
+            <input type="text" v-model="searchInput" @keyup.enter="searchCircle" name="text" class="input" placeholder="搜索">
+            <el-button @click="searchCircle" size="small" icon="el-icon-search"></el-button>
         </div>
-        <div v-if="circleInfo" class="cards">
-            <common-card  v-for="(c,index) in circleInfo" :circleInfo="c" :key="index"></common-card>
+        <div v-if="filterCircleInfo" class="cards">
+            <common-card v-for="(c,index) in filterCircleInfo" :circleInfo="c" :key="index"></common-card>
         </div>
     </div>
 </template>
 
 <script>
-import {getCircleInfo} from '@/api'
-import CommonCard from '@/components/circleHome/CommonCard.vue';
+import {getCircleInfo,getCircleByName} from '@/api'
+import CommonCard from '@/components/circle/CommonCard.vue';
 export default {
     data(){
         return{
-            circleInfo:[]
+            circleInfo:[],
+            searchInput:'',
+            nowNavId:'0',
         }
     },
     components:{CommonCard},
+    methods:{
+        searchCircle(){
+            getCircleByName({params:{circleName:this.searchInput}}).then(res=>{
+                this.circleInfo = res.data
+            }).catch(erro=>{
+                console.log(erro);
+            })
+        }
+    },
+    computed:{
+        filterCircleInfo(){
+            return this.circleInfo.filter(item=>{
+                return item.circle_type == this.nowNavId
+            })
+        }
+    },
     created(){
         getCircleInfo().then((res) => {
             if(res.status === 200){

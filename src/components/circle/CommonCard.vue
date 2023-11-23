@@ -1,10 +1,10 @@
 <template>
   <div class="contain-card">
     <div class="card" @click="clickCard">
-        <el-image  :src="circleInfo.circle_avatar" lazy></el-image>
+        <el-image  :src="circleInfo.circle_preview" lazy></el-image>
         <div class="related">
             <div class="owner-avatar">
-                <el-avatar shape="square" :size="50" :src="circleInfo.user_avatar"></el-avatar>
+                <el-avatar shape="square" :size="50" :src="circleInfo.circle_avatar"></el-avatar>
             </div>
             <div class="circle-profile">
                 <h4 class="circle-title">{{circleInfo.circle_name}}</h4>

@@ -26,6 +26,16 @@ Vue.use(
     })
   })
 )
+router.beforeEach((to, from, next) => {
+  const user = localStorage.getItem('user')
+  if(to.path==='/login'){
+    next()
+  }else if(!user&&to.path!=='/login'){
+      next({path:'/login'})
+  }else{
+      next()
+  }
+})
 new Vue({
   router,
   store,

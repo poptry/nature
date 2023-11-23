@@ -5,17 +5,21 @@
       </div>
       <div style="height: 100%;" v-if="isWhich === '1'">
         <div class="mycircles">
-          <MyCircles></MyCircles>
+          <MyFriends></MyFriends>
         </div>
+      </div>
+      <div style="height: 100%;" v-if="isWhich === '2'">
+        <MyCircles></MyCircles>
       </div>
     </div>
   </template>
   <script>
 import { mapState } from 'vuex';
-import MyCircles from '../inbox/MyFriends.vue';
-import CircleHomeNav from '../circleHome/CircleHomeNav.vue';
+import MyFriends from '../inbox/MyFriends.vue';
+import CircleHomeNav from '../circle/CircleHomeNav.vue';
+import MyCircles from '@/components/circle-myjoin/MyCircles.vue'
   export default {
-    components:{MyCircles,CircleHomeNav},
+    components:{MyFriends,CircleHomeNav,MyCircles},
     data(){
       return{
       }
@@ -34,6 +38,8 @@ import CircleHomeNav from '../circleHome/CircleHomeNav.vue';
     created(){
       if(this.$route.path.includes('inbox')){
         this.$store.commit('changeCommonAside','1')
+      }else if(this.$route.path.includes('myjoincircle')){
+        this.$store.commit('changeCommonAside','2')
       }else{
         this.$store.commit('changeCommonAside','0')
       }
@@ -44,7 +50,9 @@ import CircleHomeNav from '../circleHome/CircleHomeNav.vue';
   <style lang="less" scoped>
   .commonAside-contain{
     height: 100%;
-    max-height: calc(100vh - 80px);
+    // max-height: calc(100vh - 80px);
+    max-height: 698px;
+
     overflow-y: scroll;
     &::-webkit-scrollbar {
                 width: 0; /* Safari,Chrome 隐藏滚动条 */

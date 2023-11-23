@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "970921",
+      "name": "全部",
+      "font_class": "quanbu-copy",
+      "unicode": "e64f",
+      "unicode_decimal": 58959
+    },
+    {
+      "icon_id": "3456450",
+      "name": "我的",
+      "font_class": "wode",
+      "unicode": "e70b",
+      "unicode_decimal": 59147
+    },
+    {
       "icon_id": "829167",
       "name": "聚收藏gift",
       "font_class": "jushoucanggift",

@@ -9,21 +9,15 @@ import Circle from '@/views/Circle'//圈子
 import Strategy from '@/views/Strategy'
 import CircleHome from '@/views/CircleChildren/CircleHome'
 import Inbox from '@/views/CircleChildren/Inbox'
-import City from '@/views/CircleChildren/City'
-import School from '@/views/CircleChildren/School'
 import Equipment from '@/views/Equipment'
 import AllEquipment from '@/views/equipmentChildren/AllEquipment'
 import Login from '@/views/Login'
-
+import MyJoinCircle from '@/views/CircleChildren/MyJoinCircle'
 //组件和路由映射
 const routes = [
+    {path:'/login',component:Login,name:'login'},
     {
-        path:'/login',component:Login,name:'login'
-    },
-    {
-        path:'/',
-        component:Main,
-        redirect:'./home',
+        path:'/',component:Main,redirect:'./home',
         //二级路由
         children:[
             {path:'home',name:'home',component:Home},//首页
@@ -37,13 +31,10 @@ const routes = [
                     {
                         path:'circlehome',
                         component:CircleHome,
-                        children:[
-                            {path:'/',redirect:'city'},
-                            {path:'city',name:'city',component:City},//同城
-                            {path:'school',name:'school',component:School},//同城
-                        ]
+                        name:'circlehome'
                     },//首页
                     {path:'inbox',name:'inbox',component:Inbox},//私信
+                    {path:'myjoincircle',name:'myjoincircle',component:MyJoinCircle},//我的圈子
                 ]
             },
           //$$$$$$$$$攻略

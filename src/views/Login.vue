@@ -5,20 +5,18 @@
         </div>
         <div class="content-w3ls text-center">
             <img src="@/assets/images/admin.png" alt="" class="img-responsive">
-            <form action="#" method="post">
                 <div class="wthree-field">
-                    <input name="text1" id="text1" type="text" value="" placeholder="Username" required>
+                    <input name="text1" id="text1" type="text" v-model="userInfo.userId" value="" placeholder="Username" required>
                 </div>
                 <div class="wthree-field">
-                    <input name="password" id="myInput" type="Password" placeholder="Password">
+                    <input name="password" id="myInput" v-model="userInfo.userPwd" type="Password" placeholder="Password">
                 </div>
                 <div class="wthree-field">
-                    <button type="submit" class="btn">Sign In</button>
+                    <button @click="login" class="btn">Sign In</button>
                 </div>
                 <div class="login-bottom">
                     <a href="#url" class="">Create An Account</a>
                 </div>
-            </form>
         </div>
         <div class="copyright">
             <p>© 2020 Universe Signin Form. Made with love | Designed by <a
@@ -28,18 +26,33 @@
 </template>
 
 <script>
+import { login } from '@/api';
 export default {
-
+    name: 'Login',
+    data() {
+        return {
+            userInfo: {
+                userId: '',
+                userPwd: ''
+            },
+        }
+    },
+    methods: {
+        login() {
+            login({params:this.userInfo}).then((response)=>{
+                console.log(response);
+                if(response.status === 200){
+                    localStorage.setItem('user',JSON.stringify(response.data[0]))
+                    this.$router.push('/')
+                }}).catch(err=>{
+                    console.log(err);
+                })
+        }
+    },
 }
 </script>
 
 <style scoped>
-/*--
-    Author: W3layouts
-    Author URL: http://w3layouts.com
---*/
-
-/* reset code */
 html {
     scroll-behavior: smooth;
 }

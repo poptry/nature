@@ -18,7 +18,7 @@
       :key="nav.id"
       :class="{navActive:($route.path.includes(nav.path))}"
       :index="nav.id">
-        <i :class="nav.icon"></i>
+        <i :class="nav.icon" class="nav-icon"></i>
         <span slot="title" v-text="nav.name"></span>
       </el-menu-item>
 
@@ -50,12 +50,18 @@ export default {
                     name:'私信',
                     icon:'el-icon-message'
                 },
+                {
+                    id:'2',
+                    path:'/circle/myjoincircle',
+                    name:'圈子',
+                    icon:'el-icon-s-custom'
+                }
             ]
     }
   },
   methods:{
     ...mapMutations({
-      changeCommonAside:'changeCommonAside'
+      changeCommonAside:'changeCommonAside',
     }),
     //导航点击事件
     clickNavItem(nav){
@@ -86,6 +92,11 @@ export default {
           .openAndClose{
             font-size: 24px;
           }
+      }
+      .el-menu-item {
+        .nav-icon{
+          font-size: 20px;
+        }
       }
       .navActive{
         background-color: #ffffff !important;

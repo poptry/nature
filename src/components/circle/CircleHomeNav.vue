@@ -9,7 +9,7 @@
         background-color="#fff">
             <el-menu-item
             v-for="nav in navList"
-            :class="{activeItem:($route.path.includes(nav.path))}" 
+            :class="{activeItem:(nav.id == nowNav)}" 
             @click="clickNavItem(nav)" 
             :key="nav.id" 
             :index="nav.id">
@@ -22,27 +22,28 @@
 </template>
 
 <script>
+import { mapState,mapMutations } from 'vuex';
 export default {
   data(){
     return{
       navList:[
-      ],
-      navList1:[
         {
           id:'0',
-          path:'/circle/circlehome/city',
+          name:'全部',
+          icon:'iconfont icon-quanbu-copy'
+        },
+        {
+          id:'1',
           name:'同城推荐',
           icon:'iconfont icon-shop06'
         },
         {
-          id:'1',
-          path:'/circle/circlehome/school',
+          id:'2',
           name:'校园',
           icon:'iconfont icon-xiaoyuan'
         },
         {
-          id:'2',
-          path:'/circle/circlehome/hobby',
+          id:'3',
           name:'爱好',
           icon:'iconfont icon-ziyuan25'
         },
@@ -50,14 +51,18 @@ export default {
     }
   },
   methods:{
+    ...mapMutations(['changeNav']),
     clickNavItem(nav){
-      this.$router.push(nav.path).catch(erro=>{
-      })
+      this.changeNav(nav.id)
     }
+  },
+  computed:{
+    ...mapState({
+      nowNav:state => state.nav.nowNav
+    })
   },
   created(){
       this.title = '首页'
-      this.navList = this.navList1
   }
 }
 </script>

@@ -6,9 +6,6 @@ export const getUser = ()=>{
 export const login = (params)=>{
     return http.get('/user/login',params)
 }
-// export const upload = (data)=>{
-//     return http.post('/user/upload',data)
-// }
 export const updateAvatar = (data)=>{
     return http.post('/user/updateAvatar',data)
 }
@@ -18,8 +15,20 @@ export const updateAvatar = (data)=>{
 export const getFriends = (params)=>{
     return http.get('/friend/getFriends',params)
 }
+//获取和该好友的消息
+export const getMsgs = (params)=>{
+    return http.get('/chat/getMsgs',params)
+}
 
 //圈子相关接口
 export const getCircleInfo = ()=>{
     return http.get('/circle/getCircle')
+}
+//获取用户的圈子
+export const getMyCircle = (params)=>{
+    return http.get('/circle/getMyCircle',params)
+}
+//getCircleByName 查询接口
+export const getCircleByName = (params)=>{
+    return http.get('/circle/getCircleByName',params)
 }

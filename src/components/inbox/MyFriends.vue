@@ -19,11 +19,13 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import {getFriends} from '@/api'
 export default {
     data(){
         return{
             friendInfo:[],
+            userId:'',
             numOne:'',
             lastNumOne:localStorage.getItem('friendId')
         }
@@ -31,6 +33,7 @@ export default {
     methods:{
         //点击私信朋友事件
         clickFriend(friend){
+            console.log(this.$store.getters['nav/getNowFriendNav']);
             //记录一下点击的私信朋友的id
             localStorage.setItem('friendId',friend.user_id)
             this.numOne = friend.user_id
@@ -38,16 +41,19 @@ export default {
         }
     },
     computed:{
+        ...mapGetters("nav",{
+            nowFriend:'getNowFriendNav',
+        }),
     },
     created(){
         this.title = '私信'
         //记录之前点击过的朋友id，没有的话是0
         this.numOne = localStorage.getItem('friendId') || '0'
-        console.log(this.numOne);
-        const user_id = JSON.parse(localStorage.getItem('user')).user_id
-        getFriends({params:{user_id}}).then((res)=>{
+        this.userId = JSON.parse(localStorage.getItem('user')).user_id
+        getFriends({params:{user_id:this.userId}}).then((res)=>{
             if(res.status === 200){
                 this.friendInfo = res.data
+                console.log(res.data);
             }
         })
     }
@@ -76,7 +82,7 @@ export default {
             cursor: pointer;
             user-select: none;
             &:hover{
-                background-color: #c4c4c4;
+                background-color: var(--navBackgroundColor);
             }
             .friendImg{
                 width: 50px;
@@ -102,7 +108,7 @@ export default {
             }
         }
         .active{
-            background-color: #bababa;
+            background-color: var(--navBackgroundColor);
         }
     }
 }

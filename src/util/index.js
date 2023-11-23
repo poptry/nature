@@ -21,3 +21,23 @@ export function animation(obj, target, fn1) {
       }
     }, 10);
   }
+  export function getTime(timestamp){
+    let date = new Date(timestamp * 1000);
+    // 获取日期和时间的各个部分
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1; // 月份是从0开始的，所以要加1
+    let day = date.getDate();
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    let seconds = date.getSeconds();
+    let formattedDate = `${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day} ${hours < 10 ? '0' : ''}${hours}:${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    return formattedDate
+  }
+  //return now timestamp
+  export function getNowTimeStamp(){
+    return Math.round(new Date().getTime()/1000)
+  }
+  //将时间转换为时间戳
+  export function getTimestamp(time){
+    return Math.round(new Date(time).getTime()/1000)
+  }
