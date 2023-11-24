@@ -12,13 +12,13 @@
 
 <script>
 import {getCircleInfo,getCircleByName} from '@/api'
+import { mapGetters } from 'vuex';
 import CommonCard from '@/components/circle/CommonCard.vue';
 export default {
     data(){
         return{
             circleInfo:[],
             searchInput:'',
-            nowNavId:'0',
         }
     },
     components:{CommonCard},
@@ -32,9 +32,10 @@ export default {
         }
     },
     computed:{
+        ...mapGetters('nav',['getNowNav']),
         filterCircleInfo(){
             return this.circleInfo.filter(item=>{
-                return item.circle_type == this.nowNavId
+                return item.circle_type == this.getNowNav
             })
         }
     },

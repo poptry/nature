@@ -4,7 +4,7 @@
             <span v-text="title"></span>
         </div>
         <div class="friends-container">
-            <div v-for="friend in friendInfo" @click="clickFriend(friend)" class="friend" :class="{active:friend.user_id == numOne}"  :key="friend.friendId" >
+            <div v-for="friend in friendInfo" @click="clickFriend(friend)" class="friend" :class="{active:friend.user_id == nowFriend}"  :key="friend.friendId" >
                 <div class="friendImg">
                     <el-avatar :size="40" :src="friend.user_avatar"></el-avatar>
                 </div>
@@ -19,25 +19,23 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters,mapMutations } from 'vuex'
 import {getFriends} from '@/api'
 export default {
     data(){
         return{
             friendInfo:[],
             userId:'',
-            numOne:'',
-            lastNumOne:localStorage.getItem('friendId')
         }
     },
     methods:{
+        ...mapMutations('nav',{
+            changeFriendNav:'changeFriendNav'
+        }),
         //点击私信朋友事件
         clickFriend(friend){
-            console.log(this.$store.getters['nav/getNowFriendNav']);
-            //记录一下点击的私信朋友的id
-            localStorage.setItem('friendId',friend.user_id)
-            this.numOne = friend.user_id
-            this.$store.commit('changeFriendId',friend.user_id)
+            console.log('getter',this.$store.getters['nav/getNowFriendNav']);
+            this.changeFriendNav(friend.user_id)
         }
     },
     computed:{
@@ -47,8 +45,6 @@ export default {
     },
     created(){
         this.title = '私信'
-        //记录之前点击过的朋友id，没有的话是0
-        this.numOne = localStorage.getItem('friendId') || '0'
         this.userId = JSON.parse(localStorage.getItem('user')).user_id
         getFriends({params:{user_id:this.userId}}).then((res)=>{
             if(res.status === 200){

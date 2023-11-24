@@ -51,8 +51,9 @@ export default {
     }
   },
   methods:{
-    ...mapMutations(['changeNav']),
+    ...mapMutations('nav',{changeNav:'changeNav'}),
     clickNavItem(nav){
+      //点击菜单栏，改变当前的nav的id
       this.changeNav(nav.id)
     }
   },

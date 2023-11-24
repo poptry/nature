@@ -1,6 +1,13 @@
 export default {
     state:{
-        friendId:localStorage.getItem('friendId')
+        friendId:''
+    },
+    getters:{
+        getFriendId(state){
+            const friendId = localStorage.getItem('friendId')
+            state.friendId = friendId
+            return state.friendId
+        }
     },
     actions:{
 

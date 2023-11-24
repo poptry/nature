@@ -60,7 +60,7 @@ export default {
     }
   },
   methods:{
-    ...mapMutations({
+    ...mapMutations('nav',{
       changeCommonAside:'changeCommonAside',
     }),
     //导航点击事件

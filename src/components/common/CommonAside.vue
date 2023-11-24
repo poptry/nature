@@ -14,7 +14,7 @@
     </div>
   </template>
   <script>
-import { mapState } from 'vuex';
+import { mapState,mapMutations } from 'vuex';
 import MyFriends from '../inbox/MyFriends.vue';
 import CircleHomeNav from '../circle/CircleHomeNav.vue';
 import MyCircles from '@/components/circle-myjoin/MyCircles.vue'
@@ -25,23 +25,24 @@ import MyCircles from '@/components/circle-myjoin/MyCircles.vue'
       }
     },
     methods:{
+      ...mapMutations('nav',['changeCommonAside']),
       clickNavItem(nav){
         this.$router.push(nav.path).catch(erro=>{
         })
-      }
+      },
     },
     computed:{
       ...mapState({
         isWhich:state=>state.nav.isWhich
-      })
+      }),
     },
     created(){
       if(this.$route.path.includes('inbox')){
-        this.$store.commit('changeCommonAside','1')
+        this.changeCommonAside('1')
       }else if(this.$route.path.includes('myjoincircle')){
-        this.$store.commit('changeCommonAside','2')
+        this.changeCommonAside('2')
       }else{
-        this.$store.commit('changeCommonAside','0')
+        this.changeCommonAside('0')
       }
     }
   }

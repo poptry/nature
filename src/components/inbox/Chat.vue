@@ -11,7 +11,7 @@
               <span v-text="c.chat_timestamp"></span>
             </div>
             <!-- 好友消息 -->
-            <div class="friend" v-if="c.chat_send_id != sendInfo.user_id ">
+            <div class="friend" v-if="c.chat_send_id != sendUserInfo.user_id ">
               <div class="friend-avatar">
                 <el-avatar
                 :src="c.user_avatar"
@@ -34,7 +34,7 @@
               </div>
               <div class="my-avatar">
                 <el-avatar
-                :src="sendInfo.user_avatar"
+                :src="sendUserInfo.user_avatar"
                 >
                 </el-avatar>
               </div>
@@ -62,15 +62,15 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import {  mapGetters } from 'vuex';
 import {getMsgs} from '@/api'
-import {getTime,getNowTimeStamp,isFiveMinutes,getTimestamp} from '@/util/index.js'
+import {getTime} from '@/util/index.js'
 export default {
   data(){
     return{
       chatList:[],
       inputMsg:'',
-      sendInfo:'',
+      sendUserInfo:'',
       showTime:false,
       nowTimeStamp:''
     }
@@ -80,7 +80,7 @@ export default {
     sendMsg(){
       //会先获取目前最后的，再从后台返回，所以这里得到的不是‘最新的’的时间
       const data = {
-        send_id:this.sendInfo.user_id,
+        send_id:this.sendUserInfo.user_id,
         receive_id:this.friendId,
         msg:this.inputMsg,
         timestamp:this.nowTimeStamp
@@ -89,15 +89,13 @@ export default {
         this.$socket.emit('chatMsg',data)
         this.inputMsg = ''
       }
-
-    }
-  },
-  watch:{
-    friendId(newVal){
-      console.log(newVal);
-      getMsgs({params:{sendId:this.sendInfo.user_id,recevieId:newVal}}).then(res=>{
+    },
+    //发送消息结束
+    //获取消息
+    getFriendMsgs(id){
+      //请求消息
+      getMsgs({params:{sendId:this.sendUserInfo.user_id,recevieId:id}}).then(res=>{
         this.chatList = res.data
-        console.log(this.chatList);
         this.chatList.forEach(e=>{
           e.chat_timestamp = getTime(e.chat_timestamp)
         })
@@ -108,13 +106,21 @@ export default {
       }).catch(erro=>{
         console.log(erro);
       })
+    },
+    //获取消息结束
+  },
+  watch:{
+    //监听编号变化
+    getNowFriendNav(newVal){
+      this.getFriendMsgs(newVal)
     }
   },
   computed:{
-    ...mapState({friendId:state=>state.inbox.friendId}),
+    ...mapGetters('nav',{getNowFriendNav:"getNowFriendNav"})
   },
   created(){
-    this.sendInfo = JSON.parse(localStorage.getItem('user'))
+    this.sendUserInfo = JSON.parse(localStorage.getItem('user'))
+    this.getFriendMsgs(this.getNowFriendNav)
   },
   mounted(){
     this.$socket.open() //开启连接

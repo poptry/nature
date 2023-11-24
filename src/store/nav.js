@@ -1,4 +1,5 @@
 export default {
+    //设置命名空间
     namespaced:true,
     state:{
         iscomeout:false,
@@ -19,6 +20,9 @@ export default {
             return state.nowNav
         },
         getNowFriendNav(state){
+            //获取记录下的好友id
+            const friendId = localStorage.getItem('friendId')
+            state.nowFriendNav = friendId
             return state.nowFriendNav
         }
     },
@@ -33,6 +37,7 @@ export default {
             state.nowNav = id
         },
         changeFriendNav(state,id){
+            localStorage.setItem('friendId',id)
             state.nowFriendNav = id
         }
     }

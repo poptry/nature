@@ -36,7 +36,7 @@
 <script>
 // 引入底部公共栏
 import  CommonFooter from '@/components/common/CommonFooter'
-import {mapState} from 'vuex';
+import {mapState,mapMutations} from 'vuex';
 export default {
     components: {CommonFooter},
     data() {
@@ -69,6 +69,7 @@ export default {
       ...mapState({iscomeout:state=>state.nav.iscomeout})
     },
     methods:{
+      ...mapMutations('nav',{changeToolbar:'changeToolbar'}),
       //获取滚动高度
       handleScroll(){
         this.scrollTop = pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
@@ -97,14 +98,14 @@ export default {
     },
     created(){
       let iscomeout = false
-      this.$store.commit('changeToolbar',iscomeout)
+      this.changeToolbar(iscomeout)
     },
     watch:{
       //监视滚动高度
       scrollTop(scrollTop,oldScrollTop){
         let iscomeout = scrollTop > 0 //大于0，就背景为黑色，等于0就是透明色
         //提交滚动高度，更改状态
-        this.$store.commit('changeToolbar',iscomeout)
+        this.changeToolbar(iscomeout)
       }
     },
     mounted(){
@@ -114,12 +115,7 @@ export default {
         addEventListener('scroll',this.handleScroll)
         addEventListener('setItemEvent',this.handleSetItemEvent)
       })
-      // window.addEventListener("setItemEvent", function(e) {
-      //   if (e.key === "user") {
-      //     that.user_avatar = JSON.parse(e.newValue).user_avatar
-      //     console.log('监听成功');
-      //   }
-      // })
+
     },
     destroyed(){
       console.log('注销了');
