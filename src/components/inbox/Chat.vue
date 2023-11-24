@@ -64,7 +64,7 @@
 <script>
 import {  mapGetters } from 'vuex';
 import {getMsgs} from '@/api'
-import {getTime} from '@/util/index.js'
+import {getTime,getNowTimeStamp} from '@/util/index.js'
 export default {
   data(){
     return{
@@ -78,10 +78,11 @@ export default {
   methods:{
     //发送消息
     sendMsg(){
+      this.nowTimeStamp = getNowTimeStamp()
       //会先获取目前最后的，再从后台返回，所以这里得到的不是‘最新的’的时间
       const data = {
         send_id:this.sendUserInfo.user_id,
-        receive_id:this.friendId,
+        receive_id:this.getNowFriendNav,
         msg:this.inputMsg,
         timestamp:this.nowTimeStamp
       }
@@ -142,6 +143,7 @@ export default {
       console.log('socket连接成功');
     },
     chatMsg(data){
+      console.log(data);
       this.chatList.push({
         chat_send_id:data.send_id,
         chat_msg:data.msg,

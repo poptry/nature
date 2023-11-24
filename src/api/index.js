@@ -32,3 +32,9 @@ export const getMyCircle = (params)=>{
 export const getCircleByName = (params)=>{
     return http.get('/circle/getCircleByName',params)
 }
+
+
+//商品相关
+export const getPros = (params)=>{
+    return http.get('/product/getPros',params)
+}

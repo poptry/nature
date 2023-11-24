@@ -2,14 +2,14 @@
   <div class="card-container">
     <div class="product">
       <div @mouseenter="showImage=!showImage" @mouseleave="showImage=!showImage" class="image">
-        <img v-show="showImage" :src="product.originalImgUrl" alt="">
-        <img v-show="!showImage" :src="product.hoverImgUrl" alt="">
+        <img v-show="showImage" :src="product.product_img" alt="">
+        <img v-show="!showImage" :src="product.product_prev_img" alt="">
       </div>
       <div class="productInfo">
-        <h5>{{product.productTitle}}</h5>
+        <h5>{{product.product_name}}</h5>
         <div class="price">
-          <span>£{{ product.currentPrice }}</span>
-          <span>£{{ product.originalPrice }}</span>
+          <span>£{{ product.product_disc_price }}</span>
+          <span>£{{ product.product_orig_price }}</span>
         </div>
       </div>
     </div>
@@ -20,7 +20,6 @@
 </template>
 
 <script>
-import { getUser } from '@/api'
 export default {
   props:['product'],
   data(){
