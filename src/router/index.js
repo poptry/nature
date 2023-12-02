@@ -13,6 +13,9 @@ import Equipment from '@/views/Equipment'
 import AllEquipment from '@/views/equipmentChildren/AllEquipment'
 import Login from '@/views/Login'
 import MyJoinCircle from '@/views/CircleChildren/MyJoinCircle'
+import MenEquipment from '@/views/equipmentChildren/MenEquipment'
+import WomenEquipment from '@/views/equipmentChildren/WomenEquipment'
+import EquipmentDetail from '@/views/equipmentChildren/EquipmentDetail'
 //组件和路由映射
 const routes = [
     {path:'/login',component:Login,name:'login'},
@@ -52,7 +55,10 @@ const routes = [
                 component:Equipment,
                 children:[
                     {path:'/',name:'allEquipment',redirect:'allEquipment'},
-                    {path:'allEquipment',name:'allEquipment',component:AllEquipment}
+                    {path:'allEquipment',name:'allEquipment',component:AllEquipment}, //所有装备页面
+                    {path:'menEquipment',name:'menEquipment',component:MenEquipment}, //男装备页面
+                    {path:'womenEquipment',name:'womenEquipment',component:WomenEquipment}, //女装备页面
+                    {path:'equipmentDetail',name:'equipmentDetail',component:EquipmentDetail} //装备详情页面
                 ]
             }
         ]

@@ -1,5 +1,5 @@
 <template>
-  <div class="allEquipment">
+  <div class="menEquipment">
     <div class="products" v-for="product in EquipmentPros" @click="clickProduct(product)" :key="product.productId">
       <ShowCardVue :product="product"></ShowCardVue>
     </div>
@@ -25,20 +25,20 @@ export default {
   },
   methods:{
     ...mapActions('equipment',{
-      getEquipmentPros:'getEquipmentPros'
+      getMenEquipmentPros:'getMenEquipmentPros'
     }),
     clickProduct(proInfo){
       this.$router.push({name:'equipmentDetail',query:{productInfo:JSON.stringify(proInfo)}})
     }
   },
   created(){
-    this.getEquipmentPros()
+    this.getMenEquipmentPros()
   }
 }
 </script>
 
 <style lang="less" scoped>
-  .allEquipment{
+  .menEquipment{
     width: 100%;
     display: flex;
     justify-content: flex-start;

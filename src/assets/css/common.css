@@ -7,4 +7,6 @@
     box-shadow: 0 1px 10px 0px rgb(26, 25, 25);
     cursor: pointer;
 }
-
+.dropdown-menu .el-dropdown-menu__item{
+    color: black !important;
+}

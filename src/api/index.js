@@ -1,5 +1,5 @@
 import http from '@/util/request'
-//用户相关接口
+//---------用户相关接口
 export const getUser = ()=>{
     return http.get('/user')
 }
@@ -9,9 +9,7 @@ export const login = (params)=>{
 export const updateAvatar = (data)=>{
     return http.post('/user/updateAvatar',data)
 }
-
-
-//好友相关接口
+//----------好友相关接口
 export const getFriends = (params)=>{
     return http.get('/friend/getFriends',params)
 }
@@ -20,7 +18,7 @@ export const getMsgs = (params)=>{
     return http.get('/chat/getMsgs',params)
 }
 
-//圈子相关接口
+//------------圈子相关接口
 export const getCircleInfo = ()=>{
     return http.get('/circle/getCircle')
 }
@@ -32,9 +30,25 @@ export const getMyCircle = (params)=>{
 export const getCircleByName = (params)=>{
     return http.get('/circle/getCircleByName',params)
 }
-
-
-//商品相关
+//----------商品相关
 export const getPros = (params)=>{
     return http.get('/product/getPros',params)
+}
+export const getMenPros = (params)=>{
+    return http.get('/product/getMenPros',params)
+}
+export const getWomenPros = (params)=>{
+    return http.get('/product/getWomenPros',params)
+}
+// 获取商品评分
+export const getScoreByPro = (params)=>{
+    return http.get('/score/getScoreByPro',params)
+}
+//查看用户是否对该商品评分过
+export const getScoreByUser = (params)=>{
+    return http.get('/score/getScoreByUser',params)
+}
+//用户对商品评分
+export const addScore = (data)=>{
+    return http.post('/score/addScore',data)
 }

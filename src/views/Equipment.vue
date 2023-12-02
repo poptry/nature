@@ -4,20 +4,24 @@
             <MenuSectionVue></MenuSectionVue>
         </el-header>
         <el-main>
+            <Category v-show="!($route.name=='equipmentDetail')"></Category>
             <router-view></router-view>
         </el-main>
     </el-container>
 </template>
 
 <script>
+import Category from '@/components/equipment/Category.vue';
 import MenuSectionVue from '@/components/equipment/MenuSection'
 export default {
     data(){
         return{
+
         }
     },
     components:{
-        MenuSectionVue
+        MenuSectionVue,
+        Category
     }
 }
 </script>
@@ -33,6 +37,7 @@ export default {
         }
         .el-main{
             width: 1280px;
+            padding-top: 0;
             // max-width: 1280px;
             margin: 0 auto;
         }
