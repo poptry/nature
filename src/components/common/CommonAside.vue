@@ -53,12 +53,11 @@ import MyCircles from '@/components/circle-myjoin/MyCircles.vue'
     height: 100%;
     // max-height: calc(100vh - 80px);
     max-height: 698px;
-
     overflow-y: scroll;
-    &::-webkit-scrollbar {
-                width: 0; /* Safari,Chrome 隐藏滚动条 */
-                height: 0; /* Safari,Chrome 隐藏滚动条 */
-                display: none; /* 移动端、pad 上Safari，Chrome，隐藏滚动条 */
-            }
+      &::-webkit-scrollbar {
+        width: 0; /* Safari,Chrome 隐藏滚动条 */
+        height: 0; /* Safari,Chrome 隐藏滚动条 */
+        display: none; /* 移动端、pad 上Safari，Chrome，隐藏滚动条 */
+      }
   }
   </style>

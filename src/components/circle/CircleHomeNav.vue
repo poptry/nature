@@ -71,6 +71,7 @@ export default {
 <style lang="less" scoped>
 .container{
   height: 100%;
+  user-select: none;
   .title{
       height: 60px;
       display: flex;

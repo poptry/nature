@@ -16,6 +16,7 @@ import MyJoinCircle from '@/views/CircleChildren/MyJoinCircle'
 import MenEquipment from '@/views/equipmentChildren/MenEquipment'
 import WomenEquipment from '@/views/equipmentChildren/WomenEquipment'
 import EquipmentDetail from '@/views/equipmentChildren/EquipmentDetail'
+import CircleDetail from '@/views/CircleChildren/CircleDetail'
 //组件和路由映射
 const routes = [
     {path:'/login',component:Login,name:'login'},
@@ -30,14 +31,17 @@ const routes = [
                 component:Circle,
                 //三级路由
                 children:[
-                    {path:'/',name:'circlehome',redirect:'circlehome'},
-                    {
-                        path:'circlehome',
-                        component:CircleHome,
-                        name:'circlehome'
-                    },//首页
+                    {path:'/',redirect:'circlehome'},
+                    {path:'circlehome',name:'circlehome',component:CircleHome},//首页
                     {path:'inbox',name:'inbox',component:Inbox},//私信
-                    {path:'myjoincircle',name:'myjoincircle',component:MyJoinCircle},//我的圈子
+                    {
+                        // path:'myjoincircle',name:'myjoincircle',component:MyJoinCircle,
+                        path:'myjoincircle',component:MyJoinCircle,
+                        children:[
+                            {path:'/',redirect:'circleDetail'},
+                            {path:'circleDetail',name:'CircleDetail',component:CircleDetail},
+                        ]
+                    },//我的圈子
                 ]
             },
           //$$$$$$$$$攻略
@@ -54,7 +58,7 @@ const routes = [
                 path:'equipment',
                 component:Equipment,
                 children:[
-                    {path:'/',name:'allEquipment',redirect:'allEquipment'},
+                    {path:'/',redirect:'allEquipment'},
                     {path:'allEquipment',name:'allEquipment',component:AllEquipment}, //所有装备页面
                     {path:'menEquipment',name:'menEquipment',component:MenEquipment}, //男装备页面
                     {path:'womenEquipment',name:'womenEquipment',component:WomenEquipment}, //女装备页面

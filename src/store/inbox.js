@@ -3,6 +3,7 @@ export default {
         friendId:''
     },
     getters:{
+        //获取当前处于哪个好友id的页面
         getFriendId(state){
             const friendId = localStorage.getItem('friendId')
             state.friendId = friendId
@@ -13,6 +14,7 @@ export default {
 
     },
     mutations:{
+        //设置当前处于哪个好友id的页面
         changeFriendId(state,id){
             state.friendId = id
         }

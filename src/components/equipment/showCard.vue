@@ -1,5 +1,5 @@
 <template>
-  <div class="card-container">
+  <div class="card-container animate__animated animate__fadeIn">
     <div class="product">
       <div @mouseenter="showImage=!showImage" @mouseleave="showImage=!showImage" class="image">
         <img v-show="showImage" :src="product.product_img" alt="">

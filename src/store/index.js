@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import nav from './nav'
 import admin from './admin'
 import inbox from './inbox'
+import circle from './circle'
 import equipment from './equipment'
 Vue.use(Vuex)
 
@@ -11,6 +12,7 @@ export default new Vuex.Store({
         nav,
         admin,
         inbox,
+        circle,
         equipment
     }
 })

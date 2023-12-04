@@ -1,5 +1,5 @@
 <template>
-  <div class="contain-card">
+  <div class="contain-card animate__animated animate__fadeIn">
     <div class="card" @click="clickCard">
         <el-image  :src="circleInfo.circle_preview" lazy></el-image>
         <div class="related">
@@ -36,6 +36,7 @@ export default {
         width: 20%;
         min-width: 215px;
         margin: 0 calc(20%/4/2) 20px calc(20%/4/2) ;
+        user-select: none;
         //卡片的样式
         .card {
             position: relative;

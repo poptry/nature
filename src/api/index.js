@@ -30,6 +30,15 @@ export const getMyCircle = (params)=>{
 export const getCircleByName = (params)=>{
     return http.get('/circle/getCircleByName',params)
 }
+//获取圈子的成员
+export const getCircleMembers = (params)=>{
+    return http.get('/circle/getCircleMembers',params)
+}
+//获取圈主信息
+export const getCircleOwner = (params)=>{
+    return http.get('/circle/getCircleOwner',params)
+}
+
 //----------商品相关
 export const getPros = (params)=>{
     return http.get('/product/getPros',params)
