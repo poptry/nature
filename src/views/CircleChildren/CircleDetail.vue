@@ -6,12 +6,19 @@
                     <!-- 顶部导航 -->
                     <div class="top">
                         <i class="iconfont icon-planetspacefl"></i>
-                        <i class="iconfont icon-qunliao"></i>
-                        <i class="iconfont icon-tupian"></i>
+                        <i @click="$router.push('myCircleDetailChat').catch(err=>err)" class="iconfont icon-qunliao"></i>
+                        <i @click="$router.push('circleAlbum').catch(err=>err)" class="iconfont icon-tupian"></i>
                         <i @click="dialogVisible=!dialogVisible" class="iconfont icon-shezhi"></i>
                     </div>
                     <!-- 顶部导航 -->
-                    <MyCircleDetailChat></MyCircleDetailChat>
+
+                    <!-- <MyCircleDetailChat></MyCircleDetailChat> -->
+                    
+                    <!-- 展示内容 -->
+                    <div class="content">
+                        <router-view></router-view>
+                    </div>
+                    <!-- 展示内容结束 -->
                 </div>
             </el-col>
             <el-col :span="4">
@@ -139,6 +146,9 @@ export default {
                 .icon-shezhi{
                     right: 5%;
                 }
+            }
+            .content{
+                height: 92%;
             }
         }
         .left-member{

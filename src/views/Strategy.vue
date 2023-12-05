@@ -10,7 +10,6 @@
       <img v-if="image.imageUrl" :src="image.imageUrl" class="avatar">
       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
     </el-upload>
-    <!-- <el-image src="http://natural-image.oss-cn-hangzhou.aliyuncs.com/avatar/10.JPG"></el-image> -->
   </div>
 </template>
 

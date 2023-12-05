@@ -57,6 +57,9 @@ export default {
             console.log(this.inputMsg);
         }
     },
+    beforeDestroy(){
+        console.log('离开聊天室');
+    }
 }
 </script>
 <style lang="less" scoped>

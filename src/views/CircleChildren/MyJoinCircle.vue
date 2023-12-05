@@ -42,7 +42,7 @@ export default {
             height: 698px;
             min-height: calc(100vh - 80px);
             // background-color: #f1f1f1;
-            background: url('@/assets/images/pexels-arthouse-studio-4338015.jpg') no-repeat center/cover;
+            background: url('@/assets/images/pexels-oleksandr-p-376368.jpg') no-repeat center/cover;
             &::-webkit-scrollbar {
                 width: 0; /* Safari,Chrome 隐藏滚动条 */
                 height: 0; /* Safari,Chrome 隐藏滚动条 */

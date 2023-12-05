@@ -17,6 +17,8 @@ import MenEquipment from '@/views/equipmentChildren/MenEquipment'
 import WomenEquipment from '@/views/equipmentChildren/WomenEquipment'
 import EquipmentDetail from '@/views/equipmentChildren/EquipmentDetail'
 import CircleDetail from '@/views/CircleChildren/CircleDetail'
+import MyCircleDetailChat from '@/views/CircleChildren/MyCircleDetailChat'
+import CircleAlbum from '@/views/CircleChildren/CircleAlbum'
 //组件和路由映射
 const routes = [
     {path:'/login',component:Login,name:'login'},
@@ -35,11 +37,17 @@ const routes = [
                     {path:'circlehome',name:'circlehome',component:CircleHome},//首页
                     {path:'inbox',name:'inbox',component:Inbox},//私信
                     {
-                        // path:'myjoincircle',name:'myjoincircle',component:MyJoinCircle,
                         path:'myjoincircle',component:MyJoinCircle,
                         children:[
                             {path:'/',redirect:'circleDetail'},
-                            {path:'circleDetail',name:'CircleDetail',component:CircleDetail},
+                            {
+                                path:'circleDetail',name:'CircleDetail',component:CircleDetail,
+                                children:[
+                                    {path:'/',redirect:'myCircleDetailChat'},
+                                    {path:'myCircleDetailChat',name:'myCircleDetailChat',component:MyCircleDetailChat},//聊天
+                                    {path:'circleAlbum',name:'circleAlbum',component:CircleAlbum},//相册
+                                ]
+                            },
                         ]
                     },//我的圈子
                 ]

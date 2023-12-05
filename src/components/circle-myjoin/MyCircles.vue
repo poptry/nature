@@ -30,7 +30,7 @@ export default {
         ...mapMutations("circle",['changeCircleId']),
         //点击圈子，跳转到圈子详情页，并且将圈子id状态更改
         clickCircle(c){
-           this.$router.push({name:'CircleDetail'}).catch(err=>{})
+           this.$router.push({name:'myCircleDetailChat'}).catch(err=>{})
            this.changeCircleId(c.circle_id)
         },
     },
