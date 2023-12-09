@@ -1,6 +1,6 @@
 <template>
   <div class="allEquipment">
-    <div class="products" v-for="product in EquipmentPros" @click="clickProduct(product)" :key="product.productId">
+    <div class="products" v-for="product in EquipmentPros" :key="product.productId">
       <ShowCardVue :product="product"></ShowCardVue>
     </div>
   </div>
@@ -27,9 +27,6 @@ export default {
     ...mapActions('equipment',{
       getEquipmentPros:'getEquipmentPros'
     }),
-    clickProduct(proInfo){
-      this.$router.push({name:'equipmentDetail',query:{productInfo:JSON.stringify(proInfo)}})
-    }
   },
   created(){
     this.getEquipmentPros()

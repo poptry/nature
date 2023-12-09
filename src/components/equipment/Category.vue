@@ -22,13 +22,14 @@
             筛选<i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
-            <el-checkbox-group  v-model="sortList">
+            <el-checkbox-group :max="1"  v-model="sortList">
                 <el-row style="padding: 5px 20px;"  v-for="s in sortCondition" :key="s.id">
                     <el-checkbox  :label="s.type" name="type">{{ s.name }}</el-checkbox>
                 </el-row>
             </el-checkbox-group>
         </el-dropdown-menu>
     </el-dropdown>
+    <!-- 筛选结束 -->
   </div>
 </template>
 
@@ -77,8 +78,8 @@ export default {
                 },
                 {
                     id:'2',
-                    name:'销量从高到低',
-                    type:'salesDesc'
+                    name:'评分从高到低',
+                    type:'scoreDesc'
                 },
                 {
                     id:'3',

@@ -6,13 +6,15 @@
          @mouseleave="isEnter = false"
          :class="{comeout: (isEnter || iscomeout || this.$route.path.includes('circle') || this.$route.path.includes('equipment'))}"
          class="nav animate__animated animate__fadeIn">
-            <span class="sign" @click="clickSpan">Natrue探险者</span>
-            <ul>
-                <li v-for="(item,index) in navList" :key="index" @click="clickMenu(item)">
-                  <i :class="item.icon"></i>
-                  {{item.name}}
-                </li>
-            </ul>
+          <span class="sign" @click="clickSpan">Natrue探险者</span>
+          <ul>
+              <li v-for="(item,index) in navList" :key="index" @click="clickMenu(item)">
+                <i :class="item.icon"></i>
+                {{item.name}}
+              </li>
+          </ul>
+          <!-- 利用计算属性，getter -->
+          <div class="my-city">{{ getCity }}</div>
           <el-dropdown>
             <el-avatar class="my_avatar" shape="circle" size="medium" :src='user_avatar'></el-avatar>
             <el-dropdown-menu slot="dropdown">
@@ -36,16 +38,16 @@
 <script>
 // 引入底部公共栏
 import  CommonFooter from '@/components/common/CommonFooter'
-import {mapState,mapMutations} from 'vuex';
+import {mapState,mapMutations,mapGetters,mapActions} from 'vuex';
+import {MP} from '@/util/map'
 export default {
     components: {CommonFooter},
     data() {
       return {
+        ak: "zK6RQcckjHGY3jQ9nOp6PBHvI9ZHdjoO", // 百度的地图密钥
         scrollTop:false,
         isEnter:false,
         user_avatar:'',
-        //是否存在用户的缓存信息，没有重新登录
-        // user_avatar:localStorage.getItem('user') ? JSON.parse(localStorage.getItem(user)).user_avatar:0,
         navList:[
           {
               name:'圈子',
@@ -66,10 +68,12 @@ export default {
       };
     },
     computed:{
-      ...mapState({iscomeout:state=>state.nav.iscomeout})
+      ...mapState({iscomeout:state=>state.nav.iscomeout}),
+      ...mapGetters('circle',['getCity'])
     },
     methods:{
       ...mapMutations('nav',{changeToolbar:'changeToolbar'}),
+      ...mapActions('circle',['setCity']),
       //获取滚动高度
       handleScroll(){
         this.scrollTop = pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
@@ -82,11 +86,11 @@ export default {
         }
       },
       clickMenu(item){
-              if(this.$router.path !== item.path){
-                  this.$router.push(item.path).catch(err=>{
-                  err
-              })
-          }
+        if(this.$router.path !== item.path){
+            this.$router.push(item.path).catch(err=>{
+              err
+            })
+        }
       },
       handleSetItemEvent(e) {
         const that = this
@@ -94,7 +98,7 @@ export default {
           that.user_avatar = JSON.parse(e.newValue).user_avatar;
           console.log('监听成功');
         }
-      }
+      },
     },
     created(){
       let iscomeout = false
@@ -110,12 +114,12 @@ export default {
     },
     mounted(){
       this.user_avatar = JSON.parse(localStorage.getItem('user')).user_avatar
-      console.log(this.user_avatar);
       this.$nextTick(()=>{
         addEventListener('scroll',this.handleScroll)
         addEventListener('setItemEvent',this.handleSetItemEvent)
       })
-
+      //第一次进入设置城市
+      this.setCity()
     },
     destroyed(){
       console.log('注销了');
@@ -178,6 +182,9 @@ export default {
                   font-size: 20px;
                 }
             }
+        }
+        .my-city{
+          color: rgb(247, 247, 247);
         }
         .my_avatar {
           float: right;

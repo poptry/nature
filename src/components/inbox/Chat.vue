@@ -82,11 +82,14 @@ export default {
       //会先获取目前最后的，再从后台返回，所以这里得到的不是‘最新的’的时间
       const data = {
         send_id:this.sendUserInfo.user_id,
-        receive_id:this.getNowFriendNav,
+        //需要用数字型，不然io.to to不到
+        receive_id:Number(this.getNowFriendNav),
         msg:this.inputMsg,
-        timestamp:this.nowTimeStamp
+        timestamp:this.nowTimeStamp,
+        user_avatar:this.sendUserInfo.user_avatar
       }
       if(this.inputMsg !== ''){
+        const targetUserId = this.getNowFriendNav
         this.$socket.emit('chatMsg',data)
         this.inputMsg = ''
       }
@@ -128,6 +131,7 @@ export default {
   },
   beforeDestroy(){
     this.$socket.close() //必须要注销掉
+    console.log('注销socket');
   },
   sockets:{
     connecting(){
@@ -141,13 +145,17 @@ export default {
     },
     connect(){
       console.log('socket连接成功');
+      //连接成功后发送加入房间的请求
+      const userId = JSON.parse(localStorage.getItem('user')).user_id
+      this.$socket.emit('join',userId)
     },
     chatMsg(data){
-      console.log(data);
+      console.log("接收到啦！！",data);
       this.chatList.push({
         chat_send_id:data.send_id,
         chat_msg:data.msg,
-        chat_timestamp:getTime(data.timestamp)
+        chat_timestamp:getTime(data.timestamp),
+        user_avatar:data.user_avatar
       })
       this.$nextTick(()=>{
         const msgWrap = this.$refs.msgWrap;

@@ -33,14 +33,25 @@ export default {
     },
     computed:{
         ...mapGetters('nav',['getNowNav']),
+        //获取城市
+        ...mapGetters('circle',['getCity']),
         filterCircleInfo(){
+            //全部
+            if(this.getNowNav==0){
+                return this.circleInfo
+            }
+            //过滤数组
             return this.circleInfo.filter(item=>{
+                if(this.getNowNav==1){
+                    return item.circle_city == this.getCity
+                }
                 return item.circle_type == this.getNowNav
             })
         }
     },
     created(){
         getCircleInfo().then((res) => {
+            console.log(res);
             if(res.status === 200){
                 this.circleInfo = res.data
             }

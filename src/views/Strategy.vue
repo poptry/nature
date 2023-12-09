@@ -1,39 +1,62 @@
 <template>
   <div class="strategy">
+    <!-- action="/api/user/updateAvatar" -->
+    <div id="container" class="allmap" style="z-index: 100;width: 100%;height: 1000px;"></div>
     <el-upload
       class="avatar-uploader"
-      action="/api/user/updateAvatar"
+      action="''"
       :data="userInfo"
       :show-file-list="false"
       name="file"
-      :on-success="handleAvatarSuccess">
+      :on-change="handleLicensePreview"
+      >
       <img v-if="image.imageUrl" :src="image.imageUrl" class="avatar">
       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
     </el-upload>
+    <button @click="uploadAvatar">上传</button>
   </div>
 </template>
 
 <script>
+import {updateAvatar} from '@/api'
 export default {
   data() {
       return {
         image:{
           imageUrl: '',
         },
-        userInfo:JSON.parse(localStorage.getItem('user'))
+        file:{},
+        userInfo:JSON.parse(localStorage.getItem('user')),
+        ak: "zK6RQcckjHGY3jQ9nOp6PBHvI9ZHdjoO", // 百度的地图密钥
       };
     },
     methods: {
-      handleAvatarSuccess(res, file) {
-        console.log(res);
-        if(res.code === 200){
-          this.image.imageUrl = res.url
-          let user = JSON.parse(localStorage.getItem('user'))
-          user.user_avatar = res.url
-          localStorage.setItem('user',JSON.stringify(user))
-          console.log('写入了storage');
+      handleLicensePreview(file) {
+        console.log(file);
+        this.file = file
+        this.image.imageUrl = URL.createObjectURL(file.raw);
+      },
+      uploadAvatar(){
+        console.log('11111111111111111');
+        if(!this.image.imageUrl && !this.file){
+          this.$message.error('请先选择图片');
+          return false;
         }
-      }
+        let formData=new FormData()
+        formData.append('file',this.file.raw)
+        formData.append('userInfo',JSON.stringify(this.userInfo))
+        if(formData)
+          updateAvatar(formData).then(res=>{
+            if(res.data.code === 200){
+              let user = JSON.parse(localStorage.getItem('user'))
+              user.user_avatar = res.data.url
+              localStorage.setItem('user',JSON.stringify(user))
+            }
+          })
+      },
+
+    },
+    mounted() {
     }
 }
 </script>

@@ -19,6 +19,7 @@ import EquipmentDetail from '@/views/equipmentChildren/EquipmentDetail'
 import CircleDetail from '@/views/CircleChildren/CircleDetail'
 import MyCircleDetailChat from '@/views/CircleChildren/MyCircleDetailChat'
 import CircleAlbum from '@/views/CircleChildren/CircleAlbum'
+import Checkout from '@/views/equipmentChildren/Checkout'
 //组件和路由映射
 const routes = [
     {path:'/login',component:Login,name:'login'},
@@ -41,7 +42,7 @@ const routes = [
                         children:[
                             {path:'/',redirect:'circleDetail'},
                             {
-                                path:'circleDetail',name:'CircleDetail',component:CircleDetail,
+                                path:'circleDetail',component:CircleDetail,
                                 children:[
                                     {path:'/',redirect:'myCircleDetailChat'},
                                     {path:'myCircleDetailChat',name:'myCircleDetailChat',component:MyCircleDetailChat},//聊天
@@ -70,7 +71,8 @@ const routes = [
                     {path:'allEquipment',name:'allEquipment',component:AllEquipment}, //所有装备页面
                     {path:'menEquipment',name:'menEquipment',component:MenEquipment}, //男装备页面
                     {path:'womenEquipment',name:'womenEquipment',component:WomenEquipment}, //女装备页面
-                    {path:'equipmentDetail',name:'equipmentDetail',component:EquipmentDetail} //装备详情页面
+                    {path:'equipmentDetail',name:'equipmentDetail',component:EquipmentDetail},//装备详情页面
+                    {path:'checkout',name:'checkout',component:Checkout}
                 ]
             }
         ]

@@ -14,14 +14,31 @@
             </div>
         </div>
         <el-drawer
+            :show-close="false"
             title="购物车"
             :visible.sync="drawer">
-            <span>我来啦!</span>
+            <div class="show-content">
+                <ShopCartItemsVue></ShopCartItemsVue>
+            </div>
+            <div class="someOptions">
+                <div class="money">
+                    <div class="shipping">
+                        <span>免运费</span>
+                        <span>6￥</span>
+                    </div>
+                    <div class="total">
+                        <span>总计</span>
+                        <span>100￥</span>
+                    </div>
+                </div>
+                <button @click="toCheckout" class="to-checkout">去结算</button>
+            </div>
         </el-drawer>
     </div>
 </template>
 <script>
 import { mapActions } from 'vuex';
+import ShopCartItemsVue from './ShopCartItems.vue';
 export default {
     data(){
         return{
@@ -46,7 +63,11 @@ export default {
             ],
         }
     },
+    components:{
+        ShopCartItemsVue
+    },
     computed:{
+       
     },
     methods:{
         ...mapActions('equipment',{
@@ -73,6 +94,9 @@ export default {
         },
         selectNav(n){
             this.$router.push({path:n.path}).catch(err=>err)
+        },
+        toCheckout(){
+            this.$router.push({path:'checkout'}).catch(err=>err)
         }
     }
 }
@@ -143,6 +167,66 @@ export default {
                     }
                 }
             }
+        }
+        .el-drawer{
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            &::-webkit-scrollbar {
+                width: 0; /* Safari,Chrome 隐藏滚动条 */
+                height: 0; /* Safari,Chrome 隐藏滚动条 */
+                display: none; /* 移动端、pad 上Safari，Chrome，隐藏滚动条 */
+            }
+            .show-content{
+                width: 100%;
+                height: 80%;
+                overflow-y: scroll;
+                &::-webkit-scrollbar {
+                    width: 0; /* Safari,Chrome 隐藏滚动条 */
+                    height: 0; /* Safari,Chrome 隐藏滚动条 */
+                    display: none; /* 移动端、pad 上Safari，Chrome，隐藏滚动条 */
+                }
+            }
+            .someOptions{
+                width: 100%;
+                height: 20%;
+                min-height: 100px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                padding: 10px;
+                .to-checkout{
+                width: 100%;
+                height: 50px;
+                background-color: #ff6a07;
+                border: 0;
+                outline: none;
+                color: #fff;
+                font-size: 20px;
+                cursor: pointer;
+                    &:hover{
+                        background-color: #e65c00;
+                    }
+                }
+                .money{
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    .shipping,
+                    .total{
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-between;
+                        margin-bottom: 5px;
+                    }
+                }
+            }
+        }
+        /deep/.el-drawer__header{
+            margin: 5px !important;
+            font-size: 18px;
+            color: #121212;
         }
     }
 </style>

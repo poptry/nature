@@ -1,11 +1,12 @@
 <template>
   <div class="card-container animate__animated animate__fadeIn">
-    <div class="product">
+    <div class="product" @click="clickProduct(product)" >
       <div @mouseenter="showImage=!showImage" @mouseleave="showImage=!showImage" class="image">
         <img v-show="showImage" :src="product.product_img" alt="">
         <img v-show="!showImage" :src="product.product_prev_img" alt="">
       </div>
       <div class="productInfo">
+        <div>{{ product.product_score }}</div>
         <h5>{{product.product_name}}</h5>
         <div class="price">
           <span>£{{ product.product_disc_price }}</span>
@@ -36,6 +37,9 @@ export default {
   methods:{
     clickCollect(){
       this.isCollect=this.isCollect === '0' ? '1' : '0'
+    },
+    clickProduct(proInfo){
+      this.$router.push({name:'equipmentDetail',query:{productInfo:JSON.stringify(proInfo)}})
     }
   },
   created(){

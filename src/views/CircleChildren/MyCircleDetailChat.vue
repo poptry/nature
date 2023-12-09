@@ -4,26 +4,25 @@
     <div class="msg-box">
         <!-- 聊天框开始 -->
         <div class="msg-wrap" ref="msgWrap">
-            <div v-for="c in chatList" :key="c.chat_id">
-                <!-- 时间显示，每间隔五分钟记录一次，五分钟内的消息不记录-->
-                <div class="msgTime" v-if="c.chat_timestamp"><span v-text="c.chat_timestamp"></span></div>
+            <div v-for="c in chatList" :key="c.circleMsg_id">
+                <div class="msgTime" v-if="c.chatMsg_timestamp"><span v-text="c.chatMsg_timestamp"></span></div>
                 <!-- 好友消息 -->
-                <div class="others" v-if="c.chat_send_id != sendUserInfo.user_id ">
+                <div class="others" v-if="c.user_id != myInfo.user_id ">
                     <div class="others-avatar">
                         <el-avatar :src="c.user_avatar"></el-avatar>
                     </div>
                     <div class="others-msg">
-                        <div class="msg-text">{{ c.chat_msg }}</div>
+                        <div class="msg-text">{{ c.circleMsg_content }}</div>
                     </div>
                 </div>
                 <!-- 好友消息结束 -->
                 <!-- 我的消息开始 -->
                 <div class="my" v-else>
                     <div class="my-msg">
-                        <div class="msg-text">{{ c.chat_msg }}</div>
+                        <div class="msg-text">{{ c.circleMsg_content }}</div>
                     </div>
                     <div class="my-avatar">
-                        <el-avatar :src="sendUserInfo.user_avatar"></el-avatar>
+                        <el-avatar :src="myInfo.user_avatar"></el-avatar>
                     </div>
                 </div>
                 <!-- 我的消息结束 -->
@@ -44,22 +43,117 @@
 </template>
 
 <script>
+import { getCircleMsgs } from '@/api';
+import { mapGetters } from 'vuex';
+import {getTime,getNowTimeStamp} from '@/util/index.js'
 export default {
     data(){
         return{
             circle_id:'',
             inputMsg:'',
             chatList:[],
+            myInfo:{}
+        }
+    },
+    computed:{
+        ...mapGetters('circle',['getNowCircleNav'])
+    },
+    watch:{
+        getNowCircleNav(){
+            // console.log(this.getNowCircleNav);
+            console.log(this.$socket.connected);
+            if(this.$socket.connected){
+                //如果打开了先关闭上一个
+                this.$socket.close() //必须要注销掉
+                console.log('已经打开');
+            }
+            //然后重新启动它
+            this.$socket.open() //开启连接
+            this.getCircleMsgs()
         }
     },
     methods:{
         sendMsg(){
-            console.log(this.inputMsg);
+            const nowTimeStamp = getNowTimeStamp()
+            //会先获取目前最后的，再从后台返回，所以这里得到的不是‘最新的’的时间
+            const data = {
+                msg:this.inputMsg,
+                timestamp:nowTimeStamp,
+                send_id:this.myInfo.user_id,
+                circle_id:Number(this.getNowCircleNav),
+                user_avatar:this.myInfo.user_avatar
+            }
+            if(this.inputMsg !== ''){
+                console.log(this.inputMsg);
+                this.$socket.emit('chatCircleMsg',data)
+                this.inputMsg = ''
+            }
+        },
+        //获取聊天记录
+        getCircleMsgs(){
+            //请求消息记录
+            getCircleMsgs({params:{circle_id:this.getNowCircleNav}}).then(res=>{
+                console.log(res);
+                if(res.status === 200){
+                    this.chatList = res.data;
+                    //时间转换
+                    this.chatList.forEach(e=>{
+                        e.chatMsg_timestamp = getTime(e.chatMsg_timestamp)
+                    })
+                    //滚动条置底
+                    this.$nextTick(()=>{
+                        const msgWrap = this.$refs.msgWrap;
+                        msgWrap.scrollTop = msgWrap.scrollHeight - msgWrap.clientHeight
+                    })
+                }
+            })
         }
     },
+    mounted(){
+        this.getCircleMsgs()
+        const myInfo = JSON.parse(localStorage.getItem('user'))
+        this.myInfo = myInfo
+        console.log(this.myInfo);
+        this.$socket.open() //开启连接
+    },
     beforeDestroy(){
+        this.$socket.close() //必须要注销掉
         console.log('离开聊天室');
-    }
+    },
+    sockets:{
+        connecting(){
+            console.log("正连接");
+        },
+        disconnect(){
+            // alert("Socket端口")
+            console.log('断开连接');
+        },
+        connect_erro(){
+            console.log('连接失败');
+        },
+        connect(){
+            console.log('socket连接成功');
+            const circleId = Number(this.getNowCircleNav)
+            this.$socket.emit('join',circleId)
+        },
+        chatCircleMsg(data){
+            if(data.circle_id && data.circle_id!=this.getNowCircleNav){
+                return
+            }else if(data.circle_id){
+                this.chatList.push({
+                    user_id:data.send_id,
+                    circleMsg_content:data.msg,
+                    chatMsg_timestamp:getTime(data.timestamp),
+                    user_avatar:data.user_avatar
+                })
+                console.log("chatlist",this.chatList);
+                this.$nextTick(()=>{
+                    const msgWrap = this.$refs.msgWrap;
+                    msgWrap.scrollTop = msgWrap.scrollHeight - msgWrap.clientHeight
+                })
+            }
+        }
+  }
 }
 </script>
 <style lang="less" scoped>
@@ -68,7 +162,7 @@ export default {
     height: 100%;
         .msg-box{
         width: 100%;
-        height: 62%;
+        height: 70%;
         border-bottom: 1px solid #b8b8b8;
         padding: 0 15px;
         .msg-wrap{
@@ -88,7 +182,7 @@ export default {
                 span{
                     padding: 5px;
                     border-radius: 5px;
-                    color: #959595;
+                    color: #d5d5d5;
                 }
             }
             .others,
@@ -104,7 +198,7 @@ export default {
                     position: relative;
                     padding: 10px;
                     word-break: break-all;
-                    background-color:#adacac;
+                    background-color:#e3e3e3;
                     border-radius: 0 10px 10px;
                 }
                 }

@@ -7,8 +7,11 @@ export const login = (params)=>{
     return http.get('/user/login',params)
 }
 export const updateAvatar = (data)=>{
-    return http.post('/user/updateAvatar',data)
+    return http.post('/user/updateAvatar',data,{
+        headers: {'Content-Type':'multipart/form-data'}
+    })
 }
+
 //----------好友相关接口
 export const getFriends = (params)=>{
     return http.get('/friend/getFriends',params)
@@ -38,6 +41,13 @@ export const getCircleMembers = (params)=>{
 export const getCircleOwner = (params)=>{
     return http.get('/circle/getCircleOwner',params)
 }
+//获取圈子的聊天记录
+export const getCircleMsgs = (params)=>{
+    return http.get('/circle/getCircleChat',params)
+}
+export const joinCircle = (data)=>{
+    return http.post('/circle/joinCircle',data)
+}
 
 //----------商品相关
 export const getPros = (params)=>{
@@ -60,4 +70,8 @@ export const getScoreByUser = (params)=>{
 //用户对商品评分
 export const addScore = (data)=>{
     return http.post('/score/addScore',data)
+}
+//用户的购物车
+export const getShopCart = (params)=>{
+    return http.get('/product/getShopCart',params)
 }

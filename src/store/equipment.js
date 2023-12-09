@@ -91,7 +91,27 @@ export default {
                         }
                         return  0;
                     })
-                }
+                }else if(params.sort.includes('priceDesc')){
+                    state.EquipmentPros.sort((a,b)=>{
+                        if(a.product_disc_price > b.product_disc_price){
+                          return  -1;
+                        }
+                        if(a.product_disc_price < b.product_disc_price){
+                          return 1;
+                        }
+                        return  0;
+                    })
+                }else if(params.sort.includes('scoreDesc')){
+                    state.EquipmentPros.sort((a,b)=>{
+                        if(a.product_score > b.product_score){
+                          return  -1;
+                        }
+                        if(a.product_score < b.product_score){
+                          return 1;
+                        }
+                        return  0;
+                    })
+                }    
             }
         }
     }

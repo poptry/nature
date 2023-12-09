@@ -4,7 +4,9 @@
             <MenuSectionVue></MenuSectionVue>
         </el-header>
         <el-main>
-            <Category v-show="!($route.name=='equipmentDetail')"></Category>
+            <div class="category-menu" v-show="!($route.name==`equipmentDetail`) && !($route.name==`checkout`) ">
+                <Category ></Category>
+            </div>
             <router-view></router-view>
         </el-main>
     </el-container>
@@ -40,6 +42,9 @@ export default {
             padding-top: 0;
             // max-width: 1280px;
             margin: 0 auto;
+            .category-menu{
+                width: 100%;
+            }
         }
     }
 </style>

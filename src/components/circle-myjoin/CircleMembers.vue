@@ -1,26 +1,39 @@
 <template>
   <div class="container">
     <span class="title">圈主</span>
-    <div class="members">
+    <div class="members"  @click="clickMember(ownerInfo)">
         <el-avatar size="medium" :src="ownerInfo.user_avatar"></el-avatar>
         <span class="user-name">{{ ownerInfo.user_name }}</span>
     </div>
     <span class="title">圈子成员</span>
-    <div class="members" v-for="(m,index) in members" :key="index">
+    <div class="members" v-for="(m,index) in members" :key="index" @click="clickMember(m)">
         <el-avatar size="medium" :src="m.user_avatar"></el-avatar>
         <span class="user-name">{{m.user_name}}</span>
     </div>
+    <el-dialog
+    :show-close="false"
+    :visible.sync="dialogVisible"
+    top="15vh"
+    width="30%">
+        <UserInfoShowVue :member="member"></UserInfoShowVue>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import { mapGetters} from 'vuex'
+import UserInfoShowVue from '../common/UserInfoShow.vue'
 export default {
     data(){
         return{
             ownerInfo:{},
-            members:[]
+            members:[],
+            dialogVisible:false,
+            member:{}
         }
+    },
+    components:{
+        UserInfoShowVue
     },
     computed:{
         ...mapGetters("circle",['getCircleMembers','getCircleOwner'])
@@ -33,6 +46,14 @@ export default {
         getCircleOwner(newVal){
             //获取到新的圈主，赋值给members
             this.ownerInfo = newVal
+            console.log(newVal);
+        }
+    },
+    methods:{
+        clickMember(m){
+            this.dialogVisible = true
+            this.member = m
+            console.log(m);
         }
     },
     created(){
@@ -80,6 +101,15 @@ export default {
             cursor: pointer;
             background-color: rgba(00, 00, 00, 0.3);
         }
+    }
+    ::v-deep .el-dialog__header{
+        padding: 0 !important;
+    }
+    ::v-deep .el-dialog__body{
+        padding: 0 !important;
+        height: 600px;
+        background-color: #464646;
+        overflow: hidden;
     }
 }
 </style>

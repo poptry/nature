@@ -7,6 +7,7 @@ import './assets/css/color.css'
 import './assets/css/common.css'
 import './assets/iconfont/iconfont.css'
 
+import { VueJsonp } from 'vue-jsonp';
 import  ClientSocketIO from 'socket.io-client';
 import SocketIO from "vue-socket.io"
 
@@ -26,6 +27,7 @@ Vue.use(
     })
   })
 )
+Vue.use(VueJsonp)
 router.beforeEach((to, from, next) => {
   const user = localStorage.getItem('user')
   if(to.path==='/login'){

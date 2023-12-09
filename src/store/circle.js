@@ -1,5 +1,5 @@
 import {getCircleMembers,getCircleOwner} from '@/api/index.js'
-import { Loading } from 'element-ui'
+import Vue from 'vue'
 export default {
     //设置命名空间
     namespaced:true,
@@ -9,6 +9,7 @@ export default {
         circleMembers:[],
         circleOwner:{},
         transparency:60,//透明度
+        city:'',//城市
     },
     actions:{
         //异步获取圈子的成员，并赋值给circleMembers
@@ -27,6 +28,22 @@ export default {
                     context.commit('setCircleOwner',res.data)
             }).catch((err)=>{
                 console.log(err)
+            })
+        },
+        //异步获取用户所在城市
+        async setCity(context){
+            //请求用户地址
+            await Vue.prototype.$jsonp('https://apis.map.qq.com/ws/location/v1/ip', {
+                key: 'X34BZ-IMPC3-IQL32-RMZJL-WPDLE-64F33',
+                output: 'jsonp',
+            }).then(res=>{
+                console.log(res);
+                //获取到城市
+                const city = res.result.ad_info.city
+                //提交mutations
+                context.commit('setCity',city)
+            }).catch(err=>{
+                console.log(err);
             })
         }
     },
@@ -57,6 +74,11 @@ export default {
                 state.transparency = transparency
             }
             return state.transparency
+        },
+        //获取城市
+        getCity(state){
+            const city = sessionStorage.getItem('city')
+            return city ? city : state.city
         }
     },
     mutations:{
@@ -82,6 +104,13 @@ export default {
                 localStorage.setItem('transparency',data)
             }
             state.transparency = data
+        },
+        //城市
+        setCity(state,data){
+            if(data!==null){
+                sessionStorage.setItem('city',data)
+            }
+            state.city = data
         }
     }
 }

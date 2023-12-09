@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import { joinCircle } from '@/api';
+import { mapMutations } from 'vuex';
 export default {
     props:['circleInfo'],
     data(){
@@ -26,8 +28,34 @@ export default {
         }
     },
     methods:{
+        ...mapMutations("circle",['changeCircleId']),
         clickCard(){
+            const data = {
+                user_id: JSON.parse(localStorage.getItem('user')).user_id,
+                circle_id: this.circleInfo.circle_id
+            }
+            console.log(data);
+            joinCircle(data).then(res=>{
+                console.log(res);
+                if(res.data.code === 200){
+                    this.$message({
+                        message:res.data.msg,
+                        type: 'success'
+                    });
+                    this.changeCircleId(this.circleInfo.circle_id)
+                    this.$router.push({name:'myCircleDetailChat'}).catch(err=>{})
+                }else{
+                    this.$message({
+                        message:res.data.msg,
+                        type: 'error'
+                    });
+                    this.changeCircleId(this.circleInfo.circle_id)
+                    this.$router.push({name:'myCircleDetailChat'}).catch(err=>{})
+                }
+            })
         }
+    },
+    created(){
     }
 }
 </script>
@@ -47,14 +75,11 @@ export default {
             border: 1px solid rgba(255, 255, 255, 0.222);
             -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
-
             display: flex;
             align-items: center;
             flex-direction: column;
-
             font-size: 25px;
             font-weight: bold;
-
             border-radius: 15px;
             cursor: pointer;
             &::before,
