@@ -10,6 +10,7 @@ export default {
         circleOwner:{},
         transparency:60,//透明度
         city:'',//城市
+        showIssueDialog:false
     },
     actions:{
         //异步获取圈子的成员，并赋值给circleMembers
@@ -48,6 +49,10 @@ export default {
         }
     },
     getters:{
+        //发布弹窗
+        showIssueDialogState(state){
+            return state.showIssueDialog
+        },
         //获取当前的圈子id
         getNowCircleNav(state){
             //获取本地存储的圈子id，持久化数据
@@ -82,6 +87,10 @@ export default {
         }
     },
     mutations:{
+        //改变弹窗的状态
+        changeIssueDialogState(state,status){
+            state.showIssueDialog = status
+        },
         //控制侧边栏的显示与隐藏
         changeCircleId(state,circle_id){
             //存储在本地

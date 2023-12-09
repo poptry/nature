@@ -5,9 +5,9 @@
                 <div class="right-content">
                     <!-- 顶部导航 -->
                     <div class="top">
-                        <i class="iconfont icon-planetspacefl"></i>
                         <i @click="$router.push('myCircleDetailChat').catch(err=>err)" class="iconfont icon-qunliao"></i>
-                        <i @click="$router.push('circleAlbum').catch(err=>err)" class="iconfont icon-tupian"></i>
+                        <i @click="clickAlbum" class="iconfont icon-planetspacefl"></i>
+                        <i v-show="showIssueBtn" @click="clickIssue" class="iconfont icon-fabu"></i>
                         <i @click="dialogVisible=!dialogVisible" class="iconfont icon-shezhi"></i>
                     </div>
                     <!-- 顶部导航 -->
@@ -16,7 +16,9 @@
                     
                     <!-- 展示内容 -->
                     <div class="content">
-                        <router-view></router-view>
+                        <keep-alive>
+                            <router-view></router-view>
+                        </keep-alive>
                     </div>
                     <!-- 展示内容结束 -->
                 </div>
@@ -53,15 +55,17 @@
 <script>
 import CircleMembersVue from '@/components/circle-myjoin/CircleMembers.vue';
 import MyCircleDetailChat from './MyCircleDetailChat.vue';
-import { mapGetters,mapActions,mapMutations } from 'vuex';
+import { mapState,mapGetters,mapActions,mapMutations } from 'vuex';
 export default {
     data(){
         return{
+            issue:true,
             circle_id:'',
             inputMsg:'',
             chatList:[],
             transparency:Number,
             dialogVisible:false,
+            routerState:true
         }
     },
     components:{
@@ -69,7 +73,8 @@ export default {
         CircleMembersVue
     },
     computed:{
-        ...mapGetters("circle",['getNowCircleNav','getTransparency'])
+        ...mapState("nav",['showIssueBtn']),
+        ...mapGetters("circle",['getNowCircleNav','getTransparency']),
     },
     watch:{
         getNowCircleNav(newVal){
@@ -82,14 +87,25 @@ export default {
         }
     },
     methods:{
-        ...mapMutations("circle",['setTransparency']),
+        ...mapMutations("circle",['setTransparency','changeIssueDialogState']),
         ...mapActions("circle",['setCircleMembers','setCircleOwner']),
         sendMsg(){
             console.log(this.inputMsg);
         },
+        //关闭设置弹窗前
         beforeCloseDialog(){
+            //提交透明度修改
             this.setTransparency(this.transparency)
+            //关闭弹窗
             this.dialogVisible = false
+        },
+        //点击动态按钮，跳转
+        clickAlbum(){
+            this.$router.push('circleAlbum').catch(err=>err)
+        },
+        //点击图标，改变上传窗口的状态
+        clickIssue(){
+            this.changeIssueDialogState(true)
         }
     },
     created(){
@@ -138,10 +154,10 @@ export default {
                     left: 2%;
                 }
                 .icon-qunliao{
-                    left: 14%;
-                }
-                .icon-tupian{
                     left: 8%;
+                }
+                .icon-fabu{
+                    right: 11%;
                 }
                 .icon-shezhi{
                     right: 5%;

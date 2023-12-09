@@ -93,7 +93,6 @@ export default {
         getCircleMsgs(){
             //请求消息记录
             getCircleMsgs({params:{circle_id:this.getNowCircleNav}}).then(res=>{
-                console.log(res);
                 if(res.status === 200){
                     this.chatList = res.data;
                     //时间转换
@@ -111,9 +110,9 @@ export default {
     },
     mounted(){
         this.getCircleMsgs()
+        //获取存储中得到用户信息
         const myInfo = JSON.parse(localStorage.getItem('user'))
         this.myInfo = myInfo
-        console.log(this.myInfo);
         this.$socket.open() //开启连接
     },
     beforeDestroy(){
@@ -137,6 +136,8 @@ export default {
             this.$socket.emit('join',circleId)
         },
         chatCircleMsg(data){
+            // 如果data中的数据存在就渲染消息
+            //否则不进行
             if(data.circle_id && data.circle_id!=this.getNowCircleNav){
                 return
             }else if(data.circle_id){

@@ -6,10 +6,19 @@ export default {
         isWhich:'0',//圈子共同侧边栏的控制 0是校园，1是私信 2是我的圈子
         nowNav:'0',//当前的导航栏 =》 指的是圈子首页中的导航栏
         nowFriendNav:'0',//当前的好友 =》 指的是好友列表
+        showIssueBtn:false
     },
     actions:{
     },
     getters:{
+        //
+        // getShowIssueBtn(state){
+        //   if(this.$router.name=='circleAlbum'){
+        //     state.showIssueBtn = true
+        //   }else{
+        //     state.showIssueBtn = false
+        //   }
+        // },
         //获取侧边栏的状态
         getIscomeout(state){
             return state.iscomeout
@@ -31,6 +40,9 @@ export default {
         },
     },
     mutations:{
+        changeIssue(state,status){
+            state.showIssueBtn = status
+        },
         //控制侧边栏的显示与隐藏
         changeToolbar(state,toolbarState){
             state.iscomeout = toolbarState

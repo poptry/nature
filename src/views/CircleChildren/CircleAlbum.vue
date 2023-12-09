@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <el-button class="uploadAlbum" @click="dialogVisible=true">上传相册</el-button>
     <div class="show-part">
         <!-- 圈子中的每一条相册 -->
         <div class="item">
@@ -62,7 +61,7 @@
     <!-- 上传相册的弹窗 -->
     <el-dialog
     title="上传相册"
-    :visible.sync="dialogVisible"
+    :visible.sync="showIssueDialogState"
     width="60%"
     :before-close="handleClose">
         <UploadImagesVue></UploadImagesVue>
@@ -72,6 +71,7 @@
 </template>
 
 <script>
+import { mapMutations,mapGetters } from 'vuex';
 import UploadImagesVue from '@/components/common/UploadImages.vue';
 export default {
     data(){
@@ -121,14 +121,28 @@ export default {
         }
     },
     components:{UploadImagesVue},
+    computed:{
+        ...mapGetters('circle',['showIssueDialogState'])
+    },
     methods:{
+        ...mapMutations("nav",['changeIssue']),
+        //改变上传窗口的mutation函数
+        ...mapMutations("circle",['changeIssueDialogState']),
+
         handleClose(done) {
-            this.$confirm('确认关闭？')
-            .then(_ => {
-                done();
-            })
-            .catch(_ => {});
+            //关闭前，将上传窗口的状态改变
+            this.changeIssueDialogState(false)
         },
+    },
+    activated(){
+        //组件活跃时显示上传按钮
+        this.changeIssue(true)
+        console.log("活跃");
+    },
+    deactivated(){
+        //组件不活跃时，隐藏上传按钮
+        this.changeIssue(false)
+        console.log("不活跃");
     }
 }
 </script>
@@ -137,12 +151,9 @@ export default {
     .container{
         width: 100%;
         height: 100%;
-        .uploadAlbum{
-            height: 8%;
-        }
         .show-part{
             width: 100%;
-            height:92%;
+            height:100%;
             display: flex;
             flex-wrap: wrap;
             justify-content: space-around;

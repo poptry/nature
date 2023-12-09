@@ -21,10 +21,6 @@
                         <div class="card" id="c3"></div>
                         <div class="card" id="c4"></div>
                     </div>
-                    <!-- <el-card :body-style="{padding:'0px',border:0}" 
-                     shadow="hover">
-                        <img src="@/assets/images/goAhead.jpg" alt="">
-                    </el-card> -->
                 </el-col>
                 <el-col :span="12" class="right-col">
                         <span v-show="show" class="animate__animated animate__fadeInDown">让我们一同探索自然的奥秘</span>
@@ -46,7 +42,7 @@
             </div>
         </div>
         <!-- 回到顶部 -->
-        <el-backtop  :bottom="100" :right="20" :visibility-height="10">
+        <el-backtop  :bottom="220" :right="10" :visibility-height="10">
             <div
             style="{
                 height: 100%;
@@ -171,10 +167,10 @@ export default {
         .content-one{
             height: 600px;
             margin-bottom: 20px;
-            background: url('@/assets/images/goAhead.jpg') no-repeat center;
+            background: url('@/assets/images/1-6.jpg') no-repeat center/cover;
             .el-row {
                 height: 100%;
-                backdrop-filter:blur(20px);
+                backdrop-filter:blur(2px);
                 transition: all 0.5s;
                 &:last-child {
                 margin-bottom: 0;
@@ -186,29 +182,30 @@ export default {
                     height: 100%;
                     border-radius: 10px;
                     overflow: hidden;
-                    // .el-card{
-                    //     width: 50%;
-                    //     transition: all 0.5s;
-                    //     border: 0;
-
-                    //     &:hover{
-                    //         transform: rotateZ(-2deg);
-                    //         border: 1px solid #ffffff;
-                    //         box-shadow: 4px 4px 10px #ffffff;
-                    //     }
-                    //     img{
-                    //             display: block;
-                    //             width: 100%;
-                    //         }
-                    // }
                     .poker-card{
+                        position: relative;
                         display: grid;
-                        height: 50vmax;
+                        width: 300px;
+                        height: 400px;
                         place-items: center;
+                        border-radius: 5px;
+                        &::before{
+                            position: absolute;
+                            background-color: #fff;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                            content: '';
+                            width: 110%;
+                            height: 110%;
+                            z-index: -1;
+                            border-radius: 1em;
+                            filter: blur(20px);
+                            animation:flashing  3s linear infinite;
+                        }
                         &:hover #c1 {
                             transform: translateX(-100px) rotate(-40deg);
                         }
-
                         &:hover #c2 {
                             transform: translateX(-50px) rotate(-30deg);
                         }
@@ -229,33 +226,58 @@ export default {
                             cursor: pointer;
                             box-shadow: 0px 0px 30px -10px rgba(0, 0, 0, 0.3);
                         }
-
+                        #c1,
+                        #c2,
+                        #c3,
+                        #c4 {
+                            border-radius: 5px;
+                            &::before{
+                                position: absolute;
+                                border-radius: 5px;
+                                content: '';
+                                width: 100%;
+                                height: 100%;
+                                background-color: rgba(0, 0, 0, 0.5);
+                                transition: all 0.3s;
+                            }
+                        }
                         #c1 {
-                            background-color: black;
+                            background: url('@/assets/images/1-8.jpg') no-repeat center/cover;
                             &:hover {
                                 z-index: 100;
                                 transform: translateX(-150px) rotate(0deg) !important;
+                                &::before{
+                                    background-color: rgba(0, 0, 0, 0);
+                                }
                             }
                         }
                         #c2 {
-                            background-color: blue;
+                            background: url('@/assets/images/1-9.jpg') no-repeat center/cover;
                             &:hover{
                                 z-index: 100;
                                 transform: translateX(-100px) rotate(0deg) !important;
+                                &::before{
+                                background-color: rgba(0, 0, 0, 0);
+                            }
                             }
                         }
                         #c3 {
-                            background-color: red;
+                            background: url('@/assets/images/2-1.jpg') no-repeat center/cover;
                             &:hover {
                                 z-index: 100;
-
                                 transform: translateX(-50px) rotate(0deg) !important;
+                                &::before{
+                                    background-color: rgba(0, 0, 0, 0);
+                                }
                             }
                         }
                         #c4 {
-                            background-color: green;
+                            background: url('@/assets/images/2-2.jpg') no-repeat center/cover;
                             &:hover {
                                 transform: translateX(50px) rotate(0deg) !important;
+                                &::before{
+                                    background-color: rgba(0, 0, 0, 0);
+                                }
                             }
                         }
                     }
@@ -358,6 +380,15 @@ export default {
             }
         }
     }
-  
-
+    @keyframes flashing {
+        0% {
+            opacity: 0.5;
+        }
+        80% {
+            opacity: 1;
+        }
+        100%{
+            opacity: 0.5;
+        }
+    }
 </style>
