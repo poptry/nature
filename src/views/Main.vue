@@ -4,7 +4,10 @@
         <div
          @mouseenter="isEnter = true"
          @mouseleave="isEnter = false"
-         :class="{comeout: (isEnter || iscomeout || this.$route.path.includes('circle') || this.$route.path.includes('equipment'))}"
+         :class="{comeout: (isEnter || iscomeout || 
+          this.$route.path.includes('circle') || 
+          this.$route.path.includes('equipment')||
+          this.$route.path.includes('userPersonSys'))}"
          class="nav animate__animated animate__fadeIn">
           <span class="sign" @click="clickSpan">Natrue探险者</span>
           <ul>
@@ -15,11 +18,12 @@
           </ul>
           <!-- 利用计算属性，getter -->
           <div class="my-city">{{ getCity }}</div>
-          <el-dropdown>
+          <el-dropdown
+          @command="handleCommand">
             <el-avatar class="my_avatar" shape="circle" size="medium" :src='user_avatar'></el-avatar>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>个人中心</el-dropdown-item>
-              <el-dropdown-item>退出登录</el-dropdown-item>
+              <el-dropdown-item command="person">个人中心</el-dropdown-item>
+              <el-dropdown-item command="exits">退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
             <!-- <button class="join-us">加入我们</button> -->
@@ -39,12 +43,11 @@
 // 引入底部公共栏
 import  CommonFooter from '@/components/common/CommonFooter'
 import {mapState,mapMutations,mapGetters,mapActions} from 'vuex';
-import {MP} from '@/util/map'
 export default {
     components: {CommonFooter},
     data() {
       return {
-        ak: "zK6RQcckjHGY3jQ9nOp6PBHvI9ZHdjoO", // 百度的地图密钥
+        // ak: "zK6RQcckjHGY3jQ9nOp6PBHvI9ZHdjoO", // 百度的地图密钥
         scrollTop:false,
         isEnter:false,
         user_avatar:'',
@@ -74,6 +77,14 @@ export default {
     methods:{
       ...mapMutations('nav',{changeToolbar:'changeToolbar'}),
       ...mapActions('circle',['setCity']),
+      //下拉菜单事件
+      handleCommand(command){
+        if(command === 'person'){
+          this.$router.push('/userPersonSys').catch(err=>{
+            err
+          })
+        }
+      },
       //获取滚动高度
       handleScroll(){
         this.scrollTop = pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;

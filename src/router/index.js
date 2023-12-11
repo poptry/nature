@@ -10,16 +10,18 @@ import Strategy from '@/views/Strategy'
 import CircleHome from '@/views/CircleChildren/CircleHome'
 import Inbox from '@/views/CircleChildren/Inbox'
 import Equipment from '@/views/Equipment'
-import AllEquipment from '@/views/equipmentChildren/AllEquipment'
+import AllEquipment from '@/views/EquipmentChildren/AllEquipment'
 import Login from '@/views/Login'
 import MyJoinCircle from '@/views/CircleChildren/MyJoinCircle'
-import MenEquipment from '@/views/equipmentChildren/MenEquipment'
-import WomenEquipment from '@/views/equipmentChildren/WomenEquipment'
-import EquipmentDetail from '@/views/equipmentChildren/EquipmentDetail'
+import MenEquipment from '@/views/EquipmentChildren/MenEquipment'
+import WomenEquipment from '@/views/EquipmentChildren/WomenEquipment'
+import EquipmentDetail from '@/views/EquipmentChildren/EquipmentDetail'
 import CircleDetail from '@/views/CircleChildren/CircleDetail'
 import MyCircleDetailChat from '@/views/CircleChildren/MyCircleDetailChat'
 import CircleAlbum from '@/views/CircleChildren/CircleAlbum'
-import Checkout from '@/views/equipmentChildren/Checkout'
+import Checkout from '@/views/EquipmentChildren/Checkout'
+import DetailContent from '@/views/StrategyChildren/DetailContent'
+import UserPersonSys from   '@/views/UserPersonSys'
 //组件和路由映射
 const routes = [
     {path:'/login',component:Login,name:'login'},
@@ -28,6 +30,7 @@ const routes = [
         //二级路由
         children:[
             {path:'home',name:'home',component:Home},//首页
+            {path:'userPersonSys',name:'userPersonSys',component:UserPersonSys},//个人中心页
             //*********圈子
             {
                 path:'circle',
@@ -59,7 +62,8 @@ const routes = [
                 name:'strategy',
                 component:Strategy,
                 children:[
-                    
+                    // {path:'/',redirect:'detailContent'},
+                    // {path:'detailContent',name:'detailContent',component:DetailContent},//攻略详情
                 ]
             },
           //$$$$$$$$$装备

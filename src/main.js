@@ -6,6 +6,8 @@ import 'animate.css'
 import './assets/css/color.css'
 import './assets/css/common.css'
 import './assets/iconfont/iconfont.css'
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+import 'swiper/css/swiper.css'
 
 import { VueJsonp } from 'vue-jsonp';
 import  ClientSocketIO from 'socket.io-client';
@@ -18,6 +20,7 @@ import tool from './util/tool.js'// import socket from './socket';
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.use(tool)
+Vue.use(VueAwesomeSwiper)
 Vue.use(
   new SocketIO({
     debug:false,

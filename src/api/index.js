@@ -75,3 +75,14 @@ export const addScore = (data)=>{
 export const getShopCart = (params)=>{
     return http.get('/product/getShopCart',params)
 }
+
+
+//攻略
+export const getStrategyCollection = (params)=>{
+    return http.get('/strategy/getStrategyCollection',params)
+}
+//获取攻略目录详细内容
+export const getCollectionDetail = (data)=>{
+    //http://localhost:3000/strategy/getCollectionDetail
+    return http.post('/strategy/getCollectionDetail',data)
+}
