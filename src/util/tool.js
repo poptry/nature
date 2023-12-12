@@ -1,6 +1,5 @@
 function dispatchEventStroage() {
     const signSetItem = localStorage.setItem
-    console.log("调用了");
     localStorage.setItem = function(key, val) {
         let setEvent = new Event('setItemEvent')
         setEvent.key = key

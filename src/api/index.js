@@ -50,6 +50,7 @@ export const joinCircle = (data)=>{
 }
 
 //----------商品相关
+//获取商品
 export const getPros = (params)=>{
     return http.get('/product/getPros',params)
 }
@@ -71,12 +72,22 @@ export const getScoreByUser = (params)=>{
 export const addScore = (data)=>{
     return http.post('/score/addScore',data)
 }
+//查询该商品是否被加入购物车了
+export const findShopCart = (params)=>{
+    return http.get('/product/findShopCart',params)
+}
 //用户的购物车
 export const getShopCart = (params)=>{
     return http.get('/product/getShopCart',params)
 }
-
-
+//添加购物车
+export const addShopCart = (data)=>{
+    return http.post('/product/addShopCart',data)
+}
+//删除购物车
+export const deleteShopCart = (data)=>{
+    return http.post('/product/deleteShopCart',data)
+}
 //攻略
 export const getStrategyCollection = (params)=>{
     return http.get('/strategy/getStrategyCollection',params)

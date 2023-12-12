@@ -6,7 +6,7 @@
         <img v-show="!showImage" :src="product.product_prev_img" alt="">
       </div>
       <div class="productInfo">
-        <div>{{ product.product_score }}</div>
+        <div><i style="font-size:18px;color: orange;" class="iconfont icon-pingfenxingxing"></i>{{ product.product_score }}</div>
         <h5>{{product.product_name}}</h5>
         <div class="price">
           <span>£{{ product.product_disc_price }}</span>

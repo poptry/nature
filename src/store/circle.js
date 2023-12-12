@@ -38,7 +38,6 @@ export default {
                 key: 'X34BZ-IMPC3-IQL32-RMZJL-WPDLE-64F33',
                 output: 'jsonp',
             }).then(res=>{
-                console.log(res);
                 //获取到城市
                 const city = res.result.ad_info.city
                 //提交mutations

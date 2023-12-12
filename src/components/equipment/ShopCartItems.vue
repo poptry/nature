@@ -1,6 +1,6 @@
 <template>
   <div class="shopCart">
-    <div class="cartItem" v-for="(s,index) in shopCartList" :key="index">
+    <div class="cartItem" v-for="(s,index) in shopCartList"  @click="toProductDetail(s)" :key="index">
       <div class="item-image">
         <el-image
           style="width: 100px; height: 100px"
@@ -24,22 +24,37 @@
 </template>
 
 <script>
-import { getShopCart } from '@/api';
+import { getShopCart,deleteShopCart } from '@/api';
 export default {
   data(){
     return{
       shopCartList:[],
-      proNum:1
+      proNum:1,
+      user_id:Number
     }
   },
   methods:{
+    toProductDetail(proInfo){
+      this.$router.replace({name:'equipmentDetail',query:{productInfo:JSON.stringify(proInfo)}}).catch(err=>{});
+    },
     //删除购物车某一项
-    deleteProItem(proList){
-      this.shopCartList.forEach((item,index)=>{
-        if(item.product_id === proList.product_id){
-          this.shopCartList.splice(index,1);
-        }
-      })
+    async deleteProItem(proList){
+      //确定要删除吗？
+      await this.$confirm('确定要删除吗？','提示',{
+        confirmButtonText:'确定',
+        cancelButtonText:'取消',
+        type:'warning'
+      }).then(()=>{
+         deleteShopCart({user_id:this.user_id,product_id:proList.product_id}).then(res=>{
+          console.log(res);
+          if(res.data.code === 200){
+            this.getShopCartList();
+          }else{
+            this.$message.error('删除失败');
+          }
+        });
+      }).catch(()=>{
+      });
     },
     //获取购物车列表
     async getShopCartList(){
@@ -55,6 +70,7 @@ export default {
   },
   created(){
     this.getShopCartList();
+    this.user_id = JSON.parse(localStorage.getItem('user')).user_id;
   }
 }
 </script>
@@ -69,6 +85,9 @@ export default {
         display: flex;
         flex-direction: row;
         border-bottom: 1px solid #e3e3e3;
+        &:hover{
+          cursor: pointer;
+        }
       }
       .item-info{
         width: 100%;
