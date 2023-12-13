@@ -22,6 +22,8 @@ import CircleAlbum from '@/views/CircleChildren/CircleAlbum'
 import Checkout from '@/views/EquipmentChildren/Checkout'
 import DetailContent from '@/views/StrategyChildren/DetailContent'
 import UserPersonSys from   '@/views/UserPersonSys'
+import MyInformation from '@/views/UserPersonSysChildren/MyInformation'
+import MyOrder from '@/views/UserPersonSysChildren/MyOrder'
 //组件和路由映射
 const routes = [
     {path:'/login',component:Login,name:'login'},
@@ -30,7 +32,15 @@ const routes = [
         //二级路由
         children:[
             {path:'home',name:'home',component:Home},//首页
-            {path:'userPersonSys',name:'userPersonSys',component:UserPersonSys},//个人中心页
+            {
+                path:'userPersonSys'
+                ,component:UserPersonSys,
+                children:[
+                    {path:'/',redirect:'myInformation'},//我的信息
+                    {path:'myInformation',name:'myInformation',component:MyInformation}, //我的信息页面
+                    {path:'myOrder',name:'myOrder',component:MyOrder}, //我的订单页面
+                ]
+            },//个人中心页
             //*********圈子
             {
                 path:'circle',

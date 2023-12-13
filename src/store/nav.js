@@ -47,7 +47,7 @@ export default {
         changeToolbar(state,toolbarState){
             state.iscomeout = toolbarState
         },
-        //圈子共同侧边栏的控制 0是校园，1是私信 2是我的圈子
+        //圈子共同侧边栏的控制 0是首页，1是私信 2是我的圈子
         changeCommonAside(state,id){
             state.isWhich = id
         },

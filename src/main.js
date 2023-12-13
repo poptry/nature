@@ -8,11 +8,9 @@ import './assets/css/common.css'
 import './assets/iconfont/iconfont.css'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/css/swiper.css'
-
 import { VueJsonp } from 'vue-jsonp';
 import  ClientSocketIO from 'socket.io-client';
 import SocketIO from "vue-socket.io"
-
 import store from './store';
 import router from './router'//引入router from './router
 import tool from './util/tool.js'// import socket from './socket';

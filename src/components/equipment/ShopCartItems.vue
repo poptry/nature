@@ -1,7 +1,7 @@
 <template>
   <div class="shopCart">
-    <div class="cartItem" v-for="(s,index) in shopCartList"  @click="toProductDetail(s)" :key="index">
-      <div class="item-image">
+    <div class="cartItem" v-for="(s,index) in shopCartList"   :key="index">
+      <div class="item-image" @click="toProductDetail(s)">
         <el-image
           style="width: 100px; height: 100px"
           :src="s.product_img"
@@ -10,13 +10,13 @@
       </div>
       <div class="item-info">
         <i class="iconfont icon-shanchu delete" @click="deleteProItem(s)"></i>
-        <h3 class="pro_name" v-text="s.product_name"></h3>
+        <h3 class="pro_name" @click="toProductDetail(s)" v-text="s.product_name"></h3>
         <span class="type">藏青色</span>
-        <span class="size">X</span>
+        <span class="size" v-text="s.size_name"></span>
         <span class="price"  v-text="s.product_orig_price"></span>
         <div class="stockAndNum">
           <span class="stock" v-text="`库存剩余 ${s.product_stock}`"></span>
-          <el-input-number size="mini" v-model="proNum"></el-input-number>
+          <el-input-number @change="changeNumber(s)" :min="1" :max="10" size="mini" v-model="s.shopCart_pronum"></el-input-number>
         </div>
       </div>
     </div>
@@ -24,16 +24,32 @@
 </template>
 
 <script>
-import { getShopCart,deleteShopCart } from '@/api';
+import {deleteShopCart,updateShopCart } from '@/api';
+import { mapState,mapActions } from 'vuex';
 export default {
   data(){
     return{
-      shopCartList:[],
-      proNum:1,
       user_id:Number
     }
   },
+  computed:{
+    ...mapState('product',{
+      shopCartList:state=>state.shopCartList
+    })
+  },
   methods:{
+    ...mapActions('product',['setShopCartList']),
+    //改变商品数量
+    changeNumber(s){
+      updateShopCart({user_id:this.user_id,product_id:s.product_id,shopCart_pronum:s.shopCart_pronum}).then(res=>{
+        if(res.data.code === 200){
+          // this.getShopCartList();
+        }else{
+          this.$message.error('修改失败');
+        }
+      });
+    },
+    //前往商品详细页面
     toProductDetail(proInfo){
       this.$router.replace({name:'equipmentDetail',query:{productInfo:JSON.stringify(proInfo)}}).catch(err=>{});
     },
@@ -46,7 +62,6 @@ export default {
         type:'warning'
       }).then(()=>{
          deleteShopCart({user_id:this.user_id,product_id:proList.product_id}).then(res=>{
-          console.log(res);
           if(res.data.code === 200){
             this.getShopCartList();
           }else{
@@ -59,13 +74,7 @@ export default {
     //获取购物车列表
     async getShopCartList(){
       const user_id = JSON.parse(localStorage.getItem('user')).user_id;
-      const res = await getShopCart({params:{user_id:user_id}}).then(res=>{
-        console.log(res);
-        if(res.status === 200){
-          this.shopCartList = res.data;
-          console.log(this.shopCartList);
-        }
-      });
+      await this.setShopCartList(user_id)
     }
   },
   created(){

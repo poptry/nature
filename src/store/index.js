@@ -5,6 +5,7 @@ import admin from './admin'
 import inbox from './inbox'
 import circle from './circle'
 import equipment from './equipment'
+import product from './product'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -13,6 +14,7 @@ export default new Vuex.Store({
         admin,
         inbox,
         circle,
-        equipment
+        equipment,
+        product
     }
 })

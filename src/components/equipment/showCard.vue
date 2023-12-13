@@ -9,8 +9,8 @@
         <div><i style="font-size:18px;color: orange;" class="iconfont icon-pingfenxingxing"></i>{{ product.product_score }}</div>
         <h5>{{product.product_name}}</h5>
         <div class="price">
-          <span>£{{ product.product_disc_price }}</span>
-          <span>£{{ product.product_orig_price }}</span>
+          <span>{{ product.product_disc_price+"￥" }}</span>
+          <span>{{ product.product_orig_price+"￥" }}</span>
         </div>
       </div>
     </div>

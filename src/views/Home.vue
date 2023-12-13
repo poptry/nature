@@ -37,7 +37,7 @@
             <span class="headtitle" animate__fadeIn animate__fadeOut>前进</span>
         </div>
         <div class="content-two">
-            <div v-for="(i,index) in cardImage" :key="index" class="card" :class="i.class">
+            <div v-for="(i,index) in cardImage" :key="index" @click="$router.push(i.path)" class="card" :class="i.class">
                 <img  class="card-image"  :src="i.url" alt="">
             </div>
         </div>
@@ -80,23 +80,26 @@ export default {
                 {
                     class:'card-image0',
                     index:0,
-                    url:require('@/assets/images/0-3.jpg')
-
+                    url:require('@/assets/images/0-3.jpg'),
+                    path:'circle'
                 },
                 {
                     index:1,
                     class:'card-image1',
-                    url:require('@/assets/images/1-3.jpg')
+                    url:require('@/assets/images/1-3.jpg'),
+                    path:'circle/myjoincircle'
                 },
                 {
                     index:2,
                     class:'card-image2',
-                    url:require('@/assets/images/0-2.jpg')
+                    url:require('@/assets/images/0-2.jpg'),
+                    path:'strategy'
                 },
                 {
                     index:3,
                     class:'card-image3',
-                    url:require('@/assets/images/1-2.jpg')
+                    url:require('@/assets/images/1-2.jpg'),
+                    path:'equipment'
                 }
             ]
         }

@@ -2,8 +2,14 @@
     <div class="equipmentDetail">
       <div class="left">
         <div class="showImage animate__animated animate__fadeInLeft">
-          <img :src="productInfo.product_img" alt="" class="productImage">
-          <img :src="productInfo.product_prev_img" alt="" class="productImage">
+          <div @mouseenter="enterImage" @mouseleave="hideZoom=true">
+            <imgZoomVue  class="productImage"  :hideZoom="hideZoom" :url="productInfo.product_prev_img" :highUrl="productInfo.product_prev_img"></imgZoomVue>
+          </div>
+          <div @mouseenter="enterImage" @mouseleave="hideZoom=true">
+            <imgZoomVue  class="productImage"  :hideZoom="hideZoom"  :url="productInfo.product_img" :highUrl="productInfo.product_img"></imgZoomVue>
+          </div>
+          <!-- <img :src="productInfo.product_img" alt="" class="productImage">
+          <img :src="productInfo.product_prev_img" alt="" class="productImage"> -->
         </div>
         <div class="right animate__animated animate__fadeInRight">
           <h2 class="title">{{ productInfo.product_name }}</h2>
@@ -21,21 +27,33 @@
           <!-- 我的评分 -->
           <!-- 商品价格开始 -->
           <div class="price">
-            <span>{{ productInfo.product_disc_price }}</span>
-            <span>{{ productInfo.product_orig_price }}</span>
+            <span>{{ productInfo.product_disc_price+"￥" }}</span>
+            <span>{{ productInfo.product_orig_price+"￥" }}</span>
           </div>
           <!-- 商品价格结束 -->
+          <!-- 商品描述 -->
           <p class="describe">{{ productInfo.product_describe }}</p>
-          <div class="button-group">
-            <button :disabled="disabledShopCart" @click="addShopCart" class="addShopCart" :class="{disabled:disabledShopCart}">加入购物车</button>
-            <button></button>
+          <!-- 描述结束 -->
+          <!-- size -->
+          <div class="sizeButton">
+            <el-checkbox-group @change="changeSize" v-model="chooseSize">
+              <el-checkbox-button v-for="(size,index) in sizes" :label="size" :key="index">{{size}}</el-checkbox-button>
+            </el-checkbox-group>
           </div>
+          <!-- size -->
+          <!-- 按钮组 -->
+          <div class="button-group">
+            <el-input-number v-model="num" @change="handleChange" :min="1" :max="10"></el-input-number>
+            <button :disabled="disabledShopCart" @click="addShopCart" class="addShopCart" :class="{disabled:disabledShopCart}">加入购物车</button>
+          </div>
+          <!-- 按钮组结束 -->
         </div>
       </div>
     </div>
 </template>
 <script>
 import {getScoreByPro,addScore,getScoreByUser,addShopCart,findShopCart} from '@/api'
+import imgZoomVue from '@/components/common/imgZoom.vue';
 const LENGTH = 5;
 // 星星对应的class,亮星
 const CLS_ON = "icon-star-full";
@@ -46,6 +64,13 @@ const CLS_OFF = "icon-star";
 export default {
   data(){
     return{
+      chooseSize:[],
+      //尺寸
+      sizes:['S','M','L','XL','XXL'],
+      //商品数量
+      num:1,
+      //显示放大镜
+      hideZoom:true,
       //定义变量控制商品在购物车的状态
       disabledShopCart:false,
       //未初始化，有风险
@@ -79,6 +104,7 @@ export default {
     }
   },
   components:{
+    imgZoomVue
   },
   computed:{
     //计算属性，计算星星的class
@@ -107,6 +133,19 @@ export default {
     }
   },
   methods:{
+    //改变size
+    changeSize(){
+      console.log(this.chooseSize);
+    },
+    //数量加减
+    handleChange(){
+
+    },
+    //
+    enterImage(){
+      this.hideZoom = false
+      console.log(this.hideZoom);
+    },
     //查询购物车中是否存在该商品
     findShopCart(){
       //获取userid
@@ -208,7 +247,8 @@ export default {
     display: flex;
     justify-content: flex-start;
     flex-wrap: wrap;
-    margin-top: 40px;
+    margin-top: 20px;
+    user-select: none;
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     .left{
       width: 100%;
@@ -223,13 +263,11 @@ export default {
           width: 400px;
           height: auto;
           margin-right: 20px;
-          &:hover{
-            transform: scale(1.3);
-          }
         }
       }
     }
     .right{
+      position: relative;
       width: 100%;
       .score{
         display: flex;
@@ -268,9 +306,25 @@ export default {
       .describe{
         word-break: break-all;
       }
+      .sizeButton{
+        position: absolute;
+        bottom: 200px;
+      }
       .button-group{
+        position: absolute;
+        bottom: 100px;
+        left: 0;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        .el-input-number{
+          width: 35%;
+          height: 100%;
+        }
         .addShopCart{
-          width: 80%;
+          width: 60%;
           padding: 15px;
           outline: none;
           border: none;

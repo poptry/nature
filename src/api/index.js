@@ -45,10 +45,16 @@ export const getCircleOwner = (params)=>{
 export const getCircleMsgs = (params)=>{
     return http.get('/circle/getCircleChat',params)
 }
+//加入圈子
 export const joinCircle = (data)=>{
     return http.post('/circle/joinCircle',data)
 }
-
+//新建圈子
+export const createMyCircle = (data)=>{
+    return http.post('/circle/createMyCircle',data,{
+        headers: {'Content-Type':'multipart/form-data'}
+    })
+}
 //----------商品相关
 //获取商品
 export const getPros = (params)=>{
@@ -80,6 +86,10 @@ export const findShopCart = (params)=>{
 export const getShopCart = (params)=>{
     return http.get('/product/getShopCart',params)
 }
+//更改用户商品数量
+export const updateShopCart = (data)=>{
+    return http.post('/product/updateShopCart',data)
+}
 //添加购物车
 export const addShopCart = (data)=>{
     return http.post('/product/addShopCart',data)
@@ -88,6 +98,12 @@ export const addShopCart = (data)=>{
 export const deleteShopCart = (data)=>{
     return http.post('/product/deleteShopCart',data)
 }
+//获取用户的订单
+export const getOrders = (params)=>{
+    return http.get('/product/getOrders',params)
+}
+
+
 //攻略
 export const getStrategyCollection = (params)=>{
     return http.get('/strategy/getStrategyCollection',params)

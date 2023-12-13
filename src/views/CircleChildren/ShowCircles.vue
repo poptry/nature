@@ -35,6 +35,7 @@ export default {
         ...mapGetters('nav',['getNowNav']),
         //获取城市
         ...mapGetters('circle',['getCity']),
+        //过滤数组
         filterCircleInfo(){
             //全部
             if(this.getNowNav==0){
@@ -50,8 +51,8 @@ export default {
         }
     },
     created(){
+        //获取圈子的信息
         getCircleInfo().then((res) => {
-            console.log(res);
             if(res.status === 200){
                 this.circleInfo = res.data
             }

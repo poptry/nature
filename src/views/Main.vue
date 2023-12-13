@@ -47,7 +47,6 @@ export default {
     components: {CommonFooter},
     data() {
       return {
-        // ak: "zK6RQcckjHGY3jQ9nOp6PBHvI9ZHdjoO", // 百度的地图密钥
         scrollTop:false,
         isEnter:false,
         user_avatar:'',
@@ -83,6 +82,16 @@ export default {
           this.$router.push('/userPersonSys').catch(err=>{
             err
           })
+        }else if(command === 'exits'){
+          this.$router.push('/login').catch(err=>{
+            err
+          })
+          //清空本地存储
+          localStorage.removeItem('user')
+          localStorage.removeItem('friendId')
+          localStorage.removeItem('city')
+          sessionStorage.removeItem('circleId')
+          sessionStorage.removeItem('city')
         }
       },
       //获取滚动高度

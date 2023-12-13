@@ -97,6 +97,7 @@ export default {
         },
         toCheckout(){
             this.$router.push({path:'checkout'}).catch(err=>err)
+            this.drawer = false
         }
     }
 }
@@ -105,6 +106,7 @@ export default {
     .menu-container{
         height: 100%;
         width: 100%;
+        user-select: none;
         .menu-main{
             height: 100%;
             flex: 1;

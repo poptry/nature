@@ -113,6 +113,7 @@ export default {
 
 <style lang="less" scoped>
     .category-container{
+        user-select: none;
         display: flex;
         justify-content: space-between;
         align-items: center;

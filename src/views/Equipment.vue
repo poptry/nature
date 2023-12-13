@@ -1,6 +1,6 @@
 <template>
     <el-container class="equipment-container">
-        <el-header class="header">
+        <el-header class="header"  v-show="!($route.name==`checkout`) ">
             <MenuSectionVue></MenuSectionVue>
         </el-header>
         <el-main>
@@ -39,8 +39,8 @@ export default {
         }
         .el-main{
             width: 1280px;
+            min-height: 698px;
             padding-top: 0;
-            // max-width: 1280px;
             margin: 0 auto;
             .category-menu{
                 width: 100%;
