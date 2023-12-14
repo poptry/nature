@@ -100,7 +100,7 @@
 
 <script>
 import {createMyCircle} from  '@/api'
-import { mapState,mapMutations } from 'vuex';
+import { mapState,mapMutations,mapActions} from 'vuex';
 export default {
   data(){
     return{
@@ -156,6 +156,9 @@ export default {
     ...mapMutations('nav',{
       changeCommonAside:'changeCommonAside',
     }),
+    ...mapActions('circle',{
+      setMyCircle:'setMyCircle'
+    }),
     //确认创建圈子
     async submitCreateCircle(){
       //验证表单
@@ -190,6 +193,10 @@ export default {
                 loading.close();
                 //提示
                 this.$message.success(`${res.data.res.msg}`)
+                //如果现在在圈子页面，就刷新页面
+                if(this.$route.path.includes('/circle/myjoincircle')){
+                  this.setMyCircle(this.userInfo.user_id)
+                }
                 //关闭弹窗
                 this.dialogVisible = false
                 //重置表单

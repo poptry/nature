@@ -177,7 +177,7 @@ export default {
                         });
                         clearTimeout(timer)
                         this.$message.success("支付成功")
-                        this.$router.push('userPersonSys/myOrder')
+                        this.$router.push('/userPersonSys/myOrder')
                     },2000)
                 }
             })

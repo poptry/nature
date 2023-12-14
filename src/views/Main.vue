@@ -142,7 +142,6 @@ export default {
       this.setCity()
     },
     destroyed(){
-      console.log('注销了');
       removeEventListener('scroll',this.handleScroll)//注销滚动事件
       removeEventListener('setItemEvent',this.handleSetItemEvent)//注销滚动事件
     }

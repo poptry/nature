@@ -10,8 +10,6 @@ export default {
         async setShopCartList({commit},user_id){
             await getShopCart({params:{user_id:user_id}}).then(res=>{
                 if(res.status === 200){
-                //   this.shopCartList = res.data;
-                //   console.log(this);
                   commit('setShopCartList',res.data);
                 }
             });

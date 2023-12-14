@@ -4,7 +4,7 @@
         <span v-text="title"></span>
     </div>
     <div class="circles">
-        <div v-for="circle in myCircles" :class="{active:circle.circle_id==getNowCircleNav}" :key="circle.circle_id" class="circle" @click="clickCircle(circle)">
+        <div v-for="circle in getMyCircle" :class="{active:circle.circle_id==getNowCircleNav}" :key="circle.circle_id" class="circle" @click="clickCircle(circle)">
             <el-avatar class="circle-avatar" shape="square" size="medium" :src="circle.circle_avatar"></el-avatar>
             <span class="circle-name" v-text="circle.circle_name"></span>
         </div>
@@ -13,19 +13,18 @@
 </template>
 
 <script>
-import { mapGetters,mapMutations} from 'vuex'
-import {getMyCircle} from '@/api'
+import { mapGetters,mapMutations,mapActions} from 'vuex'
 export default {
     data(){
         return{
-            myCircles:[],
             title:''
         }
     },
     computed:{
-        ...mapGetters("circle",['getNowCircleNav'])
+        ...mapGetters("circle",['getNowCircleNav','getMyCircle'])
     },
     methods:{
+        ...mapActions("circle",['setMyCircle']),
         //得到store中的mutations,以此更改提交circle_id的值
         ...mapMutations("circle",['changeCircleId']),
         //点击圈子，跳转到圈子详情页，并且将圈子id状态更改
@@ -37,14 +36,15 @@ export default {
     created(){
         this.title = '我的圈子'
         const {user_id} = JSON.parse(localStorage.getItem('user'))
+        this.setMyCircle(user_id)
         //根据用户id，获取用户加入的圈子
-        getMyCircle({params:{user_id}}).then(res=>{
-            if(res.status === 200){
-                this.myCircles = res.data
-            }
-        }).catch(erro=>{
-            console.log(erro);
-        })
+        // getMyCircle({params:{user_id}}).then(res=>{
+        //     if(res.status === 200){
+        //         this.myCircles = res.data
+        //     }
+        // }).catch(erro=>{
+        //     console.log(erro);
+        // })
     }
 }
 </script>

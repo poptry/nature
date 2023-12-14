@@ -40,8 +40,8 @@ export default {
     methods: {
         login() {
             login({params:this.userInfo}).then((response)=>{
-                console.log(response);
                 if(response.status === 200){
+                    console.log(delete response.data[0].user_pwd);
                     localStorage.setItem('user',JSON.stringify(response.data[0]))
                     this.$router.push('/')
                 }}).catch(err=>{

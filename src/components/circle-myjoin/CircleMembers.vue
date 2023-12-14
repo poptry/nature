@@ -12,30 +12,34 @@
     </div>
     <el-dialog
     :show-close="false"
-    :visible.sync="dialogVisible"
+    :visible.sync="showFriendInfo"
+    :before-close="handlerClose"
     top="15vh"
     width="30%">
-        <UserInfoShowVue :member="member"></UserInfoShowVue>
+        <UserInfoShowVue :member="member" :showBtn="true"></UserInfoShowVue>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { mapGetters} from 'vuex'
+import {isApply} from '@/api'
+import { mapGetters,mapState,mapMutations} from 'vuex'
 import UserInfoShowVue from '../common/UserInfoShow.vue'
 export default {
     data(){
         return{
             ownerInfo:{},
             members:[],
-            dialogVisible:false,
-            member:{}
+            member:{},
+            user_id:Number,
+            disabled:false
         }
     },
     components:{
         UserInfoShowVue
     },
     computed:{
+        ...mapState('inbox',['showFriendInfo']),
         ...mapGetters("circle",['getCircleMembers','getCircleOwner'])
     },
     watch:{
@@ -50,14 +54,31 @@ export default {
         }
     },
     methods:{
-        clickMember(m){
-            this.dialogVisible = true
-            this.member = m
+        ...mapMutations('inbox',['changeShowFriendInfo']),
+        handlerClose(){
+            this.changeShowFriendInfo(false)
+        },
+        async clickMember(m){
+            //更改dialog状态
+            this.changeShowFriendInfo(true)
             console.log(m);
+            await isApply({params:{user_id:this.user_id,friend_id:m.user_id}}).then(res=>{
+                console.log(res);
+                if(res.data.code == 200 && res.data.res.length > 0){
+                    this.disabled = true
+                }else{
+                    this.disabled = false
+                }
+            })
+            //如果申请过了或者是好友了，就禁止添加好友的按钮可以按下 
+            m.disabled = this.disabled
+            console.log(m.disabled);
+            this.member = m
         }
     },
     created(){
-
+        const user_id = JSON.parse(localStorage.getItem('user')).user_id
+        this.user_id = user_id
     }
 }
 </script>

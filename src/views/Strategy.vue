@@ -10,7 +10,7 @@
       <span class="paginations" v-for="(d,index) in detailList" :key="index" @click="clickDetail(d)">{{ d.collection_detail }}</span>
     </div>
     <div class="create">
-      <button class="createbtn" @click="createStrategy">+ Create a new strategy</button>
+      <button class="createbtn" @click="createStrategy">发布攻略</button>
     </div>
     <div class="detail-content">
       <DetailContentVue></DetailContentVue>

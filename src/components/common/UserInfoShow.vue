@@ -12,7 +12,7 @@
                     </div>
                 </div>
             </div>
-            <el-button class="private animate__animated animate__flipInX" icon="el-icon-plus" type="primary" round>好友</el-button>
+            <el-button v-if="showBtn" :disabled = 'member.disabled || member.user_id === user_id'  @click="addInbox(member)" class="private animate__animated animate__flipInX" icon="el-icon-plus" type="primary" round>好友</el-button>
         </div>
         <div class="motto">
             <span>个人签名:</span>
@@ -30,12 +30,39 @@
 </template>
 
 <script>
+import {addFriend} from '@/api'
+import { mapMutations } from 'vuex'
 export default {
-    props:['member'],
+    props:['member','showBtn'],
     data(){
         return{
-            
+            user_id:Number
         }
+    },
+    computed:{
+    },
+    methods:{
+        ...mapMutations('inbox',['changeShowFriendInfo']),
+        addInbox(member){
+            console.log(member);
+            const user_id = JSON.parse(localStorage.getItem('user')).user_id
+            //添加好友
+            addFriend({user_id,friend_id:member.user_id}).then(res=>{
+                if(res.data.code == 200){
+                    this.changeShowFriendInfo(false)
+                    this.$message({
+                        message: '申请成功',
+                        type: 'success'
+                    });
+                }
+            })
+        }
+    },
+    created(){
+        this.user_id = JSON.parse(localStorage.getItem('user')).user_id
+    },
+    activated(){
+        console.log(this.member);
     }
 }
 </script>

@@ -2,9 +2,12 @@
     <div class="container">
         <div class="title">
             <span v-text="title"></span>
+            <el-badge is-dot :hidden="hidden" class="item">
+                <i style="margin-left: 20px;" @click="dialogVisible=true" class="el-icon-s-promotion"></i>
+            </el-badge>
         </div>
         <div class="friends-container">
-            <div v-for="friend in friendInfo" @click="clickFriend(friend)" class="friend" :class="{active:friend.user_id == nowFriend}"  :key="friend.friendId" >
+            <div v-for="friend in getMyFriends" @click="clickFriend(friend)" class="friend" :class="{active:friend.user_id == nowFriend}"  :key="friend.friendId" >
                 <div class="friendImg">
                     <el-avatar :size="40" :src="friend.user_avatar"></el-avatar>
                 </div>
@@ -15,23 +18,46 @@
                 </div>
             </div>
         </div>
+        <el-dialog
+        title="通知"
+        :visible.sync="dialogVisible"
+        :modal="false"
+        width="40%"
+        top="20vh"
+        :before-close="handleClose">
+            <div style="height: 400px !important;overflow-y: scroll;padding: 10px;overflow-x: hidden;">
+                 <ApplyCardVue v-for="item in applyUser" :key="item.user_id" :applyUser="item"></ApplyCardVue>
+            </div>
+        </el-dialog>
     </div>
 </template>
 
 <script>
-import { mapGetters,mapMutations } from 'vuex'
-import {getFriends} from '@/api'
+import {getApply} from '@/api'
+import { mapGetters,mapMutations,mapActions } from 'vuex'
+import ApplyCardVue from '../common/ApplyCard.vue'
 export default {
     data(){
         return{
             friendInfo:[],
             userId:'',
+            hidden:true,
+            dialogVisible:false,
+            applyUser:[]
         }
     },
+    components:{
+        ApplyCardVue
+    },
     methods:{
+        ...mapActions('inbox',['setMyFriends']),
         ...mapMutations('nav',{
             changeFriendNav:'changeFriendNav'
         }),
+        //关闭dialog
+        handleClose(){
+            this.dialogVisible = false
+        },
         //点击私信朋友事件
         clickFriend(friend){
             console.log('getter',this.$store.getters['nav/getNowFriendNav']);
@@ -42,16 +68,19 @@ export default {
         ...mapGetters("nav",{
             nowFriend:'getNowFriendNav',
         }),
+        ...mapGetters('inbox',['getMyFriends'])
     },
-    created(){
+    async created(){
         this.title = '私信'
         this.userId = JSON.parse(localStorage.getItem('user')).user_id
-        getFriends({params:{user_id:this.userId}}).then((res)=>{
-            if(res.status === 200){
-                this.friendInfo = res.data
-                console.log(res.data);
+        //请求所有申请的用户
+        await getApply({params:{user_id:this.userId}}).then((res)=>{
+            this.applyUser = res.data
+            if(this.applyUser.length > 0){
+                this.hidden = false
             }
         })
+        this.setMyFriends(this.userId)
     }
 }
 </script>
@@ -90,6 +119,9 @@ export default {
                 margin-left: 5px;
                 h4{
                     font-size: 16px;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
                 }
                 p{
                     font-size: 14px;

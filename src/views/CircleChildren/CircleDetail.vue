@@ -11,9 +11,7 @@
                         <i @click="dialogVisible=!dialogVisible" class="iconfont icon-shezhi"></i>
                     </div>
                     <!-- 顶部导航 -->
-
                     <!-- <MyCircleDetailChat></MyCircleDetailChat> -->
-                    
                     <!-- 展示内容 -->
                     <div class="content">
                         <keep-alive>
@@ -47,7 +45,9 @@
                     </el-button-group>
                 </el-col>
             </el-row>
-            <span>背景图片</span>
+            <el-row>
+                <button @click="existCircle" style="border: 0;border-radius: 5px;color: white;background-color: #40afff;padding: 10px;">退出圈子</button>
+            </el-row>
         </el-dialog>
     </div>
 </template>
@@ -88,9 +88,29 @@ export default {
     },
     methods:{
         ...mapMutations("circle",['setTransparency','changeIssueDialogState']),
-        ...mapActions("circle",['setCircleMembers','setCircleOwner']),
+        ...mapActions("circle",['setCircleMembers','setCircleOwner','quitMyCircle']),
         sendMsg(){
             console.log(this.inputMsg);
+        },
+        //existCircle
+        existCircle(){
+            this.$confirm('确认退出圈子?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+                }).then(() => {
+                    const user_id = JSON.parse(localStorage.getItem('user')).user_id
+                    this.quitMyCircle({user_id,circle_id:this.circle_id})
+                    this.$message({
+                        type: 'success',
+                        message: '删除成功!'
+                    });
+                }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除'
+                });          
+            });
         },
         //关闭设置弹窗前
         beforeCloseDialog(){

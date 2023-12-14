@@ -1,10 +1,11 @@
-import {getCircleMembers,getCircleOwner} from '@/api/index.js'
+import {getCircleMembers,getCircleOwner,getMyCircle,quitCircle} from '@/api/index.js'
 import Vue from 'vue'
 export default {
     //设置命名空间
     namespaced:true,
     state:{
         circleId:'',//记录当前点击的圈子的id
+        myCircle:[],//用户的圈子
         circleInfo:{},
         circleMembers:[],
         circleOwner:{},
@@ -14,8 +15,8 @@ export default {
     },
     actions:{
         //异步获取圈子的成员，并赋值给circleMembers
-        setCircleMembers(context,circle_id){
-            getCircleMembers({params:{circle_id:circle_id}}).then((res)=>{
+        async setCircleMembers(context,circle_id){
+            await getCircleMembers({params:{circle_id:circle_id}}).then((res)=>{
                 if(res.status==200)
                     context.commit('setCircleMembers',res.data)
             }).catch((err)=>{
@@ -23,8 +24,8 @@ export default {
             })
         },
         //异步获取圈主信息
-        setCircleOwner(context,circle_id){
-            getCircleOwner({params:{circle_id:circle_id}}).then((res)=>{
+        async setCircleOwner(context,circle_id){
+            await getCircleOwner({params:{circle_id:circle_id}}).then((res)=>{
                 if(res.status==200)
                     context.commit('setCircleOwner',res.data)
             }).catch((err)=>{
@@ -45,9 +46,35 @@ export default {
             }).catch(err=>{
                 console.log(err);
             })
+        },
+        //异步获取用户加入的圈子的信息
+        async setMyCircle(context,user_id){
+            const res = await getMyCircle({params:{user_id}}).then(res=>{
+                if(res.status === 200){
+                    //提交mutations
+                    context.commit('setMyCircle',res.data)
+                }
+            }).catch(erro=>{
+                console.log(erro);
+            })
+        },
+        //退出圈子
+        async quitMyCircle(context,data){
+            const res = await quitCircle(data).then(res=>{
+                if(res.status === 200){
+                    //提交mutations
+                    // context.commit('setMyCircle',res.data)
+                }
+            }).catch(erro=>{
+                console.log(erro);
+            })
         }
     },
     getters:{
+        //获取用户加入的圈子
+        getMyCircle(state){
+            return state.myCircle
+        },
         //发布弹窗
         showIssueDialogState(state){
             return state.showIssueDialog
@@ -86,6 +113,10 @@ export default {
         }
     },
     mutations:{
+        //获取用户加入的圈子
+        setMyCircle(state,data){
+            state.myCircle = data
+        },
         //改变弹窗的状态
         changeIssueDialogState(state,status){
             state.showIssueDialog = status

@@ -3,6 +3,7 @@
       <div class="change-photo-zoom">
         <el-upload
           class="avatar-uploader"
+          :class="{'avatar-uploader-white':!getTheme}"
           action="''"
           :data="userInfo"
           :auto-upload="false"
@@ -21,6 +22,7 @@
   
   <script>
   import {updateAvatar} from '@/api'
+  import { mapGetters } from 'vuex';
   export default {
     data() {
         return {
@@ -30,6 +32,9 @@
           file:{},
           userInfo:JSON.parse(localStorage.getItem('user')),
         };
+      },
+      computed:{
+        ...mapGetters('user',['getTheme'])
       },
       methods: {
         handleLicensePreview(file) {
@@ -77,7 +82,7 @@
           .avatar-uploader{
             width: 100px;
             height: 100px;
-            border: 1px solid #d9d9d9;
+            border: 1px dashed #d9d9d9;
             border-radius: 50%;
             cursor: pointer;
             position: relative;
@@ -87,6 +92,7 @@
               height: 100px;
               display: block;
             }
+
             .avatar-uploader-icon {
               position: absolute;
               top: 50%;
@@ -99,6 +105,9 @@
               line-height: 80px;
               text-align: center;
             }
+          }
+          .avatar-uploader-white{
+            border: 1px dashed #3b3b3b;
           }
           .btn {
               width: 100px;
