@@ -81,11 +81,11 @@ export default {
                     name:'评分从高到低',
                     type:'scoreDesc'
                 },
-                {
-                    id:'3',
-                    name:'销量从低到高',
-                    type:'salesAsc'
-                },
+                // {
+                //     id:'3',
+                //     name:'销量从低到高',
+                //     type:'salesAsc'
+                // },
             ],
             classificationList:[],
             sortList:[],
@@ -94,17 +94,19 @@ export default {
     },
     methods:{
         ...mapMutations('equipment',{
-            getProsByClassify:'getProsByClassify'
+            getProsByClassify:'getProsByClassify',
+            commitClassify:'commitClassify'
         })
     },
     watch:{
         classificationList(val){
             this.params.type = val
+            console.log(this.params);
+            this.commitClassify(this.params)
             this.getProsByClassify(this.params)
         },
         sortList(val){
             this.params.sort = val
-            console.log(this.params.sort);
             this.getProsByClassify(this.params)
         }
     }

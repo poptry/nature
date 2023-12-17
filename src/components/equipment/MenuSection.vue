@@ -10,7 +10,7 @@
             </div>
             <div class="icons">
                 <i @click="drawer=true" class="iconfont icon-shangjiaduanicon-"></i>
-                <i class="iconfont icon-jushoucang favorite"></i>
+                <!-- <i class="iconfont icon-jushoucang favorite"></i> -->
             </div>
         </div>
         <el-drawer
@@ -21,16 +21,6 @@
                 <ShopCartItemsVue></ShopCartItemsVue>
             </div>
             <div class="someOptions">
-                <div class="money">
-                    <div class="shipping">
-                        <span>免运费</span>
-                        <span>6￥</span>
-                    </div>
-                    <div class="total">
-                        <span>总计</span>
-                        <span>100￥</span>
-                    </div>
-                </div>
                 <button @click="toCheckout" class="to-checkout">去结算</button>
             </div>
         </el-drawer>
@@ -77,19 +67,17 @@ export default {
         }),
         //搜索按钮事件
         searchEquipment(){
-            if(this.searchContent){
-                console.log('搜索内容：'+this.searchContent);
-                const params = {
-                    proName:this.searchContent
-                }
-                console.log(this.$route.name);
-                if(this.$route.name=='allEquipment'){
-                    this.getEquipmentPros(params)
-                }else if(this.$route.name=='menEquipment'){
-                    this.getMenEquipmentPros(params)
-                }else{
-                    this.getWomenEquipmentPros(params)
-                }
+            console.log('搜索内容：'+this.searchContent);
+            const params = {
+                'proName':this.searchContent
+            }
+            console.log(this.$route.name);
+            if(this.$route.name=='allEquipment'){
+                this.getEquipmentPros(params)
+            }else if(this.$route.name=='menEquipment'){
+                this.getMenEquipmentPros(params)
+            }else{
+                this.getWomenEquipmentPros(params)
             }
         },
         selectNav(n){

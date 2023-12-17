@@ -54,9 +54,9 @@
       <!-- 消息输入框结束 -->
     </div>
     <!-- 私信记录开始 -->
-    <div class="right">
+    <!-- <div class="right">
       私信记录
-    </div>
+    </div> -->
     <!-- 私信记录结束 -->
   </div>
 </template>
@@ -176,7 +176,7 @@ export default {
     min-width: 880px;
     .left{
       height: 100%;
-      width: 70%;
+      width: 100%;
       .msg-box{
         width: 100%;
         height: 70%;

@@ -1,10 +1,11 @@
 <template>
   <div class="contain-card animate__animated animate__fadeIn">
     <div class="card" @click="clickCard">
-        <el-image  :src="circleInfo.circle_preview" lazy></el-image>
+        <el-image style="width: 193px;height: 140px;" fit="cover" :src="circleInfo.circle_preview" lazy></el-image>
         <div class="related">
             <div class="owner-avatar">
-                <el-avatar shape="square" :size="50" :src="circleInfo.circle_avatar"></el-avatar>
+                <img width="60px" height="60px" style="border-radius: 5px;" :src="circleInfo.circle_avatar" alt="">
+                <!-- <el-avatar fit="contain" shape="square" :size="50" :src="circleInfo.circle_avatar"></el-avatar> -->
             </div>
             <div class="circle-profile">
                 <h4 class="circle-title">{{circleInfo.circle_name}}</h4>
@@ -69,7 +70,7 @@ export default {
         .card {
             position: relative;
             width: 100%;
-            height: 280px;
+            height: 300px;
             padding: 10px;
             background-color: rgba(255, 255, 255, 0.074);
             border: 1px solid rgba(255, 255, 255, 0.222);
@@ -138,8 +139,14 @@ export default {
                 }
                 .circle-profile{
                     .circle-people{
+                        width: 100%;
                         margin-top: 5px;
                         font-size: 14px;
+                        word-break: break-all;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+
                     }
                 }
             }

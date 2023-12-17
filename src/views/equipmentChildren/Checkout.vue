@@ -14,6 +14,7 @@
         <!-- 标题区 -->
         <!-- 商品展示 -->
         <div class="proList" v-for="item in shopCartList" :key="item.shopCart_id">
+            <i class="iconfont icon-shanchu delete" @click="deleteProItem(item)"></i>
             <div class="proInfo">
                 <img class="proImg" :src="item.product_img" alt="">
                 <div class="pro_text">
@@ -124,10 +125,10 @@ export default {
             user_id:Number,
             detailadd:'',
             userInfo:{
-                user_name:'',
-                user_address:'',
-                user_phone:'',
-                user_remark:'',
+                user_name:'黄海波',
+                user_address:'闽南师范',
+                user_phone:'133333333333',
+                user_remark:'无',
             },
             rules:{
                 user_name: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
@@ -147,6 +148,24 @@ export default {
     },
     methods:{
         ...mapActions('product',['setShopCartList']),
+        //删除购物车项目
+        async deleteProItem(proList){
+            console.log(proList);
+            await this.$confirm('确定要删除吗？','提示',{
+                confirmButtonText:'确定',
+                cancelButtonText:'取消',
+                type:'warning'
+            }).then(()=>{
+                deleteShopCart({user_id:this.user_id,product_id:proList.product_id}).then(res=>{
+                if(res.data.code === 200){
+                    this.getShopCartList();
+                }else{
+                    this.$message.error('删除失败');
+                }
+                });
+            }).catch(()=>{
+            });
+        },
         //控制弹窗关闭
         handleClose(){
             this.dialogVisible = false
@@ -270,12 +289,23 @@ export default {
             }
         }
         .proList{
+            position: relative;
             width: 100%;
             padding: 10px;
             display: flex;
             justify-content: center;
             align-items: center;
             border-bottom: 1px solid #c9c9c9;
+            .delete{
+                position: absolute;
+                right: 40px;
+                top: 20px;
+                font-size: 20px;
+                color: #c9c9c9;
+                &:hover{
+                    cursor: pointer;
+                }
+            }
             .proInfo{
                 width: 100%;
                 height: 120px;

@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "10885314",
+      "name": "移除",
+      "font_class": "yichu",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "28757133",
+      "name": "talk-off",
+      "font_class": "talk-off",
+      "unicode": "e691",
+      "unicode_decimal": 59025
+    },
+    {
       "icon_id": "15463301",
       "name": "评分、星星",
       "font_class": "pingfenxingxing",

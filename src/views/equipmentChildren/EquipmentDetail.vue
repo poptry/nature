@@ -16,7 +16,8 @@
           <!-- 商品评分开始 -->
           <div class="score" v-if="rating">
             <i v-for="(item,index) in scoreClasses" :key="index" class="iconfont" :class="item"></i>
-            <a href="">前往评分</a>
+            <!-- <a href="">前往评分</a> -->
+            <span>评分</span>
           </div>
           <!-- 商品评分结束 -->
           <!-- 我的评分呢 -->
@@ -308,11 +309,11 @@ export default {
       }
       .sizeButton{
         position: absolute;
-        bottom: 200px;
+        bottom: 100px;
       }
       .button-group{
         position: absolute;
-        bottom: 100px;
+        bottom: 0px;
         left: 0;
         width: 100%;
         display: flex;

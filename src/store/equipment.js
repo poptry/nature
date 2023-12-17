@@ -5,52 +5,54 @@ export default {
     namespaced:true,
     state:{
         EquipmentPros:[],
-        EquipProsBackups:[] //用作备份，不做任何修改删除操作
+        EquipProsBackups:[], //用作备份，不做任何修改删除操作
+        classifyList:{}
     },
     actions:{
         //获取所有商品信息Action,根据传入的参数，判断是获取所有商品还是获取某一类商品,用作
         // 搜索功能
-        getEquipmentPros({commit},params){
+        async getEquipmentPros({commit},params){
             if(params){
                 //如果传入了参数，就根据参数获取商品信息
-                getPros({params}).then(data=>{
+                await getPros({params}).then(data=>{
                     if(data.status === 200){;
                         commit('getEquipment',data.data)
                     }
                 })
             }else{
                 //如果没有传入参数，就获取所有商品信息
-                getPros().then(data=>{
+                await getPros().then(data=>{
                     if(data.status === 200)
                     commit('getEquipment',data.data)
                 })
             }
         },
         //获取男装商品信息
-        getMenEquipmentPros({commit},params){
+        async getMenEquipmentPros({commit},params){
             if(params){
-                getMenPros({proName}).then(data=>{
+                await getMenPros({params}).then(data=>{
                     if(data.status === 200){;
                         commit('getEquipment',data.data)
                     }
                 })
             }else{
-                getMenPros().then(data=>{
+                await getMenPros().then(data=>{
+                    console.log(data);
                     if(data.status === 200)
                     commit('getEquipment',data.data)
                 })
             }
         },
         //获取女装商品信息
-        getWomenEquipmentPros({commit},params){
+        async getWomenEquipmentPros({commit},params){
             if(params){
-                getWomenPros({params}).then(data=>{
+                await getWomenPros({params}).then(data=>{
                     if(data.status === 200){;
                         commit('getEquipment',data.data)
                     }
                 })
             }else{
-                getWomenPros().then(data=>{
+                await getWomenPros().then(data=>{
                     console.log('女装');
                     if(data.status === 200)
                     commit('getEquipment',data.data)
@@ -79,6 +81,7 @@ export default {
                     return params.type.includes(item.product_classification)
                 })
             }
+            console.log(state.EquipmentPros);
             //这个是根据条件进行排序，比如价格升序，价格降序，销量升序，销量降序
             if(params.sort&&params.sort.length !== 0){
                 if(params.sort.includes('priceAsc')){
@@ -113,6 +116,10 @@ export default {
                     })
                 }    
             }
+        },
+        //提交分类
+        commitClassify(state,params){
+            state.classifyList = params
         }
     }
 }

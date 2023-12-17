@@ -60,12 +60,9 @@ export default {
     },
     watch:{
         getNowCircleNav(){
-            // console.log(this.getNowCircleNav);
-            console.log(this.$socket.connected);
             if(this.$socket.connected){
                 //如果打开了先关闭上一个
                 this.$socket.close() //必须要注销掉
-                console.log('已经打开');
             }
             //然后重新启动它
             this.$socket.open() //开启连接
@@ -121,17 +118,12 @@ export default {
     },
     sockets:{
         connecting(){
-            console.log("正连接");
         },
         disconnect(){
-            // alert("Socket端口")
-            console.log('断开连接');
         },
         connect_erro(){
-            console.log('连接失败');
         },
         connect(){
-            console.log('socket连接成功');
             const circleId = Number(this.getNowCircleNav)
             this.$socket.emit('join',circleId)
         },

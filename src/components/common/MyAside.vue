@@ -7,7 +7,9 @@
       :collapse="isCollapse">
       <el-menu-item >
         <div class="person">
-          <el-avatar v-if="avatar"  slot="reference" :src="avatar"></el-avatar>
+          <div @click="$router.push('/userPersonSys/myInformation')">
+            <el-avatar  v-if="avatar"  slot="reference" :src="avatar"></el-avatar>
+          </div>
           <i  @click="isCollapse = !isCollapse" class="iconfont icon-caidan-dakai openAndClose"></i>
         </div>
       </el-menu-item>
@@ -164,13 +166,6 @@ export default {
       //验证表单
       await this.$refs['form'].validate((valid) => {
         if(valid){
-          //表单验证成功，进入加载状态
-          const loading = this.$loading({
-            lock: true,
-            text: 'Loading',
-            spinner: 'el-icon-loading',
-            background: 'rgba(0, 0, 0, 0.7)'
-          });
           //定义一个变量用来存储请求参数
           const data =this.createCircleInfo
           //获取用户id，然后加入到参数对象中，作为圈主的id
@@ -181,6 +176,13 @@ export default {
             this.$message.error('请先选择图片');
             return false;
           }
+          //表单验证成功，进入加载状态
+          const loading = this.$loading({
+            lock: true,
+            text: 'Loading',
+            spinner: 'el-icon-loading',
+            background: 'rgba(0, 0, 0, 0.7)'
+          });
         //表单格式传给服务器
           let formData=new FormData()
           formData.append('file',this.file.raw)
@@ -188,6 +190,7 @@ export default {
           formData.append('createCircleInfo',JSON.stringify(this.createCircleInfo))
           if(formData){
             createMyCircle(formData).then(res=>{
+              console.log(res);
               if(res.data.res.code === 200){
                 //关闭加载
                 loading.close();

@@ -22,6 +22,10 @@
             <span class="title">爱好:</span>
             <el-tag class="tag" size="mini">{{member.user_hobby}}</el-tag>
         </div>
+        <div style="margin-top: 10px;" v-show="member.user_id != user_id && user_id == ownerInfo.user_id">
+            <el-button type="danger" @click="kickOutCircle"><i class="iconfont icon-yichu"></i> 移出圈子</el-button>
+            <el-button type="warning"><i class="iconfont icon-talk-off"></i>禁言</el-button>
+        </div>
         </div>
         <div class="user-activity animate__animated animate__fadeInUp">
             
@@ -31,20 +35,33 @@
 
 <script>
 import {addFriend} from '@/api'
-import { mapMutations } from 'vuex'
+import { mapMutations,mapGetters,mapActions } from 'vuex'
+import {kickOutCircle} from '@/api'
 export default {
     props:['member','showBtn'],
     data(){
         return{
-            user_id:Number
+            user_id:Number,
+            ownerInfo:''
         }
     },
     computed:{
+        ...mapGetters("circle",['getCircleMembers','getCircleOwner','getNowCircleNav']),
+    },
+    watch:{
+        getCircleMembers(newVal){
+            //获取到新的成员列表，赋值给members
+            this.members = newVal
+        },
+        getCircleOwner(newVal){
+            //获取到新的圈主，赋值给members
+            this.ownerInfo = newVal
+        }
     },
     methods:{
         ...mapMutations('inbox',['changeShowFriendInfo']),
+        ...mapActions('circle',['setCircleMembers']),
         addInbox(member){
-            console.log(member);
             const user_id = JSON.parse(localStorage.getItem('user')).user_id
             //添加好友
             addFriend({user_id,friend_id:member.user_id}).then(res=>{
@@ -56,10 +73,26 @@ export default {
                     });
                 }
             })
+        },
+        kickOutCircle(){
+            console.log(this.member);
+            kickOutCircle({user_id:this.member.user_id,circle_id:this.getNowCircleNav}).then(res=>{
+                if(res.data.code == 200){
+                    this.$message({
+                        message: '移出成功',
+                        type: 'success'
+                    });
+                    //重新请求圈子成员
+                    this.setCircleMembers(this.getNowCircleNav)
+                    //关闭弹窗
+                    this.changeShowFriendInfo(false)
+                }
+            })
         }
     },
     created(){
         this.user_id = JSON.parse(localStorage.getItem('user')).user_id
+        this.ownerInfo = this.getCircleOwner
     },
     activated(){
         console.log(this.member);

@@ -12,7 +12,7 @@
     <div class="create">
       <button class="createbtn" @click="createStrategy">发布攻略</button>
     </div>
-    <div class="detail-content">
+    <div v-show="showDetail" class="detail-content">
       <DetailContentVue></DetailContentVue>
     </div>
     <el-dialog
@@ -35,6 +35,7 @@ export default {
     return {
       dialogVisible: false,
       activeIndex: 0,
+      showDetail:false,
       navList : ['首页', '关于我们', '产品中心', '新闻资讯', '联系我们','1','2'],
       detailList: [],
       //定义一个key ，用来重新执行animate动画
@@ -89,7 +90,7 @@ export default {
     },
     //点击
     clickDetail(item){
-      console.log(item);
+      this.showDetail = !this.showDetail
     },
     // 点击导航
     clickNav(index,item){

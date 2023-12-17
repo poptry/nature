@@ -13,6 +13,7 @@
     </el-input>
     <span class="title">选择相片({{fileList.length}}/9)</span>
     <el-upload
+    ref="upload"
     action="''"
     list-type="picture-card"
     :on-preview="handlePictureCardPreview"
@@ -29,21 +30,59 @@
     :modal="false">
         <img width="100%" :src="dialogImageUrl" alt="">
     </el-dialog>
-    <button class="submitImage">确认上传</button>
+    <button class="submitImage" @click="confirmUpload">确认上传</button>
   </div>
 </template>
 
 <script>
+import {uploadAlbum} from '@/api'
+import { mapGetters,mapMutations } from 'vuex'
 export default {
     data(){
         return{
             dialogImageUrl: '',
             dialogImagePreview: false,
             fileList: [],
-            photoDescribe:''
+            photoDescribe:'',
+            user_id:Number
         }
-    },  
+    }, 
+    computed:{
+        ...mapGetters('circle',['getNowCircleNav','showIssueDialogState']),
+    },
     methods:{
+        ...mapMutations('circle',['changeIssueDialogState']),
+        //确认上传
+        confirmUpload(){
+            let obj = {
+                user_id:this.user_id,
+                circle_id:this.getNowCircleNav,
+                album_describe:this.photoDescribe,
+                album_url:[]
+            }
+            let formData = new FormData();
+            formData.append('albumInfo',JSON.stringify(obj))
+            this.fileList.forEach((item,index)=>{
+                formData.append('file',item.raw)
+            })
+            uploadAlbum(formData).then(res=>{
+                if(res.data.code == 200){
+                    //成功提示
+                    this.$message({
+                        message: res.data.msg,
+                        type: 'success'
+                    });
+                    //重新获取相册
+                    this.$emit('resetAlbum')
+                    //关闭弹窗
+                    this.changeIssueDialogState(false)
+                    //清空数据
+                    this.photoDescribe = ''
+                    this.fileList = []
+                    this.$refs.upload.clearFiles()
+                }
+            })
+        },
         handleRemove(file, fileList) {
             console.log(file, fileList);
         },
@@ -55,6 +94,9 @@ export default {
             this.fileList.push(file)
             console.log(this.fileList);
         }
+    },
+    created(){
+        this.user_id = JSON.parse(localStorage.getItem('user')).user_id
     }
 }
 </script>

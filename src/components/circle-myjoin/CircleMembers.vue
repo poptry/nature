@@ -6,7 +6,7 @@
         <span class="user-name">{{ ownerInfo.user_name }}</span>
     </div>
     <span class="title">圈子成员</span>
-    <div class="members" v-for="(m,index) in members" :key="index" @click="clickMember(m)">
+    <div class="members" v-for="(m,index) in members" :key="index"  @click="clickMember(m)">
         <el-avatar size="medium" :src="m.user_avatar"></el-avatar>
         <span class="user-name">{{m.user_name}}</span>
     </div>
@@ -32,7 +32,7 @@ export default {
             members:[],
             member:{},
             user_id:Number,
-            disabled:false
+            disabled:false,
         }
     },
     components:{
@@ -50,18 +50,18 @@ export default {
         getCircleOwner(newVal){
             //获取到新的圈主，赋值给members
             this.ownerInfo = newVal
-            console.log(newVal);
         }
     },
     methods:{
         ...mapMutations('inbox',['changeShowFriendInfo']),
+        handlerDbClick(){
+            console.log('122');
+        },
         handlerClose(){
             this.changeShowFriendInfo(false)
         },
-        async clickMember(m){
-            //更改dialog状态
-            this.changeShowFriendInfo(true)
-            console.log(m);
+        //查询用户信息
+        async getOtherInfo(m){
             await isApply({params:{user_id:this.user_id,friend_id:m.user_id}}).then(res=>{
                 console.log(res);
                 if(res.data.code == 200 && res.data.res.length > 0){
@@ -70,11 +70,18 @@ export default {
                     this.disabled = false
                 }
             })
+        },
+        //成员点击事件
+        async clickMember(m){
+            // 更改dialog状态
+            this.changeShowFriendInfo(true)
+            this.getOtherInfo(m)
             //如果申请过了或者是好友了，就禁止添加好友的按钮可以按下 
             m.disabled = this.disabled
             console.log(m.disabled);
             this.member = m
-        }
+        },
+
     },
     created(){
         const user_id = JSON.parse(localStorage.getItem('user')).user_id

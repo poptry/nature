@@ -97,6 +97,22 @@ export const createMyCircle = (data)=>{
         headers: {'Content-Type':'multipart/form-data'}
     })
 }
+
+//获取圈子相册
+export const getAlbums = (params) =>{
+    return http.get('/album/getAlbums',params)
+}
+//上传圈子相册
+export const uploadAlbum = (data)=>{
+    return http.post('/album/uploadAlbum',data,{
+        headers: {'Content-Type':'multipart/form-data'}
+    })
+}
+//踢出圈子
+export const kickOutCircle = (data)=>{
+    return http.post('/circle/kickOutCircle',data)
+}
+
 //----------商品相关
 //获取商品
 export const getPros = (params)=>{

@@ -49,6 +49,7 @@ export default {
         },
         //异步获取用户加入的圈子的信息
         async setMyCircle(context,user_id){
+            console.log('进入setMyCircle');
             const res = await getMyCircle({params:{user_id}}).then(res=>{
                 if(res.status === 200){
                     //提交mutations
@@ -62,8 +63,10 @@ export default {
         async quitMyCircle(context,data){
             const res = await quitCircle(data).then(res=>{
                 if(res.status === 200){
+                    console.log('进入quit');
                     //提交mutations
                     // context.commit('setMyCircle',res.data)
+                    context.dispatch('setMyCircle',data.user_id)
                 }
             }).catch(erro=>{
                 console.log(erro);

@@ -5,7 +5,8 @@
     </div>
     <div class="circles">
         <div v-for="circle in getMyCircle" :class="{active:circle.circle_id==getNowCircleNav}" :key="circle.circle_id" class="circle" @click="clickCircle(circle)">
-            <el-avatar class="circle-avatar" shape="square" size="medium" :src="circle.circle_avatar"></el-avatar>
+            <img width="40px" height="40px" style="border-radius: 5px;object-fit: cover;" :src="circle.circle_avatar" alt="">
+            <!-- <el-avatar  fit="cover" class="circle-avatar" shape="square" size="medium" :src="circle.circle_avatar"></el-avatar> -->
             <span class="circle-name" v-text="circle.circle_name"></span>
         </div>
     </div>
@@ -63,10 +64,15 @@ export default {
             padding: 0 10px;
             .circle{
                 display: flex;
+                flex-direction: row;
                 padding: 15px;
                 border-radius: 5px;
                 margin-bottom: 5px;
+                img{
+                    flex: 1.5;
+                }
                 .circle-name{
+                    flex: 3;
                     margin-left: 10px;
                 }
                 &:hover{

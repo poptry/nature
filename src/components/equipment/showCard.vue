@@ -14,9 +14,9 @@
         </div>
       </div>
     </div>
-    <button @click="clickCollect" class="collect">
+    <!-- <button @click="clickCollect" class="collect">
         <i class="iconfont" :class="collectClass"></i>
-    </button>
+    </button> -->
   </div>
 </template>
 
@@ -61,8 +61,8 @@ export default {
       .product{
         cursor: pointer;
         .image{
-          height: auto;
-          width: 100%;
+          height: 347px;
+          width: 260px;
           img{
             width: 100%;
             height: 100%;

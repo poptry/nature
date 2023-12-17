@@ -7,7 +7,7 @@
   </template>
   
   <script>
-  import { mapState,mapActions } from 'vuex'
+  import { mapState,mapActions,mapMutations } from 'vuex'
   import ShowCardVue from '@/components/equipment/ShowCard'
   export default {
     data(){
@@ -20,10 +20,12 @@
     },
     computed:{
       ...mapState('equipment',{
-        EquipmentPros:state=>state.EquipmentPros
+        EquipmentPros:state=>state.EquipmentPros,
+        classifyList:state=>state.classifyList
       })
     },
     methods:{
+      ...mapMutations('equipment',{getProsByClassify:'getProsByClassify'}),
       ...mapActions('equipment',{
         getWomenEquipmentPros:'getWomenEquipmentPros'
       }),
@@ -31,8 +33,9 @@
         this.$router.push({name:'equipmentDetail',query:{productInfo:JSON.stringify(proInfo)}})
       }
     },
-    created(){
-      this.getWomenEquipmentPros()
+    async created(){
+      await this.getWomenEquipmentPros()
+      this.getProsByClassify(this.classifyList)
     }
   }
   </script>

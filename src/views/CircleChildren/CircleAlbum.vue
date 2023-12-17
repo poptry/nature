@@ -2,58 +2,35 @@
   <div class="container">
     <div class="show-part">
         <!-- 圈子中的每一条相册 -->
-        <div class="item">
+        <div class="item" v-for="(item,index) in albumList" :key="index">
             <div class="user">
                 <el-avatar size="large" src="https://ts1.cn.mm.bing.net/th?id=OIP-C.ZtrvDWpDrJNiyRQj6DwPvwAAAA&w=116&h=130&c=8&rs=1&qlt=90&o=6&dpr=2&pid=3.1&rm=2"></el-avatar>
                 <div class="text">
-                    <span>用户名</span>
-                    <span class="time">2023-3-10-10:00:30</span>
+                    <span>{{item.user_name}}</span>
+                    <span class="time">{{item.album_timestamp}}</span>
                 </div>
             </div>
+            <div style="margin: 5px;">
+                <p>{{ item.album_describe }}</p>
+            </div>
             <div class="album">
-                <div class="image-item" v-for="a,index in albumList" :key="index">
+                <div class="image-item" v-for="a,index in item.album_url" :key="index">
                     <el-image
-                        :src="a.url" 
-                        :preview-src-list="a.srcList"
+                        :src="a"
+                        fit="cover"
+                        :preview-src-list="[a]"
                         class="image"
                         lazy>
                     </el-image>
                 </div>
             </div>
             <div class="interaction">
-                <div class="like">
+                <!-- <div class="like">
                     <el-button type="text" icon="el-icon-thumb" size="small">点赞</el-button>
                 </div>
                 <div class="comment">
                     <el-button type="text" icon="el-icon-chat-dot-round" size="small">评论</el-button>
-                </div>
-            </div>
-        </div>
-        <div class="item">
-            <div class="user">
-                <el-avatar size="large" src="https://ts1.cn.mm.bing.net/th?id=OIP-C.ZtrvDWpDrJNiyRQj6DwPvwAAAA&w=116&h=130&c=8&rs=1&qlt=90&o=6&dpr=2&pid=3.1&rm=2"></el-avatar>
-                <div class="text">
-                    <span>用户名</span>
-                    <span class="time">2023-3-10-10:00:30</span>
-                </div>
-            </div>
-            <div class="album">
-                <div class="image-item" v-for="a,index in albumList" :key="index">
-                    <el-image
-                        :src="a.url" 
-                        :preview-src-list="a.srcList"
-                        class="image"
-                        lazy>
-                    </el-image>
-                </div>
-            </div>
-            <div class="interaction">
-                <div class="like">
-                    <el-button type="text" icon="el-icon-thumb" size="small">点赞</el-button>
-                </div>
-                <div class="comment">
-                    <el-button type="text" icon="el-icon-chat-dot-round" size="small">评论</el-button>
-                </div>
+                </div> -->
             </div>
         </div>
         <!-- 圈子中的每一条相册结束 --> 
@@ -64,7 +41,7 @@
     :visible.sync="showIssueDialogState"
     width="60%"
     :before-close="handleClose">
-        <UploadImagesVue></UploadImagesVue>
+        <UploadImagesVue @resetAlbum="getAlbums"></UploadImagesVue>
     </el-dialog>
     <!-- 上传相册的弹窗结束 -->
   </div>
@@ -72,48 +49,13 @@
 
 <script>
 import { mapMutations,mapGetters } from 'vuex';
+import { getTime } from '@/util/index';
+import {getAlbums} from '@/api'
 import UploadImagesVue from '@/components/common/UploadImages.vue';
 export default {
     data(){
         return{
-            albumList:[
-                {
-                    url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-                    srcList: [
-                        'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-                    ]
-                },
-                {
-                    url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-                    srcList: [
-                        'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-                    ]
-                },
-                {
-                    url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-                    srcList: [
-                        'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-                    ]
-                },
-                {
-                    url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-                    srcList: [
-                        'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-                    ]
-                },
-                {
-                    url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-                    srcList: [
-                        'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-                    ]
-                },
-                {
-                    url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-                    srcList: [
-                        'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-                    ]
-                }
-            ],
+            albumList:[],
             dialogVisible: false,
             dialogImagePreview: false,
             dialogImageUrl: '',
@@ -122,7 +64,7 @@ export default {
     },
     components:{UploadImagesVue},
     computed:{
-        ...mapGetters('circle',['showIssueDialogState'])
+        ...mapGetters('circle',['showIssueDialogState','getNowCircleNav'])
     },
     methods:{
         ...mapMutations("nav",['changeIssue']),
@@ -133,11 +75,24 @@ export default {
             //关闭前，将上传窗口的状态改变
             this.changeIssueDialogState(false)
         },
+        //获取相册
+        async getAlbums(){
+            const user_id = JSON.parse(localStorage.getItem("user")).user_id
+            await getAlbums({params:{circle_id:this.getNowCircleNav,user_id:user_id}}).then(res=>{
+                let arr = res.data
+                arr.forEach(item=>{
+                    //转换时间
+                    item.album_timestamp = getTime(item.album_timestamp)
+                })
+                this.albumList = arr
+                console.log(this.albumList);
+            })
+        }
     },
     activated(){
         //组件活跃时显示上传按钮
         this.changeIssue(true)
-        console.log("活跃");
+        this.getAlbums()
     },
     deactivated(){
         //组件不活跃时，隐藏上传按钮
@@ -195,7 +150,12 @@ export default {
                     align-items: center;
                     .image-item{
                         width: 30%;
+                        height: 100%;
                         margin:5px calc(10%/3/2);
+                        .el-image{
+                            width: 100%;
+                            height: 200px;
+                        }
                     }
                 }
                 .interaction{
