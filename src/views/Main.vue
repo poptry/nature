@@ -20,7 +20,8 @@
           <div class="my-city">{{ getCity }}</div>
           <el-dropdown
           @command="handleCommand">
-            <el-avatar class="my_avatar" shape="circle" size="medium" :src='user_avatar'></el-avatar>
+            <img :src="user_avatar" class="my_avatar" style="width: 40px;height: 40px;object-fit: cover; border-radius: 50%;" alt="">
+            <!-- <el-avatar class="my_avatar" shape="circle" size="medium" fit="cover" :src='user_avatar'></el-avatar> -->
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item command="person">个人中心</el-dropdown-item>
               <el-dropdown-item command="exits">退出登录</el-dropdown-item>
@@ -163,7 +164,7 @@ export default {
         max-height: 100px;
         min-height: 80px;
         min-width: 1000px;
-        z-index: 99;
+        z-index: 101;
         background-color:var(--noBackground);
         transition: background-color 1s ease;
         user-select: none;

@@ -29,6 +29,7 @@ Vue.use(
   })
 )
 Vue.use(VueJsonp)
+
 router.beforeEach((to, from, next) => {
   const user = localStorage.getItem('user')
   if(to.path==='/login'){

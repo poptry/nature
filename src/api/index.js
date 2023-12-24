@@ -3,6 +3,20 @@ import http from '@/util/request'
 export const getUser = ()=>{
     return http.get('/user')
 }
+//查看手机号是否已经注册getUserByPhone
+export const isRegister = (params)=>{
+    return http.get('/user/getUserByPhone',params)
+}
+//发送验证码接口
+export const sendCode = (data)=>{
+    return http.post('/register/note',data)
+}
+//注册，验证验证码
+export const register = (data)=>{
+    return http.post('/user/registerNewUser',data,{
+        headers: {'Content-Type':'multipart/form-data'}
+    })
+}
 //获取用户信息
 export const getUserInfo = (params)=>{
     return http.get('/user/getUserInfo',params)
@@ -56,7 +70,10 @@ export const agreeApply = (data)=>{
 export const refuseApply = (data)=>{
     return http.post('/friend/refuseApply',data)
 }
-
+//删除好友
+export const deleteFriend = (data)=>{
+    return http.post('/friend/deleteFriend',data)
+}
 
 
 //------------圈子相关接口
@@ -136,6 +153,10 @@ export const getScoreByUser = (params)=>{
 export const addScore = (data)=>{
     return http.post('/score/addScore',data)
 }
+//通过id获取商品
+export const getProById = (params)=>{
+    return http.get('/product/getProById',params)
+}
 //查询该商品是否被加入购物车了
 export const findShopCart = (params)=>{
     return http.get('/product/findShopCart',params)
@@ -160,7 +181,10 @@ export const deleteShopCart = (data)=>{
 export const getOrders = (params)=>{
     return http.get('/product/getOrders',params)
 }
-
+//支付购物车
+export const payShopCart = (data)=>{
+    return http.post('/product/pay',data)
+}
 
 //攻略
 export const getStrategyCollection = (params)=>{
@@ -170,4 +194,8 @@ export const getStrategyCollection = (params)=>{
 export const getCollectionDetail = (data)=>{
     //http://localhost:3000/strategy/getCollectionDetail
     return http.post('/strategy/getCollectionDetail',data)
+}
+//获取攻略目录的详细内容
+export const getStrategyContent = (params)=>{
+    return http.get('/strategy/getStrategyContent',params)
 }

@@ -8,7 +8,8 @@
       <el-menu-item >
         <div class="person">
           <div @click="$router.push('/userPersonSys/myInformation')">
-            <el-avatar  v-if="avatar"  slot="reference" :src="avatar"></el-avatar>
+            <img v-if="!isCollapse && avatar" slot="reference" :src="avatar" class="my_avatar" style="width: 40px;height: 40px;object-fit: cover; border-radius: 50%;" alt="">
+            <!-- <el-avatar   fit="fill"  slot="reference" :src="avatar"></el-avatar> -->
           </div>
           <i  @click="isCollapse = !isCollapse" class="iconfont icon-caidan-dakai openAndClose"></i>
         </div>

@@ -74,7 +74,7 @@ export default {
     },
     computed:{
         ...mapState("nav",['showIssueBtn']),
-        ...mapGetters("circle",['getNowCircleNav','getTransparency']),
+        ...mapGetters("circle",['getNowCircleNav','getTransparency','getMyCircle']),
     },
     watch:{
         getNowCircleNav(newVal){
@@ -87,24 +87,29 @@ export default {
         }
     },
     methods:{
-        ...mapMutations("circle",['setTransparency','changeIssueDialogState']),
+        ...mapMutations("circle",['setTransparency','changeIssueDialogState','changeCircleId']),
         ...mapActions("circle",['setCircleMembers','setCircleOwner','quitMyCircle']),
         sendMsg(){
             console.log(this.inputMsg);
         },
         //existCircle
-        existCircle(){
+        async existCircle(){
             this.$confirm('确认退出圈子?', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 type: 'warning'
-                }).then(() => {
+                }).then(async () => {
                     const user_id = JSON.parse(localStorage.getItem('user')).user_id
-                    this.quitMyCircle({user_id,circle_id:this.circle_id})
+                    await this.quitMyCircle({user_id,circle_id:this.circle_id})
                     this.$message({
                         type: 'success',
-                        message: '删除成功!'
+                        message: '退出成功!'
                     });
+                    console.log(this.getMyCircle);
+                    //退出成功后，关闭弹窗
+                    this.dialogVisible = false
+                    //改变圈子id
+                    this.changeCircleId(this.getMyCircle[0].circle_id)
                 }).catch(() => {
                 this.$message({
                     type: 'info',
@@ -145,6 +150,7 @@ export default {
     .circle-detail-container{
         width: 100%;
         height: 100%;
+        min-width: 1117px;
         .el-row{
             height: 100%;
             .el-col{

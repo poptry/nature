@@ -37,6 +37,7 @@
 <script>
 import {uploadAlbum} from '@/api'
 import { mapGetters,mapMutations } from 'vuex'
+import { Loading } from 'element-ui';
 export default {
     data(){
         return{
@@ -54,6 +55,7 @@ export default {
         ...mapMutations('circle',['changeIssueDialogState']),
         //确认上传
         confirmUpload(){
+            let LoadingInstance = Loading.service();
             let obj = {
                 user_id:this.user_id,
                 circle_id:this.getNowCircleNav,
@@ -67,6 +69,7 @@ export default {
             })
             uploadAlbum(formData).then(res=>{
                 if(res.data.code == 200){
+                    LoadingInstance.close()
                     //成功提示
                     this.$message({
                         message: res.data.msg,
@@ -80,6 +83,8 @@ export default {
                     this.photoDescribe = ''
                     this.fileList = []
                     this.$refs.upload.clearFiles()
+                }else{
+                    LoadingInstance.close()
                 }
             })
         },

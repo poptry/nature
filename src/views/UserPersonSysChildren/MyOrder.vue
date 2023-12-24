@@ -40,10 +40,10 @@
                                 <span>{{ item.order_pronum }}</span>
                             </div>
                             <div class="proPrice">
-                                <span>{{ item.product_orig_price+'￥' }}</span>
+                                <span>{{ item.product_disc_price+'￥' }}</span>
                             </div>
                             <div class="proTotal">
-                                <span> {{ (Number(item.order_pronum) * Number(item.product_orig_price)).toFixed(2) + '￥'}}</span>
+                                <span> {{ (Number(item.order_pronum) * Number(item.product_disc_price)).toFixed(2) + '￥'}}</span>
                             </div>
                         </div>
                         <!-- 商品展示 -->
@@ -51,9 +51,7 @@
                 </el-collapse>
             </div>
         </div>
-        <!-- <div class="product"  >
 
-        </div> -->
     </div>
 </template>
 
@@ -72,9 +70,11 @@ export default {
             orderList.forEach(ele=>{
                 ele.order_timestamp = getTime(ele.order_timestamp)
             })
-            console.log(orderList);
             let newArr = []
             const {order_id,...other} = {...orderList[0]}
+            if(order_id == undefined){
+                return
+            }
             let obj = {
                 order_id:order_id,
                 productInfo:[other]
@@ -100,7 +100,6 @@ export default {
                     newArr.push(obj)
                 }
             })
-            console.log(newArr);
             this.ordersList = newArr
         }
     },
@@ -109,7 +108,6 @@ export default {
             user_id:JSON.parse(localStorage.getItem('user')).user_id
         }
         getOrders({params}).then(res=>{
-            console.log(res.data.data);
             if(res.data.code==200){
                 this.createOrderIdList(res.data.data)
             }

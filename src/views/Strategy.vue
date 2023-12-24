@@ -4,23 +4,14 @@
       <swiper-slide v-for="item in navList" :key="item.strategy_collection_id"><img class="images" :src="item.strategy_collection_background" alt=""></swiper-slide>
     </swiper>
     <div class="swiper-pagination">
-      <span  class="paginations" v-for="(n,index) in navList" :class="{active:index == activeIndex}" @click="clickNav(index,n)" :key="index">{{ n.strategy_collection_content }}</span>
+      <span style="font-size: 18px;" class="paginations" v-for="(n,index) in navList" :class="{active:index == activeIndex}" @click="clickNav(index,n)" :key="index">{{ n.strategy_collection_content }}</span>
     </div>
     <div class="pagination-detail animate__animated animate__fadeIn" :key="keyNum">
       <span class="paginations" v-for="(d,index) in detailList" :key="index" @click="clickDetail(d)">{{ d.collection_detail }}</span>
     </div>
-    <div class="create">
-      <button class="createbtn" @click="createStrategy">发布攻略</button>
-    </div>
     <div v-show="showDetail" class="detail-content">
       <DetailContentVue></DetailContentVue>
     </div>
-    <el-dialog
-    title="发布攻略"
-    :visible.sync="dialogVisible"
-    width="55%">
-      <RichTextVue></RichTextVue>
-    </el-dialog>
   </div>
 </template>
 
@@ -30,6 +21,7 @@ var _this=null;
 import { getStrategyCollection,getCollectionDetail } from '@/api'
 import DetailContentVue from './StrategyChildren/DetailContent.vue';
 import RichTextVue from '@/components/common/RichText.vue';
+import { mapState,mapMutations,mapActions } from 'vuex';
 export default {
   data () {
     return {
@@ -64,6 +56,7 @@ export default {
           slideChangeTransitionStart: function () {
             // https://blog.csdn.net/StoneVivi/article/details/113762692
             _this.activeIndex = this.realIndex
+            _this.showDetail = false
             console.log(_this.activeIndex,this.realIndex);
             _this.filterDetailList(this.realIndex+1)
           },
@@ -78,52 +71,50 @@ export default {
     RichTextVue
   },
   computed: {
+    ...mapState('strategy',['strategy_id']),
     swiper () {
       //调试发现是$swiper
       return this.$refs.mySwiper.$swiper
     }
   },
   methods:{
+    ...mapMutations('strategy',['changeId']),
+    ...mapActions('strategy',['getStrategyContent']),
     //新增
     createStrategy(){
       this.dialogVisible = true
     },
     //点击
     clickDetail(item){
-      this.showDetail = !this.showDetail
+      this.showDetail = true
+      this.changeId(item.collection_id)
+      this.getStrategyContent(item.collection_id)
     },
     // 点击导航
     clickNav(index,item){
-      console.log(item);
       this.activeIndex = index
       this.swiper.slideTo(index+1, 1000, false)
       this.filterDetailList(index+1)
     },
     //请求攻略目录详细帖子标题
     getCollectionDetail(strategyCollectionIds){
-      console.log("strategyCollectionIds",strategyCollectionIds);
       getCollectionDetail({strategyCollectionIds}).then((res)=>{
-        console.log('detail',res);
         if(res.status==200){
           this.detailListBackup = res.data
           this.filterDetailList(1)
         }
-        console.log('detailList',this.detailList);
       })
     },
     //请求同城攻略目录
     async getStrategyCollection(city){
       await getStrategyCollection({params:{city}}).then(res=>{
         if(res.status == 200){
-          console.log('collection',res);
           this.navList = res.data
-          console.log(this.navList);
           if(this.navList){
             const strategyCollectionIds =[]
             this.navList.forEach(item=>{
               strategyCollectionIds.push(item.strategy_collection_id)
             })
-            console.log('strategyCollectionIds',strategyCollectionIds);
             this.getCollectionDetail(strategyCollectionIds)
           }
         }
@@ -158,7 +149,7 @@ export default {
     position: relative;
     width: 100%;
     height: 100%;
-    background-color: #191717;
+    background-color: #424242;
     font-family: 'Times New Roman', Times, serif;
     display: flex;
     flex-direction: row;
@@ -196,11 +187,11 @@ export default {
     height: 100%;
     object-fit: cover;
     cursor: pointer;
-    opacity: 0.4;
+    opacity: 1;
   }
   .swiper-pagination{
     position: absolute;
-    height:400px;
+    height:auto;
     padding: 20px;
     overflow-y: scroll;
     left: 20px;
@@ -297,7 +288,13 @@ export default {
     height: 600px;
     border-radius: 5px;
     z-index: 100;
+    overflow-y: scroll;
   }
+.detail-content::-webkit-scrollbar {
+  width: 0; /* Safari,Chrome 隐藏滚动条 */
+  height: 0; /* Safari,Chrome 隐藏滚动条 */
+  display: none; /* 移动端、pad 上Safari，Chrome，隐藏滚动条 */
+}
   ::v-deep .el-dialog__header{
       padding: 10px !important;
     }

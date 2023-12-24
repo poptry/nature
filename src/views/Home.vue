@@ -7,9 +7,58 @@
                 <img :src="item.url" alt="">
             </el-carousel-item>
         </el-carousel>
-        <!-- 题 1 -->
-        <div class="slogan animate__animated animate__fadeIn">
-            <span class="headtitle" animate__fadeIn animate__fadeOut>前进</span>
+        <div class="slogan">
+            <span class="headtitle" animate__fadeIn animate__fadeOut>伙伴</span>
+        </div>
+        <div class="video-friend">
+            <video autoplay loop muted src="https://natural-image.oss-cn-hangzhou.aliyuncs.com/home/pexels-cottonbro-9943276%20%28Original%29.mp4"></video>
+        </div>
+        <div class="slogan">
+            <span class="headtitle" animate__fadeIn animate__fadeOut>探险者</span>
+        </div>
+        <div class="content-two">
+            <div v-for="(i,index) in cardImage" :key="index" @click="$router.push(i.path)" class="card" :class="i.class">
+                <!-- <img  class="card-image"  :src="i.url" alt=""> -->
+                <el-image fit="cover" class="card-image" :src="i.url" lazy></el-image>
+                
+            </div>
+        </div>
+        <div class="slogan">
+            <span class="headtitle" animate__fadeIn animate__fadeOut>户外</span>
+        </div>
+        <div class="outside-grid">
+            <div class="card-gird diving">
+                <el-image fit="cover" src="https://natural-image.oss-cn-hangzhou.aliyuncs.com/home/pexels-bagus-tri-kuncoro-j-2744596.jpg" lazy></el-image>
+                <!-- <img src="https://natural-image.oss-cn-hangzhou.aliyuncs.com/home/pexels-bagus-tri-kuncoro-j-2744596.jpg" alt=""> -->
+            </div>
+            <div class="card-gird fishing">
+                <el-image fit="cover" src="https://natural-image.oss-cn-hangzhou.aliyuncs.com/home/pexels-brett-sayles-1143926.jpg" lazy></el-image>
+
+                <!-- <img src="https://natural-image.oss-cn-hangzhou.aliyuncs.com/home/pexels-brett-sayles-1143926.jpg" alt=""> -->
+            </div>
+            <div class="card-gird cycling">
+                <el-image fit="cover" src="https://natural-image.oss-cn-hangzhou.aliyuncs.com/home/pexels-d%C3%B3-castle-2270328.jpg" lazy></el-image>
+
+                <!-- <img src="https://natural-image.oss-cn-hangzhou.aliyuncs.com/home/pexels-d%C3%B3-castle-2270328.jpg" alt=""> -->
+            </div>
+            <div class="card-gird hiking">
+                <el-image fit="cover" src="https://natural-image.oss-cn-hangzhou.aliyuncs.com/home/pexels-kamaji-ogino-5064664.jpg" lazy></el-image>
+
+                <!-- <img src="https://natural-image.oss-cn-hangzhou.aliyuncs.com/home/pexels-kamaji-ogino-5064664.jpg" alt=""> -->
+            </div>
+            <div class="card-gird camping">
+                <el-image fit="cover" src="https://natural-image.oss-cn-hangzhou.aliyuncs.com/home/pexels-teemu-r-1840421.jpg" lazy></el-image>
+
+                <!-- <img src="https://natural-image.oss-cn-hangzhou.aliyuncs.com/home/pexels-teemu-r-1840421.jpg" alt=""> -->
+            </div>
+            <div class="card-gird skiing">
+                <el-image fit="cover" src="https://natural-image.oss-cn-hangzhou.aliyuncs.com/home/pexels-dids-1740098.jpg" lazy></el-image>
+
+                <!-- <img src="https://natural-image.oss-cn-hangzhou.aliyuncs.com/home/pexels-dids-1740098.jpg" alt=""> -->
+            </div>
+        </div>
+        <div class="slogan">
+            <span class="headtitle" animate__fadeIn animate__fadeOut>自然</span>
         </div>
         <!-- 左图右字 -->
         <div class="content-one">
@@ -31,15 +80,6 @@
                         <span v-show="show" class="animate__animated animate__fadeInDown">找回内心的宁静，感受生活的美好</span>
                 </el-col>
             </el-row>
-        </div>
-        <!-- 题 2 -->
-        <div class="slogan">
-            <span class="headtitle" animate__fadeIn animate__fadeOut>前进</span>
-        </div>
-        <div class="content-two">
-            <div v-for="(i,index) in cardImage" :key="index" @click="$router.push(i.path)" class="card" :class="i.class">
-                <img  class="card-image"  :src="i.url" alt="">
-            </div>
         </div>
         <!-- 回到顶部 -->
         <el-backtop  :bottom="220" :right="10" :visibility-height="10">
@@ -145,13 +185,12 @@ export default {
                 object-fit: fill;
             }
         }
-        //slogan样式
         .slogan{
             position: relative;
             font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
             text-align: center;
             font-weight: 400;
-            margin: 40px 0 40px 0;
+            margin: 20px 0 20px 0;
             .headtitle{
                 color: var(--themeColor);
                 font-size:28px;
@@ -164,6 +203,160 @@ export default {
                 background-color:var(--themeColor);
                 left: calc((100% - 64px)/2);
                 bottom: -14px;
+            }
+        }
+        .video-friend{
+            width: 100%;
+            height: auto;
+            video{
+                width: 100%;
+                object-fit: fill;
+            }
+        }
+        .outside-grid{
+            display: grid;
+            background-color: #2b2b2b;
+            user-select: none;
+            padding: 100px;
+            grid-template-columns: repeat(3,33.33%);
+            grid-template-rows: repeat(2,340px);
+            .card-gird{
+                position: relative;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                &::before,
+                &::after{
+                    content: "";
+                    position: absolute;
+                    display: block;
+                    width: auto;
+                    height: auto;
+                    padding: 20px;
+                    font-size: 30px;
+                    color: #ffffff;
+                    transition: all .5s;
+                    z-index: 100;
+                }
+                &::after{
+                    font-size: 16px;
+                }
+                .el-image,
+                img{
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    transition: all .5s;
+                    filter:  grayscale(50%)  contrast(120%);
+                }
+            }
+            .diving{
+                &:hover{
+                    &::after{
+                        content: "泛指所有的水面下活动。包含使用压缩机由水面供气的潜水；由潜水员自行携带呼吸系统的水肺潜水；以及不携带呼吸系统，仅使用轻装备的自由潜水。";
+                        bottom: 0;
+                        right: 0;
+                    }
+                    &::before{
+                        top: 0;
+                        left: 0;
+                        content: "潜水";
+                    }
+                    .el-image,
+                    img{
+                        filter:  grayscale(200%) contrast(200%) blur(10px);
+                    }
+                }
+            }
+            .fishing{
+                &:hover{
+                    &::after{
+                        content: "是一种用鱼线牵扯挂有鱼饵的鱼钩诱捕鱼类的捕鱼方法。最常见的钓鱼法是使用鱼竿伸展到水面上方操控鱼线的垂钓（rod fishing），是很受民间欢迎的休闲户外运动。";
+                        bottom: 0;
+                        right: 0;
+                    }
+                    &::before{
+                        top: 0;
+                        left: 0;
+                        content: "钓鱼";
+                    }
+                    .el-image,
+                    img{
+                        filter:  grayscale(100%) contrast(150%) blur(10px);
+                    }
+                }
+            }
+            .cycling{
+                &:hover{
+                    &::after{
+                        content: "登山车由重型cruiser bicycle改进而来，以用于从山路自由滑行下落。登山车在1970年代的美国加州成为一项流行的运动，当时美国年轻人骑小轮车从陡峭的山腰下落。自行车架设计者Joe Breeze运用了他的构想并发展了登山车运动。";
+                        bottom: 0;
+                        right: 0;
+                    }
+                    &::before{
+                        top: 0;
+                        left: 0;
+                        content: "山地自行车";
+                    }
+                    .el-image,
+                    img{
+                        filter:  grayscale(100%) contrast(150%) blur(10px);
+                    }
+                }
+            }
+            .hiking{
+                &:hover{
+                    &::after{
+                        content: "徒步亦称远足、行山或是健行（英语：Hiking），并不是通常意义上的散步，也不是体育竞赛中的竞走项目，而是指有目的地在郊区、农村的小径或者山野间的山径进行中长距离的走路锻炼，徒步也是户外运动中最为典型和最为普遍的一种";
+                        bottom: 0;
+                        right: 0;
+                    }
+                    &::before{
+                        top: 0;
+                        left: 0;
+                        content: "徒步";
+                    }
+                    .el-image,
+                    img{
+                        filter:  grayscale(100%) contrast(150%) blur(10px);
+                    }
+                }
+            }
+            .camping{
+                &:hover{
+                    &::after{
+                        content: "露营是一种休闲活动，通常露营者携带帐篷，离开城市在野外扎营，度过一个或者多个夜晚。露营通常和其他活动联系，如徒步、钓鱼或者游泳等，或是自认为在露营都算是露营。";
+                        bottom: 0;
+                        right: 0;
+                    }
+                    &::before{
+                        top: 0;
+                        left: 0;
+                        content: "露营";
+                    }
+                    .el-image,
+                    img{
+                        filter:  grayscale(100%) contrast(150%) blur(10px);
+                    }
+                }
+            }
+            .skiing{
+                &:hover{
+                    &::after{
+                        content: "滑雪是指利用滑雪板在雪地滑行的一种活动，最初是为了便于在冬季的雪地中出行，后来逐渐演变成一种冬季运动项目。滑雪和滑冰、滑水有相似之处，但是滑的表面不同。滑雪的英文名词“ski”本是一个挪威语词汇，源于古挪威语“skid”，意为小段木头。";
+                        bottom: 0;
+                        right: 0;
+                    }
+                    &::before{
+                        top: 0;
+                        left: 0;
+                        content: "滑雪";
+                    }
+                    .el-image,
+                    img{
+                        filter:  grayscale(100%) contrast(150%) blur(10px);
+                    }
+                }
             }
         }
         //第二部分内容

@@ -27,10 +27,11 @@
                 <el-input-number  @change="changeNumber(item)" v-model="item.shopCart_pronum" :min="1" :max="10"></el-input-number>
             </div>
             <div class="proPrice">
-                <span>{{ item.product_orig_price+'￥' }}</span>
+                <span>{{ item.product_disc_price+'￥' }}</span>
+                <span style="text-decoration:line-through; font-size: 12px;">{{ item.product_orig_price+'￥' }}</span>
             </div>
             <div class="proTotal">
-                <span> {{ (item.shopCart_pronum * item.product_orig_price).toFixed(2) + '￥'}}</span>
+                <span> {{ (item.shopCart_pronum * item.product_disc_price).toFixed(2) + '￥'}}</span>
             </div>
         </div>
         <!-- 商品展示 -->
@@ -100,7 +101,7 @@
 // https://github.com/jcc/v-distpicker/blob/master/README.zh_CN.md
 import VDistpicker from 'v-distpicker'
 import { Loading } from 'element-ui';
-import { getShopCart,deleteShopCart,updateShopCart } from '@/api';
+import { getShopCart,deleteShopCart,updateShopCart,payShopCart } from '@/api';
 import { mapState,mapActions,mapGetters } from 'vuex';
 export default {
     data(){
@@ -127,7 +128,7 @@ export default {
             userInfo:{
                 user_name:'黄海波',
                 user_address:'闽南师范',
-                user_phone:'133333333333',
+                user_phone:'13333333333',
                 user_remark:'无',
             },
             rules:{
@@ -170,6 +171,10 @@ export default {
         handleClose(){
             this.dialogVisible = false
         },
+        //存储订单
+        saveOrder(){
+            
+        },
         //支付
         continueCheckout(){
             for(let item in this.region){
@@ -189,15 +194,30 @@ export default {
                     let loadingInstance = Loading.service({
                         target:document.querySelector('#pay')
                     });
+                    this.userInfo.order_account = this.getSum
+                    this.userInfo.user_id = this.user_id
+                    //存储订单
+                    let order = {
+                        userInfo:this.userInfo,
+                        product_list:this.shopCartList,
+                    }
+                    payShopCart(order).then(res=>{
+                        if(res.data.code === 200){
+                            this.$message.success('支付成功');
+                        }else{
+                            this.$message.error('支付失败');
+                        }
+                    })
                     let timer = setTimeout(()=>{
                         this.dialogVisible = false
                         this.$nextTick(() => { // 以服务的方式调用的 Loading 需要异步关闭
                             loadingInstance.close();
                         });
                         clearTimeout(timer)
-                        this.$message.success("支付成功")
+                        // this.$message.success("支付成功")
                         this.$router.push('/userPersonSys/myOrder')
                     },2000)
+                
                 }
             })
         },

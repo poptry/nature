@@ -1,13 +1,15 @@
 <template>
-  <div class="container">
+  <div class="container animate__animated animate__fadeIn">
     <span class="title">圈主</span>
     <div class="members"  @click="clickMember(ownerInfo)">
-        <el-avatar size="medium" :src="ownerInfo.user_avatar"></el-avatar>
+        <img :src="ownerInfo.user_avatar" class="my_avatar" style="width: 40px;height: 40px;object-fit: cover; border-radius: 50%;" alt="">
+        <!-- <el-avatar size="medium" fit="cover" :src="ownerInfo.user_avatar"></el-avatar> -->
         <span class="user-name">{{ ownerInfo.user_name }}</span>
     </div>
     <span class="title">圈子成员</span>
     <div class="members" v-for="(m,index) in members" :key="index"  @click="clickMember(m)">
-        <el-avatar size="medium" :src="m.user_avatar"></el-avatar>
+        <!-- <el-avatar size="medium" :src="m.user_avatar"></el-avatar> -->
+        <img :src="m.user_avatar" class="my_avatar" style="width: 40px;height: 40px;object-fit: cover; border-radius: 50%;" alt="">
         <span class="user-name">{{m.user_name}}</span>
     </div>
     <el-dialog
@@ -63,7 +65,6 @@ export default {
         //查询用户信息
         async getOtherInfo(m){
             await isApply({params:{user_id:this.user_id,friend_id:m.user_id}}).then(res=>{
-                console.log(res);
                 if(res.data.code == 200 && res.data.res.length > 0){
                     this.disabled = true
                 }else{
@@ -75,10 +76,9 @@ export default {
         async clickMember(m){
             // 更改dialog状态
             this.changeShowFriendInfo(true)
-            this.getOtherInfo(m)
-            //如果申请过了或者是好友了，就禁止添加好友的按钮可以按下 
+            await this.getOtherInfo(m) //await 等待异步执行完毕
+            //如果申请过了或者是好友了，就禁止添加好友的按钮可以按下
             m.disabled = this.disabled
-            console.log(m.disabled);
             this.member = m
         },
 

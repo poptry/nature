@@ -7,7 +7,14 @@
             </el-badge>
         </div>
         <div class="friends-container">
-            <div v-for="friend in getMyFriends" @click="clickFriend(friend)" class="friend" :class="{active:friend.user_id == nowFriend}"  :key="friend.friendId" >
+            <div v-for="friend in getMyFriends" 
+            @click="clickFriend(friend)"  
+            @mousedown="startLongPress(friend)" 
+            @mouseup="cancelLongPress" 
+            @mouseleave="cancelLongPress" 
+            class="friend" 
+            :class="{active:friend.user_id == nowFriend}"  
+            :key="friend.friendId" >
                 <div class="friendImg">
                     <el-avatar :size="40" :src="friend.user_avatar"></el-avatar>
                 </div>
@@ -29,11 +36,22 @@
                  <ApplyCardVue v-for="item in applyUser" :key="item.user_id" :applyUser="item"></ApplyCardVue>
             </div>
         </el-dialog>
+        <!-- <el-dialog
+        title="通知"
+        :visible.sync="isDeleteFriend"
+        :modal="false"
+        width="40%"
+        top="20vh"
+        :before-close="handleClose">
+            <div style="height: 400px !important;overflow-y: scroll;padding: 10px;overflow-x: hidden;">
+                 <ApplyCardVue v-for="item in applyUser" :key="item.user_id" :applyUser="item"></ApplyCardVue>
+            </div>
+        </el-dialog> -->
     </div>
 </template>
 
 <script>
-import {getApply} from '@/api'
+import {deleteFriend, getApply} from '@/api'
 import { mapGetters,mapMutations,mapActions } from 'vuex'
 import ApplyCardVue from '../common/ApplyCard.vue'
 export default {
@@ -43,7 +61,9 @@ export default {
             userId:'',
             hidden:true,
             dialogVisible:false,
-            applyUser:[]
+            applyUser:[],
+            longPress:false,
+            // isDeleteFriend:false
         }
     },
     components:{
@@ -54,14 +74,48 @@ export default {
         ...mapMutations('nav',{
             changeFriendNav:'changeFriendNav'
         }),
+        startLongPress(friend) {
+            console.log(friend);
+            this.longPress = false
+            this.pressTimer = setTimeout(() => {
+                console.log('长按事件触发了！');
+                this.longPress = true
+                this.$confirm('此操作将永久删除好友并删除聊天记录, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(async () => {
+                    await deleteFriend({user_id:this.userId,friend_id:friend.user_id}).then(res=>{
+                        console.log(res);
+                    })
+                    this.$message({
+                        type: 'success',
+                        message: '删除成功!'
+                    });
+                    //重新请求好友
+                    this.setMyFriends(this.userId)
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });          
+                });
+                // this.isDeleteFriend = true
+                // 在这里执行长按事件的逻辑
+            }, 1000); // 设置长按的时间，单位为毫秒
+        },
+        cancelLongPress() {
+            clearTimeout(this.pressTimer);
+        },
         //关闭dialog
         handleClose(){
             this.dialogVisible = false
+            this.isDeleteFriend = false
         },
         //点击私信朋友事件
         clickFriend(friend){
-            console.log('getter',this.$store.getters['nav/getNowFriendNav']);
-            this.changeFriendNav(friend.user_id)
+            if(!this.longPress)
+                this.changeFriendNav(friend.user_id)
         }
     },
     computed:{

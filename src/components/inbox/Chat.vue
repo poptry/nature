@@ -7,16 +7,17 @@
         <div class="msg-wrap" ref="msgWrap">
           <div v-for="c in chatList" :key="c.chat_id">
             <!-- 时间显示，每间隔五分钟记录一次，五分钟内的消息不记录-->
-            <div class="msgTime" v-if="c.chat_timestamp">
+            <div class="msgTime animate__animated animate__fadeInDown" v-if="c.chat_timestamp">
               <span v-text="c.chat_timestamp"></span>
             </div>
             <!-- 好友消息 -->
-            <div class="friend" v-if="c.chat_send_id != sendUserInfo.user_id ">
+            <div class="friend animate__animated animate__fadeInDown" v-if="c.chat_send_id != sendUserInfo.user_id ">
               <div class="friend-avatar">
-                <el-avatar
+                <!-- <el-avatar
                 :src="c.user_avatar"
                 >
-                </el-avatar>
+                </el-avatar> -->
+                <img :src="c.user_avatar" style="width: 40px;height: 40px;object-fit: cover; border-radius: 50%;" alt="">
               </div>
               <div class="friend-msg">
                 <div class="msg-text">
@@ -26,17 +27,18 @@
             </div>
             <!-- 好友消息结束 -->
             <!-- 我的消息开始 -->
-            <div class="my" v-else>
+            <div class="my animate__animated animate__fadeInDown" v-else>
               <div class="my-msg">
                 <div class="msg-text">
                   {{ c.chat_msg }}
                 </div>
               </div>
               <div class="my-avatar">
-                <el-avatar
+                <!-- <el-avatar
                 :src="sendUserInfo.user_avatar"
                 >
-                </el-avatar>
+                </el-avatar> -->
+                <img :src="sendUserInfo.user_avatar" style="width: 40px;height: 40px;object-fit: cover; border-radius: 50%;" alt="">
               </div>
             </div>
             <!-- 我的消息结束 -->
@@ -72,7 +74,8 @@ export default {
       inputMsg:'',
       sendUserInfo:'',
       showTime:false,
-      nowTimeStamp:''
+      nowTimeStamp:'',
+      showFriendInfo:false
     }
   },
   methods:{
@@ -138,7 +141,7 @@ export default {
       console.log("正连接");
     },
     disconnect(){
-      alert("Socket端口")
+
     },
     connect_erro(){
       console.log('连接失败');

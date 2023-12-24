@@ -13,7 +13,7 @@
         <h3 class="pro_name" @click="toProductDetail(s)" v-text="s.product_name"></h3>
         <span class="type">藏青色</span>
         <span class="size" v-text="s.size_name"></span>
-        <span class="price"  v-text="s.product_orig_price"></span>
+        <span class="price" v-text="s.product_disc_price"></span>
         <div class="stockAndNum">
           <span class="stock" v-text="`库存剩余 ${s.product_stock}`"></span>
           <el-input-number @change="changeNumber(s)" :min="1" :max="10" size="mini" v-model="s.shopCart_pronum"></el-input-number>

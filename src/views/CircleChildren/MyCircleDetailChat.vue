@@ -5,11 +5,12 @@
         <!-- 聊天框开始 -->
         <div class="msg-wrap" ref="msgWrap">
             <div v-for="c in chatList" :key="c.circleMsg_id">
-                <div class="msgTime" v-if="c.chatMsg_timestamp"><span v-text="c.chatMsg_timestamp"></span></div>
+                <div class="msgTime animate__animated animate__fadeInDown" v-if="c.chatMsg_timestamp"><span v-text="c.chatMsg_timestamp"></span></div>
                 <!-- 好友消息 -->
-                <div class="others" v-if="c.user_id != myInfo.user_id ">
+                <div class="others animate__animated animate__fadeInDown" v-if="c.user_id != myInfo.user_id ">
                     <div class="others-avatar">
-                        <el-avatar :src="c.user_avatar"></el-avatar>
+                        <!-- <el-avatar :src="c.user_avatar"></el-avatar> -->
+                        <img :src="c.user_avatar" style="width: 40px;height: 40px;object-fit: cover; border-radius: 50%;" alt="">
                     </div>
                     <div class="others-msg">
                         <div class="msg-text">{{ c.circleMsg_content }}</div>
@@ -17,12 +18,13 @@
                 </div>
                 <!-- 好友消息结束 -->
                 <!-- 我的消息开始 -->
-                <div class="my" v-else>
+                <div class="my animate__animated animate__fadeInDown" v-else>
                     <div class="my-msg">
                         <div class="msg-text">{{ c.circleMsg_content }}</div>
                     </div>
                     <div class="my-avatar">
-                        <el-avatar :src="myInfo.user_avatar"></el-avatar>
+                        <!-- <el-avatar :src="myInfo.user_avatar"></el-avatar> -->
+                        <img :src="myInfo.user_avatar" style="width: 40px;height: 40px;object-fit: cover; border-radius: 50%;" alt="">
                     </div>
                 </div>
                 <!-- 我的消息结束 -->

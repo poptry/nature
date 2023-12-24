@@ -14,9 +14,6 @@
         </div>
       </div>
     </div>
-    <!-- <button @click="clickCollect" class="collect">
-        <i class="iconfont" :class="collectClass"></i>
-    </button> -->
   </div>
 </template>
 

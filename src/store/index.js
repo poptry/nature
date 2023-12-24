@@ -6,6 +6,7 @@ import circle from './circle'
 import equipment from './equipment'
 import product from './product'
 import user from './user'
+import strategy from './strategy'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -15,6 +16,7 @@ export default new Vuex.Store({
         circle,
         equipment,
         product,
-        user
+        user,
+        strategy
     }
 })

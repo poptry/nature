@@ -37,9 +37,9 @@
           <!-- 描述结束 -->
           <!-- size -->
           <div class="sizeButton">
-            <el-checkbox-group @change="changeSize" v-model="chooseSize">
-              <el-checkbox-button v-for="(size,index) in sizes" :label="size" :key="index">{{size}}</el-checkbox-button>
-            </el-checkbox-group>
+            <el-radio-group @change="changeSize" v-model="chooseSize">
+              <el-radio-button v-for="(size,index) in sizes" :label="size" :key="index">{{size}}</el-radio-button>
+            </el-radio-group>
           </div>
           <!-- size -->
           <!-- 按钮组 -->
@@ -53,8 +53,9 @@
     </div>
 </template>
 <script>
-import {getScoreByPro,addScore,getScoreByUser,addShopCart,findShopCart} from '@/api'
+import {getScoreByPro,addScore,getScoreByUser,addShopCart,findShopCart,getProById} from '@/api'
 import imgZoomVue from '@/components/common/imgZoom.vue';
+import { mapState,mapActions } from 'vuex';
 const LENGTH = 5;
 // 星星对应的class,亮星
 const CLS_ON = "icon-star-full";
@@ -65,7 +66,7 @@ const CLS_OFF = "icon-star";
 export default {
   data(){
     return{
-      chooseSize:[],
+      chooseSize:'',
       //尺寸
       sizes:['S','M','L','XL','XXL'],
       //商品数量
@@ -134,6 +135,12 @@ export default {
     }
   },
   methods:{
+    ...mapActions('product',['setShopCartList']),
+    //获取购物车列表
+    async getShopCartList(){
+      const user_id = JSON.parse(localStorage.getItem('user')).user_id;
+      await this.setShopCartList(user_id)
+    },
     //改变size
     changeSize(){
       console.log(this.chooseSize);
@@ -145,7 +152,6 @@ export default {
     //
     enterImage(){
       this.hideZoom = false
-      console.log(this.hideZoom);
     },
     //查询购物车中是否存在该商品
     findShopCart(){
@@ -155,8 +161,7 @@ export default {
       const product_id = this.productInfo.product_id
       //查询购物车
       findShopCart({params:{user_id:user_id,product_id:product_id}}).then(res=>{
-        console.log(res);
-        if(res.data.code==500){
+        if(res.data.length==0){
           this.disabledShopCart = false
           console.log("没加入");
         }else{
@@ -167,13 +172,26 @@ export default {
     },
     //添加商品到购物车
     addShopCart(){
+      if(this.chooseSize==''){
+        this.$message.error('请选择尺码');
+        return false
+      }
       //获取userid
       const user_id = JSON.parse(localStorage.getItem('user')).user_id
       //获取商品id
       const product_id = this.productInfo.product_id
       //添加到购物车
-      addShopCart({user_id:user_id,product_id:product_id}).then(res=>{
-        console.log(res)
+      addShopCart({user_id:user_id,product_id:product_id,size_name:this.chooseSize,shopCart_pronum:this.num}).then(res=>{
+        if(res.data.code == 200){
+          this.$message({
+            message: '添加成功',
+            type: 'success'
+          });
+          //禁用加入购物车按钮
+          this.disabledShopCart = true
+          //重新查询购物车
+          this.getShopCartList()
+        }
       })
     },
     //获取评分事件
@@ -219,14 +237,15 @@ export default {
       })
     }
   },
-  mounted(){
+  async mounted(){
     //获取userid
     const user_id = this.user_id
     //从路由获取参数----------商品信息
     const proInfo = this.$route.query.productInfo
-    //赋值给data里面的productInfo
-    this.productInfo = JSON.parse(proInfo)
-    console.log(this.productInfo);
+    await getProById({params:{product_id:JSON.parse(proInfo).product_id}}).then(res=>{
+      console.log(res);
+      this.productInfo = res.data[0]
+    })
     //赋值评分
     this.rating = this.productInfo.product_score
     //查看用户对该商品是否评分 评分过就不能再评分了
@@ -331,13 +350,18 @@ export default {
           border: none;
           border-radius: 5px;
           background-color: #ff5e01;
-          color: rgba(255, 255, 255, 0.8);
+          color: rgba(255, 255, 255, 0.9);
+          &:hover{
+            cursor: pointer;
+          }
         }
-      }
-
-      .disabled{
-        background-color: #9e9e9e;
-        color: rgba(255, 255, 255, 0.9);
+        .disabled{
+          background-color: #9e9e9e;
+          color: rgba(255, 255, 255, 0.9);
+          &:hover{
+            cursor: not-allowed;
+          }
+        }
       }
     }
   }

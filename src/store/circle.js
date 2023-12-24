@@ -17,6 +17,7 @@ export default {
         //异步获取圈子的成员，并赋值给circleMembers
         async setCircleMembers(context,circle_id){
             await getCircleMembers({params:{circle_id:circle_id}}).then((res)=>{
+                console.log(res);
                 if(res.status==200)
                     context.commit('setCircleMembers',res.data)
             }).catch((err)=>{
@@ -49,7 +50,7 @@ export default {
         },
         //异步获取用户加入的圈子的信息
         async setMyCircle(context,user_id){
-            console.log('进入setMyCircle');
+            console.log("进入获取圈子");
             const res = await getMyCircle({params:{user_id}}).then(res=>{
                 if(res.status === 200){
                     //提交mutations
@@ -61,12 +62,10 @@ export default {
         },
         //退出圈子
         async quitMyCircle(context,data){
-            const res = await quitCircle(data).then(res=>{
+            console.log("进入删除圈子");
+            const res = await quitCircle(data).then(async res=>{
                 if(res.status === 200){
-                    console.log('进入quit');
-                    //提交mutations
-                    // context.commit('setMyCircle',res.data)
-                    context.dispatch('setMyCircle',data.user_id)
+                    await context.dispatch('setMyCircle',data.user_id)
                 }
             }).catch(erro=>{
                 console.log(erro);
