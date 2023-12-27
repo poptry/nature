@@ -45,7 +45,9 @@ export default {
             dialogImagePreview: false,
             fileList: [],
             photoDescribe:'',
-            user_id:Number
+            user_id:Number,
+            isJPG:true,
+            isLt2M:true
         }
     }, 
     computed:{
@@ -65,8 +67,27 @@ export default {
             let formData = new FormData();
             formData.append('albumInfo',JSON.stringify(obj))
             this.fileList.forEach((item,index)=>{
+                // console.log(item.raw.type);
+                if(item.raw.type!='image/jpeg'){
+                    this.isJPG = false
+                }
+                if(item.raw.size / 1024 / 1024 > 20){
+                    this.isLt2M = false
+                }
                 formData.append('file',item.raw)
             })
+            if(!this.isJPG){
+                this.$message.error('上传图片只能是 JPG 格式!');
+                LoadingInstance.close()
+                this.isJPG = true
+                return false
+            }
+            if(!this.isLt2M){
+                this.$message.error('上传头像图片大小不能超过 20MB!');
+                this.isLt2M = true
+                LoadingInstance.close()
+                return false
+            }
             uploadAlbum(formData).then(res=>{
                 if(res.data.code == 200){
                     LoadingInstance.close()
@@ -89,7 +110,7 @@ export default {
             })
         },
         handleRemove(file, fileList) {
-            console.log(file, fileList);
+            this.fileList.pop()
         },
         handlePictureCardPreview(file) {
             this.dialogImageUrl = file.url;
@@ -97,7 +118,6 @@ export default {
         },
         changeList(file){
             this.fileList.push(file)
-            console.log(this.fileList);
         }
     },
     created(){

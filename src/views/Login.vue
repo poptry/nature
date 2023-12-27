@@ -4,10 +4,10 @@
            <video style="position: absolute;top:0;left:0;bottom: 0;right: 0;width: 100%;height: auto;min-height: 100vh;object-fit: cover;" autoplay loop muted src="@/assets/video/loginVideo.mp4"></video>
         </div>
         <section class="main">
-            <div class="logo text-center">
+            <div class="logo text-center animate__animated animate__bounceIn">
                 <h1> <a href="index.html">E X P L O R E R 探 险 者 </a></h1>
             </div>
-            <div v-show="!registerState" class="content-w3ls text-center">
+            <div v-show="!registerState" class="content-w3ls text-center animate__animated animate__zoomIn">
                 <img src="@/assets/images/admin.png" alt="" class="img-responsive">
                     <div class="wthree-field">
                         <input name="text1" id="text1" type="text" v-model="userInfo.userId" value="" placeholder="账号/手机号" required>
@@ -24,7 +24,7 @@
             </div>
 
             <!-- 注册 -->
-            <div v-show="registerState" class="content-w3ls text-center">
+            <div v-show="registerState" class="content-w3ls text-center  animate__animated animate__zoomIn">
                 <div class="wthree-field">
                     <el-upload
                     class="avatar-uploader"

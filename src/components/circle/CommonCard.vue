@@ -4,7 +4,7 @@
         <el-image style="width: 193px;height: 140px;" fit="cover" :src="circleInfo.circle_preview" lazy></el-image>
         <div class="related">
             <div class="owner-avatar">
-                <img width="60px" height="60px" style="border-radius: 5px;" :src="circleInfo.circle_avatar" alt="">
+                <el-image lazy fit="cover" :src="circleInfo.circle_avatar" style="width: 60px;height: 60px;border-radius: 5px;" alt=""></el-image>
                 <!-- <el-avatar fit="contain" shape="square" :size="50" :src="circleInfo.circle_avatar"></el-avatar> -->
             </div>
             <div class="circle-profile">

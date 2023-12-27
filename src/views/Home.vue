@@ -27,33 +27,31 @@
             <span class="headtitle" animate__fadeIn animate__fadeOut>户外</span>
         </div>
         <div class="outside-grid">
+            <div class="more">
+                <span @click="toStrategy">更多 >></span>
+            </div>
             <div class="card-gird diving">
                 <el-image fit="cover" src="https://natural-image.oss-cn-hangzhou.aliyuncs.com/home/pexels-bagus-tri-kuncoro-j-2744596.jpg" lazy></el-image>
                 <!-- <img src="https://natural-image.oss-cn-hangzhou.aliyuncs.com/home/pexels-bagus-tri-kuncoro-j-2744596.jpg" alt=""> -->
             </div>
             <div class="card-gird fishing">
                 <el-image fit="cover" src="https://natural-image.oss-cn-hangzhou.aliyuncs.com/home/pexels-brett-sayles-1143926.jpg" lazy></el-image>
-
                 <!-- <img src="https://natural-image.oss-cn-hangzhou.aliyuncs.com/home/pexels-brett-sayles-1143926.jpg" alt=""> -->
             </div>
             <div class="card-gird cycling">
                 <el-image fit="cover" src="https://natural-image.oss-cn-hangzhou.aliyuncs.com/home/pexels-d%C3%B3-castle-2270328.jpg" lazy></el-image>
-
                 <!-- <img src="https://natural-image.oss-cn-hangzhou.aliyuncs.com/home/pexels-d%C3%B3-castle-2270328.jpg" alt=""> -->
             </div>
             <div class="card-gird hiking">
                 <el-image fit="cover" src="https://natural-image.oss-cn-hangzhou.aliyuncs.com/home/pexels-kamaji-ogino-5064664.jpg" lazy></el-image>
-
                 <!-- <img src="https://natural-image.oss-cn-hangzhou.aliyuncs.com/home/pexels-kamaji-ogino-5064664.jpg" alt=""> -->
             </div>
             <div class="card-gird camping">
                 <el-image fit="cover" src="https://natural-image.oss-cn-hangzhou.aliyuncs.com/home/pexels-teemu-r-1840421.jpg" lazy></el-image>
-
                 <!-- <img src="https://natural-image.oss-cn-hangzhou.aliyuncs.com/home/pexels-teemu-r-1840421.jpg" alt=""> -->
             </div>
             <div class="card-gird skiing">
                 <el-image fit="cover" src="https://natural-image.oss-cn-hangzhou.aliyuncs.com/home/pexels-dids-1740098.jpg" lazy></el-image>
-
                 <!-- <img src="https://natural-image.oss-cn-hangzhou.aliyuncs.com/home/pexels-dids-1740098.jpg" alt=""> -->
             </div>
         </div>
@@ -162,6 +160,9 @@ export default {
                     }
             });
         },
+        toStrategy(){
+            this.$router.push('/strategy')
+        }
     },
     mounted(){
         this.$nextTick(()=>{
@@ -215,11 +216,29 @@ export default {
         }
         .outside-grid{
             display: grid;
+            position: relative;
             background-color: #2b2b2b;
             user-select: none;
             padding: 100px;
             grid-template-columns: repeat(3,33.33%);
             grid-template-rows: repeat(2,340px);
+            width: 100%;
+            height: 100%;
+            background: #121212;
+            background: linear-gradient(
+                135deg,
+                #121212 25%,
+                #1a1a1a 25%,
+                #1a1a1a 50%,
+                #121212 50%,
+                #121212 75%,
+                #1a1a1a 75%,
+                #1a1a1a
+            );
+            background-size: 40px 40px;
+
+            /* Animation */
+            animation: move 4s linear infinite;
             .card-gird{
                 position: relative;
                 width: 100%;
@@ -356,6 +375,16 @@ export default {
                     img{
                         filter:  grayscale(100%) contrast(150%) blur(10px);
                     }
+                }
+            }
+            .more{
+                position: absolute;
+                color: rgb(141, 141, 141);
+                bottom: 20px;
+                right: 50px;
+                &:hover{
+                    color: #ffffff;
+                    cursor: pointer;
                 }
             }
         }
@@ -587,4 +616,13 @@ export default {
             opacity: 0.5;
         }
     }
+    @keyframes move {
+        0% {
+            background-position: 0 0;
+        }
+        100% {
+            background-position: 40px 40px;
+        }
+    }
+
 </style>

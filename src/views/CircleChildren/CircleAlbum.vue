@@ -4,7 +4,9 @@
         <!-- 圈子中的每一条相册 -->
         <div class="item" v-for="(item,index) in albumList" :key="index">
             <div class="user">
-                <el-avatar size="large" :src="item.user_avatar"></el-avatar>
+                <el-image lazy fit="cover" :src="item.user_avatar" style="width: 40px;height: 40px;border-radius: 50%;" alt=""></el-image>
+
+                <!-- <el-avatar size="large" :src="item.user_avatar"></el-avatar> -->
                 <div class="text">
                     <span>{{item.user_name}}</span>
                     <span class="time">{{item.album_timestamp}}</span>
@@ -81,13 +83,11 @@ export default {
             const user_id = JSON.parse(localStorage.getItem("user")).user_id
             await getAlbums({params:{circle_id:this.getNowCircleNav,user_id:user_id}}).then(res=>{
                 let arr = res.data
-                console.log(arr);
                 arr.forEach(item=>{
                     //转换时间
                     item.album_timestamp = getTime(item.album_timestamp)
                 })
                 this.albumList = arr
-                console.log(this.albumList);
             })
         }
     },
@@ -99,7 +99,6 @@ export default {
     deactivated(){
         //组件不活跃时，隐藏上传按钮
         this.changeIssue(false)
-        console.log("不活跃");
     }
 }
 </script>
@@ -148,7 +147,7 @@ export default {
                     display: flex;
                     flex-direction: row;
                     flex-wrap: wrap;
-                    justify-content: center;
+                    justify-content: flex-start;
                     align-items: center;
                     .image-item{
                         width: 30%;

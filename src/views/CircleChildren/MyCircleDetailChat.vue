@@ -10,7 +10,8 @@
                 <div class="others animate__animated animate__fadeInDown" v-if="c.user_id != myInfo.user_id ">
                     <div class="others-avatar">
                         <!-- <el-avatar :src="c.user_avatar"></el-avatar> -->
-                        <img :src="c.user_avatar" style="width: 40px;height: 40px;object-fit: cover; border-radius: 50%;" alt="">
+                         <el-image lazy fit="cover" :src="c.user_avatar" style="width: 40px;height: 40px;border-radius: 50%;" alt=""></el-image>
+                        <!-- <img :src="c.user_avatar" style="width: 40px;height: 40px;object-fit: cover; border-radius: 50%;" alt=""> -->
                     </div>
                     <div class="others-msg">
                         <div class="msg-text">{{ c.circleMsg_content }}</div>
@@ -24,7 +25,9 @@
                     </div>
                     <div class="my-avatar">
                         <!-- <el-avatar :src="myInfo.user_avatar"></el-avatar> -->
-                        <img :src="myInfo.user_avatar" style="width: 40px;height: 40px;object-fit: cover; border-radius: 50%;" alt="">
+                        <el-image lazy fit="cover" :src="myInfo.user_avatar" style="width: 40px;height: 40px;border-radius: 50%;" alt=""></el-image>
+                        
+                        <!-- <img :src="myInfo.user_avatar" style="width: 40px;height: 40px;object-fit: cover; border-radius: 50%;" alt=""> -->
                     </div>
                 </div>
                 <!-- 我的消息结束 -->

@@ -16,7 +16,8 @@
             :class="{active:friend.user_id == nowFriend}"  
             :key="friend.friendId" >
                 <div class="friendImg">
-                    <el-avatar :size="40" :src="friend.user_avatar"></el-avatar>
+                    <el-image lazy fit="cover" :src="friend.user_avatar" style="width: 40px;height: 40px;border-radius: 50%;" alt=""></el-image>
+                    <!-- <el-avatar :size="40" :src="friend.user_avatar"></el-avatar> -->
                 </div>
                 <div class="friendText">
                     <h4 v-text="friend.user_name"></h4>

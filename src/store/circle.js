@@ -17,7 +17,6 @@ export default {
         //异步获取圈子的成员，并赋值给circleMembers
         async setCircleMembers(context,circle_id){
             await getCircleMembers({params:{circle_id:circle_id}}).then((res)=>{
-                console.log(res);
                 if(res.status==200)
                     context.commit('setCircleMembers',res.data)
             }).catch((err)=>{
@@ -50,7 +49,6 @@ export default {
         },
         //异步获取用户加入的圈子的信息
         async setMyCircle(context,user_id){
-            console.log("进入获取圈子");
             const res = await getMyCircle({params:{user_id}}).then(res=>{
                 if(res.status === 200){
                     //提交mutations

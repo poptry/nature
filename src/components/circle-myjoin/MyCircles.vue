@@ -5,7 +5,8 @@
     </div>
     <div class="circles">
         <div v-for="circle in getMyCircle" :class="{active:circle.circle_id==getNowCircleNav}" :key="circle.circle_id" class="circle" @click="clickCircle(circle)">
-            <img width="40px" height="40px" style="border-radius: 5px;object-fit: cover;" :src="circle.circle_avatar" alt="">
+            <!-- <img width="40px" height="40px" style="border-radius: 5px;object-fit: cover;" :src="circle.circle_avatar" alt=""> -->
+            <el-image lazy fit="cover" :src="circle.circle_avatar" style="width: 40px;height: 40px;border-radius: 5px;" alt=""></el-image>
             <!-- <el-avatar  fit="cover" class="circle-avatar" shape="square" size="medium" :src="circle.circle_avatar"></el-avatar> -->
             <span class="circle-name" v-text="circle.circle_name"></span>
         </div>

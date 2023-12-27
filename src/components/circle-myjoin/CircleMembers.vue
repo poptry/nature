@@ -2,14 +2,16 @@
   <div class="container animate__animated animate__fadeIn">
     <span class="title">圈主</span>
     <div class="members"  @click="clickMember(ownerInfo)">
-        <img :src="ownerInfo.user_avatar" class="my_avatar" style="width: 40px;height: 40px;object-fit: cover; border-radius: 50%;" alt="">
+        <el-image lazy fit="cover" :src="ownerInfo.user_avatar" style="width: 40px;height: 40px;border-radius: 50%;" alt=""></el-image>
+        <!-- <img :src="ownerInfo.user_avatar" class="my_avatar" style="width: 40px;height: 40px;object-fit: cover; border-radius: 50%;" alt=""> -->
         <!-- <el-avatar size="medium" fit="cover" :src="ownerInfo.user_avatar"></el-avatar> -->
         <span class="user-name">{{ ownerInfo.user_name }}</span>
     </div>
     <span class="title">圈子成员</span>
     <div class="members" v-for="(m,index) in members" :key="index"  @click="clickMember(m)">
+        <el-image lazy fit="cover" :src="m.user_avatar" style="width: 40px;height: 40px;border-radius: 50%;" alt=""></el-image>
         <!-- <el-avatar size="medium" :src="m.user_avatar"></el-avatar> -->
-        <img :src="m.user_avatar" class="my_avatar" style="width: 40px;height: 40px;object-fit: cover; border-radius: 50%;" alt="">
+        <!-- <img :src="m.user_avatar" class="my_avatar" style="width: 40px;height: 40px;object-fit: cover; border-radius: 50%;" alt=""> -->
         <span class="user-name">{{m.user_name}}</span>
     </div>
     <el-dialog

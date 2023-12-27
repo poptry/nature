@@ -136,7 +136,6 @@ export default {
     created(){
         //第一次进入手动赋值
         this.circle_id = this.getNowCircleNav
-        console.log("第一次进入",this.circle_id,this.getNowCircleNav);
         //因为第一次进入时，circle_id没有变化，所以第一次进入需要请求一次圈子成员和圈主
         this.setCircleMembers(this.getNowCircleNav)
         this.setCircleOwner(this.getNowCircleNav)

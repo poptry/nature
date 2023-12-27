@@ -70,7 +70,6 @@ export default {
         },
         member(newVal){
             //获取到新的成员列表，赋值给members
-            console.log(newVal);
         },
         getCircleOwner(newVal){
             //获取到新的圈主，赋值给members
