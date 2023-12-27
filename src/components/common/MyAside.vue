@@ -126,8 +126,8 @@ export default {
         circle_name: [{ required: true, message: '请输入圈子名称', trigger: 'blur' }],
         circle_type: [{ required: true, message: '请选择圈子类型', trigger: 'change' }],
       },
-      file:{},
-      file2:{},
+      file:null,
+      file2:null,
       navList:[
         {
             id:'0',
@@ -172,8 +172,7 @@ export default {
           //获取用户id，然后加入到参数对象中，作为圈主的id
           data.circle_owner = this.userInfo.user_id
           //没有图片的话，提示
-          if(!this.image.coverUrl && !this.image.headUrl && this.file && this.file2){
-            console.log(this.image,this.file);
+          if( this.image.coverUrl=='' || this.image.headUrl=='' || this.file === null || this.file2===null){
             this.$message.error('请先选择图片');
             return false;
           }
